@@ -177,21 +177,58 @@ aria-hidden="true">
     <div class="footer-head">
       <div class="footer-logo"><img src='{!! asset("storage/app/public/images/about/".$getabout->footer_logo) !!}' alt=""></div>
       <p>{!! \Illuminate\Support\Str::limit(htmlspecialchars($getabout->about_content, ENT_QUOTES, 'UTF-8'), $limit = 200, $end = '...') !!}</p>
+          
     </div>
-    <div class="footer-socialmedia">
-      @if($getabout->fb != "")
-        <a href="{{$getabout->fb}}" target="_blank"><i class="fab fa-facebook-f"></i></a>
-      @endif
-
-      @if($getabout->twitter != "")
-        <a href="{{$getabout->twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>
-      @endif
-
-      @if($getabout->insta != "")
-        <a href="{{$getabout->insta}}" target="_blank"><i class="fab fa-instagram"></i></a>
-      @endif
+    <div class="abt-f">
+      <h3>About</h3>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="{{URL::to('/privacy')}}" style="color: #fff;"> {{ trans('labels.privacy_policy') }} </a></li>
+        <li><a href="#">Delivery</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+      </ul>
     </div>
-    <div class="download-app">
+    <div class="abt-f">
+      <h3>Account & Help</h3>
+      <ul>
+          @if (Session::get('id'))
+            <li><a href="{{URL::to('/orders')}}">{{ trans('labels.my_orders') }}</a></li>
+            <li><a href="{{URL::to('/favorite')}}">{{ trans('labels.favourite_list') }}</a></li>
+            <li><a href="{{URL::to('/wallet')}}">{{ trans('labels.my_wallet') }}</a></li>  
+        @else
+        <li><a href="{{URL::to('/signin')}}">Sign in</li>
+          @endif 
+            
+
+        
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Site Map</a></li>
+         
+      </ul>
+    </div>
+     <div class=" abt-f get-coupan">
+      <h3>Get Discount Coupons</h3>
+                <form class="contact-form" id="contactform" method="post">
+                    {{csrf_field()}}
+                    <input type="email" name="email" placeholder="{{ trans('messages.enter_email') }}" id="email" required="">
+                    <button type="button" name="Send" class="btn" onclick="contact()">Send</button>
+                </form>
+                <div class="footer-socialmedia">
+          @if($getabout->fb != "")
+            <a href="{{$getabout->fb}}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          @endif
+
+          @if($getabout->twitter != "")
+            <a href="{{$getabout->twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>
+          @endif
+
+          @if($getabout->insta != "")
+            <a href="{{$getabout->insta}}" target="_blank"><i class="fab fa-instagram"></i></a>
+          @endif
+        </div>
+      </div>
+
+   <!--  <div class="download-app">
       <p>{{ trans('labels.download_app') }}</p>
       <div class="download-app-wrap">
         @if($getabout->ios != "")
@@ -206,11 +243,32 @@ aria-hidden="true">
           </div>
         @endif
       </div>
-    </div>
+    </div> -->
   </div>
   <div class="copy-right text-center">
-    <a href="{{URL::to('/privacy')}}" style="color: #fff;"> {{ trans('labels.privacy_policy') }} </a>
-    <p>{{$getabout->copyright}} <br> Designed & Developed by <a href="http://infotechgravity.com/" target="_blank" style="color: #000;"><b>Gravity Infotech</b>.</a></p>
+    <div class="container">
+      <div class="row">
+        <div class="para-f-one col-md-4">
+        <p>{{$getabout->copyright}}</p>
+      </div>
+      
+      <div class="para-f-two col-md-4">
+        <p>Designed & Developed by <a href="geeksroot.com" target="_blank" style="color: #fd3f32;"><b>Geeks Root</b>.</a></p> 
+      </div>
+
+      <div class="para-f-three col-md-4">
+        <ul>
+          <li><i class="fab fa-cc-visa"></i></li>
+          <li><i class="fab fa-cc-mastercard"></i></li>
+          <li><i class="fab fa-cc-paypal"></i></li>
+          <li><i class="fab fa-cc-amex"></i></li>
+          <li><i class="fab fa-cc-discover"></i></li>
+        </ul>
+      </div>
+      </div>
+    </div>
+    
+   
   </div>
 </footer>
 
@@ -391,7 +449,7 @@ aria-hidden="true">
             }
         }
     })
-  }
+  };
   function AddtoCart(id,user_id) {
     "use strict";
     var price = $('#price').val();
@@ -400,33 +458,62 @@ aria-hidden="true">
     var variation = $(".readers option:selected").attr("data-variation");
     var variation_price = $(".readers option:selected").attr("data-price");
 
-    var addons_id = ($('.single_addon.Checkbox:checked').map(function() {
+    var addons_id = ($('single_addon.Checkbox:checked').map(function() {
         return this.value;
     }).get().join(', '));
 
-    var addons_name = ($('.single_addon.Checkbox:checked').map(function() {
+    var addons_name = ($('single_addon.Checkbox:checked').map(function() {
       return $(this).attr('addons_name');
     }).get().join(', '));
-    
-    var addons_price = ($('.single_addon.Checkbox:checked').map(function() {
-      return $(this).attr('price');
-    }).get().join(', '));
 
-    
-
-    var ingredients = ($('.ingredients:checked').map(function() {
-      return $(this).val();
-    }).get().join(', '));
-
-    var addon_group = ($('.group_addon:checked').map(function() {
-      return $(this).val();
+    var ingredients = ($('ingredients.Checkbox:checked').parents('ul').map(function() {
+      return $(this).attr('ingredient_type') = [];
     }).get().join(', '));
 
 
+// Ingredients
+    let ingredients_array = [];
+    $('.ingredientsOptions ul').each(function(index, item){
+      let ing_type = $(item).attr('ingredient_type');
+      let temp = [];
+      temp[ing_type] = [];      
+      $(item).find('.ingredients.Checkbox:checked').each(function(child_index, child_item){
+        temp[ing_type][child_index] = $(child_item).attr('ingredient_name');
+      })
+      ingredients_array[index]  = temp;
+    })
+    console.log('Ingredients', ingredients_array.serialize());
+
+// Add-ons Groups
+    let addon_groups = [];
+    $('ul.addon_group').each(function(index, item){
+      let addon_group = $(item).attr('group_name');
+      let temp = [];
+      temp[addon_group] = [];      
+      $(item).find('.group_addon.Checkbox:checked').each(function(child_index, child_item){
+        temp[addon_group][child_index] = $(child_item).attr('addon_name');
+      })
+      addon_groups[index]  = temp;
+    })
+    console.log('Addon Group', addon_groups.serialize());
+
+// Add-ons Price
+    let addon_groups_price = [];
+
+    $('ul.addon_group').each(function(index, item){
+      let addon_group = $(item).attr('group_name');
+
+      let temp = [];
+      temp[addon_group] = $(item).attr('data-price');
+      addon_groups_price[index] = temp;
+    })
+    console.log('Addon Group Price', addon_groups_price.serialize());
 
 
    
-
+    var addons_price = ($('.Checkbox:checked').map(function() {
+      return $(this).attr('price');
+    }).get().join(', '));
      
     $('#preloader').show();
     $.ajax({
@@ -445,8 +532,9 @@ aria-hidden="true">
             variation_price: variation_price,
             variation: variation,
             item_notes: item_notes,
-            ingredients: ingredients,
-            addon_group: addon_group,
+            ingredients: ingredients_array,
+            addon_groups: addon_groups,
+            addon_groups_price: addon_groups_price,
             user_id: user_id,
 
         },

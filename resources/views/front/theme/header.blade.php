@@ -75,17 +75,7 @@
 
 						<li><a href="{{ url('locale/vi') }}" ><i class="fa fa-language"></i> VI</a></li> -->
 
-						@if (Session::get('id'))
 						
-							<li class="nav-item {{ request()->is('orders') ? 'active' : '' }}">
-								<a class="nav-link" href="{{URL::to('/orders')}}">{{ trans('labels.my_orders') }}</a>
-							</li>
-							<li class="nav-item {{ request()->is('favorite') ? 'active' : '' }}">
-								<a class="nav-link" href="{{URL::to('/favorite')}}">{{ trans('labels.favourite_list') }}</a>
-							</li>
-							<li class="nav-item {{ request()->is('wallet') ? 'active' : '' }}">
-								<a class="nav-link" href="{{URL::to('/wallet')}}">{{ trans('labels.my_wallet') }}</a>
-							</li>
 							<li class="nav-item search">
 								<form method="get" action="{{URL::to('/search')}}">
 									<div class="search-input">
@@ -95,23 +85,38 @@
 								</form>
 								<div id="countryList" class="item-list"></div>
 							</li>
-							<li class="nav-item cart-btn">
-								<a class="nav-link" href="{{URL::to('/cart')}}"><i class="fas fa-shopping-cart"></i><span id="cartcnt">{{Session::get('cart')}}</span></a>
-							</li>
-						@else 
-							<li class="nav-item search">
-								<form method="get" action="{{URL::to('/search')}}">
-									<div class="search-input">
-										<input type="search" id="search-box" name="item" placeholder="{{ trans('messages.search_here') }}" required="" autocomplete="off">
+							<li class="nav-item cart-btn dropdown">
+								<a class="nav-link dropdown-toggle " href="javascript:void(0)" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-shopping-cart"></i></a>
+								<div class="dropdown-menu cart-dropdown" aria-labelledby="dropdownMenuButton">
+									<div class="item-cart">
+										<div class="images-cart">
+											<img src="http://localhost/punjabibynature/storage/app/public/images/category/category-613696ce00fa7.jpg">
+										</div>
+										<div class="description-cart">
+											<p>Hello Products</p>
+											<p>29$</p>
+										</div>
+										<div class="delete-item">
+											<a href="#"><i class="far fa-trash-alt"></i></a>
+										</div>	
 									</div>
-									<button type="submit" class="nav-link"><i class="far fa-search"></i></button>
-								</form>
-								<div id="countryList" class="item-list"></div>
+									<div class="item-cart">
+										<div class="images-cart">
+											<img src="http://localhost/punjabibynature/storage/app/public/images/category/category-613696ce00fa7.jpg">
+										</div>
+										<div class="description-cart">
+											<p>Hello Products</p>
+											<p>29$</p>
+										</div>
+										<div class="delete-item">
+											<a href="#"><i class="far fa-trash-alt"></i></a>
+										</div>	
+									</div>
+								</div>
+	  								
+								
 							</li>
-							<li class="nav-item cart-btn">
-								<a class="nav-link" href="{{URL::to('/signin')}}"><i class="fas fa-shopping-cart"></i></a>
-							</li>
-						@endif
+						
 						@if (Session::get('id'))
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:void(0)">
@@ -152,13 +157,23 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 							  
 							<ul class="navbar-nav">
-								<!-- <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
-									<a class="nav-link" href="{{URL::to('/')}}">{{ trans('labels.home') }}</a>
-								</li> -->
 								<li class="nav-item {{ request()->is('product') ? 'active' : '' }}">
 									<a class="nav-link" href="{{URL::to('/product')}}">
 										<i class="fas fa-bars"></i>
 									Our Menu</a>
+									<ul class="sub-menu">
+										@foreach ($getcategory as $category)
+										<li>
+							              	<h5>					              		
+							              		<a href="{{URL::to('/product/'.$category->id)}}">{{$category->category_name}}</a>
+							              	</h5>
+							              	<figure>
+						              			<img src='{!! asset("storage/app/public/images/category/".$category->image) !!}' alt="">
+						              		</figure>
+						                </li>
+						                @endforeach
+									</ul>
+
 								</li>
 								<li class="nav-item {{ request()->is('catering') ? 'active' : '' }}">
 									<a class="nav-link" href="{{URL::to('/catering')}}">
@@ -175,8 +190,22 @@
 										<i class="fas fa-mobile"></i> 
 									Contact</a>
 								</li>
+								@if (Session::get('id'))
+						
+							<li class="nav-item {{ request()->is('orders') ? 'active' : '' }}">
+								<a class="nav-link" href="{{URL::to('/orders')}}">{{ trans('labels.my_orders') }}</a>
+
+							</li>
+							<li class="nav-item {{ request()->is('favorite') ? 'active' : '' }}">
+								<a class="nav-link" href="{{URL::to('/favorite')}}">{{ trans('labels.favourite_list') }}</a>
+							</li>
+							<li class="nav-item {{ request()->is('wallet') ? 'active' : '' }}">
+								<a class="nav-link" href="{{URL::to('/wallet')}}">{{ trans('labels.my_wallet') }}</a>
+							</li>
 							
-									
+						
+						@endif	
+								
 								
 								
 							</ul>

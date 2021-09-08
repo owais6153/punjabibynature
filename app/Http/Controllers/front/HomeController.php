@@ -43,7 +43,7 @@ class HomeController extends Controller
         $getbanner = Banner::orderby('id','desc')->get();
 
         $getdata=User::select('currency')->where('type','1')->first();
-
+        
         return view('front.home', compact('getslider','getcategory','getabout','getitem','getreview','getbanner','getdata'));
     }
 
