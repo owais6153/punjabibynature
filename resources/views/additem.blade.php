@@ -188,6 +188,14 @@
                                 </div>
                             </div>
 
+
+                            <h3 class="mt-4">Add combo options</h3>
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <label>Combo Price</label>
+                                    <input class="form-control" type="text" name="price" placeholder="Enter price">
+                                </div>
+                            </div>
                             @if (env('Environment') == 'sendbox')
                                 <button type="button" class="btn btn-primary" onclick="myFunction()">{{ trans('labels.save') }}</button>
                             @else
