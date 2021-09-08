@@ -1,0 +1,364 @@
+div#navbarNav .nav-item.search {
+    width: 740px;
+}
+.nav-bottom-bar div#navbarNav {
+    justify-content: center;
+}
+.nav-bar-top .navbar-brand {
+    max-width: 146px;
+}
+.nav-bar-top div#navbarNav {
+    justify-content: center;
+}
+.first-sec-home .first-section-home {
+    border: 0px;
+}
+
+.first-sec-home .first-section-home .home-first-sec-img img {
+    width: 546px;
+}
+
+.first-sec-home .btn-order-now {
+    color: #fff;
+    margin: 0 auto;
+    display: block;
+    padding: 10px 25px;
+    border-radius: 6px;
+    background-color: var(--primary-color-hover);
+    box-shadow: 0 0 4px var(--primary-color-hover);
+    width: 135px;
+    text-align: center;
+    font-weight: 600;
+}
+.first-sec-home .sec-head {
+    text-align: center !important;
+    font-size: 30px;
+}
+
+.first-sec-home p {
+    text-align: center;
+}
+.first-sec-home .about-contant {
+    flex: 0 0 50%;
+}
+
+.first-sec-home .home-first-sec-img {
+    flex: 0 0 50%;
+}
+.third-sec-home {
+    background-image: url(http://localhost/punjabibynature/storage/app/public/assets/images/Appetizer.jpg)!important;
+    background-size: cover!important;
+    background-repeat: no-repeat!important;
+    background-position: center!important;
+    background-attachment: fixed!important;
+    min-height: 490px!important;
+    text-align: center!important;
+}
+.third-sec-home .third-section-home {
+    border: 0px;
+    flex: 0 0 100%;
+    align-items: center;
+    justify-content: center;
+}
+.third-sec-home .third-section-home .sec-head {
+    margin: 90px 0 15px 0;
+    color: #fff;
+    font-size: 50px;
+    text-align: center !important;
+    font-weight: 900;
+}
+.third-sec-home .third-section-home .btn-order-now {
+    color: #fff;
+    margin: 0 auto;
+    display: block;
+    padding: 10px 25px;
+    border-radius: 6px;
+    background-color: var(--primary-color-hover);
+    box-shadow: 0 0 4px var(--primary-color-hover);
+    width: 135px;
+    text-align: center;
+    font-weight: 600;
+}
+.home-fourth-sec-img {
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover !important;
+    padding-top: 65px;
+    padding-right: 90px;
+    padding-bottom: 65px;
+    padding-left: 90px;
+    text-align: center;
+    background: url(http://localhost/punjabibynature/storage/app/public/assets/images/border_white1-663x399.png);
+    flex: 0 0 55%;
+}
+.fourth-sec-home .fourth-section-home {
+    border: 0px;
+}
+.fourth-sec-home .fourth-section-home .sec-head {
+    text-align: center !important;
+}
+.fourth-sec-home .home-fourth-right p {
+    color: #000;
+    font-weight: 500;
+}
+.fifth-sec-home {
+    background-image: url(http://localhost/punjabibynature/storage/app/public/assets/images/live-catring-video-img.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 490px;
+    text-align: center;
+}
+.fifth-sec-home .fifth-section-home {
+    border: 0px;
+    flex: 0 0 100%;
+    align-items: center;
+    justify-content: center;
+}
+.fifth-sec-home .fifth-section-home .sec-head {
+    margin: 130px 0 15px 0;
+    color: #fff;
+    font-size: 50px;
+    text-align: center !important;
+    font-weight: 900;
+}
+.sixth-sec-home .sec-head {
+    padding-top: 40px;
+}
+.sixth-sec-home p {
+    font-size: 18px;
+}
+section.banner-sec .item h1, section.banner-sec .item p {
+    display: none;
+}
+section.banner-sec {
+    margin-top: 142px;
+}
+
+
+div#navbarNav ul.sub-menu {
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    width: 1300px;
+    left: auto;
+    left: 100px;
+    margin: auto;
+    text-align: left;
+    background: #fff;
+    top: 34px;
+    box-shadow: 0px 0px 7px 0 #e1e1e1;
+    -webkit-transition-property: background;
+    -webkit-transition-duration: 0.1s;
+    -webkit-transition-timing-function: ease;
+    top: -webkit-calc(100% + 10px);
+    top: -moz-calc(100% + 10px);
+    top: calc(100% + 50px);
+    -webkit-transition: all 0.1s ease-in;
+    -o-transition: all 0.1s ease-in;
+    -moz-transition: all 0.1s ease-in;
+    transition: all 0.1s ease-in;
+    visibility: hidden;
+    padding: 24px 0;
+    z-index: 9;
+    flex-wrap: wrap;
+}
+
+div#navbarNav ul li:hover .sub-menu {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: rotateX(0) translateZ(0);
+    -moz-transform: rotateX(0) translateZ(0);
+    transform: rotateX(0) translateZ(0);
+    top: -webkit-calc(100% - 0px);
+    top: -moz-calc(100% - 17px);
+    top: calc(100% + 30px);
+}
+div#navbarNav ul li .sub-menu li h5 {
+    font-size: 15px !important;
+}
+
+div#navbarNav ul li .sub-menu li {
+    margin: 8px;
+    list-style: none;
+}
+div#navbarNav ul li .sub-menu figure img {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(221, 221, 221, 1);
+}
+div#navbarNav ul li .sub-menu li:first-child {
+    margin-left: 10px;
+}
+.nav-bar-top {
+    border-bottom: solid 1px #f0f0f0;
+}
+.footer-logo {
+    height: unset !important;
+    max-width: unset !important;
+    text-align: center;
+    padding: 14px;
+    border-radius: 10px;
+    background-color: transparent !important;
+    text-align: left !important;
+    padding-left: 0px !important;
+    margin-bottom: 35px;
+    padding-top: 0px !important;
+}
+footer .container {
+    align-items: flex-start !important;
+}
+.abt-f {
+    padding-top: 25px;
+}
+footer {
+    background-color: #000 !important;
+}
+.footer-socialmedia {
+    max-width: 100% !important;
+    text-align: left !important;
+}
+.abt-f h3 {
+    color: #fff;
+    position: relative;
+    margin-bottom: 30px;
+}
+.abt-f ul li {
+    color: #fff;
+    list-style: none;
+}
+
+.abt-f ul li a {
+    color: #fff;
+    font-size: 18px;
+}
+
+.abt-f ul {
+    padding-left: 0px;
+}
+
+.abt-f h3:after {
+    content: '';
+    height: 2px;
+    width: 50px;
+    background-color: #faa817;
+    display: block;
+}
+.get-coupan form#contactform {
+    background: transparent;
+    padding: 0px;
+    position: relative;
+}
+
+.get-coupan form#contactform input#email {
+    width: 330px;
+    padding: 10px 9px 9px 15px;
+}
+
+.get-coupan form#contactform .btn {
+    position: absolute;
+    right: 1px;
+    top: 0px;
+    border-radius: 0px 9px 9px 0px;
+    height: 46px;
+}
+.copy-right {
+    display: flex;
+    align-items: center;
+}
+.copy-right ul {
+    padding-left: 0px;
+    display: flex;
+    margin-bottom: 0px;
+    justify-content: flex-end;
+}
+.copy-right .para-f-one {
+    padding-left: 0px;
+}
+
+.copy-right ul li {
+    list-style: none;
+    padding-left: 20px;
+}
+
+.copy-right ul li:hover {
+    color: #fcb511;
+    cursor: pointer;
+}
+.copy-right .row {
+    align-items: center;
+}
+.copy-right ul li i {
+    font-size: 38px;
+}
+
+.copy-right p {
+    flex: 0 0 33.33%;
+}
+.extra-food-wrap > * {
+    flex: 0 0 28%;
+    max-width: 28%;
+}
+.extra-food-wrap {
+    flex-wrap: wrap;
+}
+.extra-food li.disabled p::before {
+    opacity: 0.3 !important;
+}
+.extra-food li.Radio p::before {
+    border-radius: 100%;
+}
+
+.extra-food li.Radio p::after {
+    border-radius: 100%;
+}
+.extra-food{
+    margin-right: 0px !important;
+}
+.cart-btn {
+    box-shadow: none !important;
+}
+
+.cart-btn a#dropdownMenuButton:after {
+    display: none;
+}
+
+.cart-btn a#dropdownMenuButton {
+    padding-left: 28px;
+}
+.cart-dropdown.show {}
+
+.cart-dropdown.show .item-cart {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.cart-dropdown.show {
+    width: 300px !important;
+}
+
+.cart-dropdown.show .item-cart .images-cart img {
+    width: 70px;
+}
+
+.cart-dropdown.show .item-cart .images-cart {
+    border: solid 1px #eee;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+.cart-dropdown.show .item-cart .description-cart p {
+    margin-bottom: 0px;
+}
+
+.cart-dropdown.show .item-cart .description-cart {
+    margin-right: 20px;
+    flex: 0 0 146px;
+}
+
+.cart-dropdown.show .item-cart  .delete-item {
+    justify-content: flex-end !important;
+}
