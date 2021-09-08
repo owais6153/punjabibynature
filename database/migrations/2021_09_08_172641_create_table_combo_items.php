@@ -32,3 +32,4 @@ class CreateTableComboItems extends Migration
         Schema::dropIfExists('combo_items');
     }
 }
+

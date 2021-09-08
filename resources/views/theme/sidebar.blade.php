@@ -32,6 +32,21 @@
             </li>
 
             <li>
+                <a href="{{URL::to('/admin/combo')}}" aria-expanded="false">
+                    <i class="fa fa-plus"></i><span class="nav-text">Combo Items</span>
+                </a>
+            </li>
+
+
+            <li>
+                <a href="{{URL::to('/admin/combo/groups')}}" aria-expanded="false">
+                    <i class="fa fa-plus"></i><span class="nav-text">Combo Groups</span>
+                </a>
+            </li>
+
+    
+
+            <li>
                 <a href="{{URL::to('/admin/ingredients')}}" aria-expanded="false">
                     <i class="fa fa-plus"></i><span class="nav-text">{{ trans('labels.ingredients') }}</span>
                 </a>

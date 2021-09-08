@@ -30,3 +30,4 @@ class CreateTableComboGroup extends Migration
         Schema::dropIfExists('combo_group');
     }
 }
+

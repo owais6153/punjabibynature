@@ -182,6 +182,20 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 		Route::post('ingredients/status', 'IngredientsController@status');
 		Route::post('ingredients/delete', 'IngredientsController@delete');
 
+		Route::get('combo', 'ComboItemController@index');
+		Route::post('combo/store', 'ComboItemController@store');
+		Route::post('combo/show', 'ComboItemController@show');
+		Route::post('combo/update', 'ComboItemController@update');
+		Route::get('combo/list', 'ComboItemController@list');
+		Route::post('combo/delete', 'ComboItemController@delete');
+		
+		Route::get('combo/groups', 'ComboGroupController@index');
+		Route::post('combo/groups/store', 'ComboGroupController@store');
+		Route::post('combo/groups/show', 'ComboGroupController@show');
+		Route::post('combo/groups/update', 'ComboGroupController@update');
+		Route::get('combo/groups/list', 'ComboGroupController@list');
+		Route::post('combo/groups/delete', 'ComboGroupController@delete');
+
 		Route::get('ingredients/types', 'IngredientTypeController@index');
 		Route::post('ingredients/types/store', 'IngredientTypeController@store');
 		Route::post('ingredients/types/show', 'IngredientTypeController@show');

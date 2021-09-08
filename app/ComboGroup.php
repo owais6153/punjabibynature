@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class ComboGroup extends Model
 {
-   protected $table='combo_items';
+   protected $table='combo_group';
    protected $fillable = ['name', 'group_id'];
 
-   public function comboItem()
+   public function ComboItem()
    {
-   		return $this->hasMany(comboItem::class, 'group_id');
+   		return $this->hasMany(ComboItem::class, 'group_id');
    }
 }
+

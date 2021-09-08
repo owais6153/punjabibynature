@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class comboItem extends Model
+class ComboItem extends Model
 {
    protected $table='combo_items';
    protected $fillable = ['name', 'group_id'];
