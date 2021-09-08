@@ -9,7 +9,7 @@ class comboItem extends Model
    protected $table='combo_items';
    protected $fillable = ['name', 'group_id'];
 
-   public function combo_group()
+   public function ComboGroup()
    {
    		return $this->belongsTo(ComboGroup::class, 'group_id');
    }
