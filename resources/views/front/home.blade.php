@@ -16,7 +16,7 @@
     </div>
 </section>
 
-<section class="feature-sec">
+<!-- <section class="feature-sec">
     <div class="container">
         <div class="feature-carousel owl-carousel owl-theme">
             @foreach ($getbanner as $banner)
@@ -40,9 +40,8 @@
             @endforeach
         </div>
     </div>
-</section>
-
-<section class="product-prev-sec">
+</section> -->
+<!-- <section class="product-prev-sec">
     <div class="container">
         <h2 class="sec-head">{{ trans('labels.our_products') }}</h2>
         <div id="sync2" class="owl-carousel owl-theme">
@@ -117,8 +116,91 @@
             @endforeach
         </div>
     </div>
+</section> -->
+<section class="first-sec-home">
+    <div class="container">
+        <div class="about-box first-section-home">
+            <div class="about-contant">
+                <h2 class="sec-head text-left">FRESH TAKES ON OLD STANDARDS</h2>
+                <p>The Punjabi cuisine is a culinary style which incorporates rich traditions of many distinct and local ways of cooking. One of them being a special form of tandoori cooking which is now famous in many parts of the world. We are also heavily influenced by the agriculture and farming lifestyle, which is why we pride ourselves on sourcing out the freshest ingredients, including seasonal produce to ensure our customers have the very best dining experience. Our chefs excellently craft traditional Punjabi dishes packed with flavourful herbs and spices combined with textures to appease taste buds.</p>
+                <a href="{{URL::to('product/')}}" class="btn-order-now">{{ trans('labels.view_more') }}</a>
+
+            </div>
+            <div class="home-first-sec-img">
+                <img src='{!! asset("storage/app/public/assets/images/fresh-takes.png") !!}' alt="">
+            </div>
+        </div>
+    </div>
+</section>
+<section class="third-sec-home">
+    <div class="container">
+        <div class="about-box third-section-home">
+            <div class="sectionhome-contant">
+                <h2 class="sec-head text-left">AMBASSADORS OF <br/>HOSPITALITY</h2>
+                <a href="{{URL::to('product/')}}" class="btn-order-now">About Us</a>
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="fourth-sec-home">
+    <div class="container">
+        <div class="about-box fourth-section-home">
+            <div class="about-contant">
+                <img src='{!! asset("http://localhost/punjabibynature/storage/app/public/assets/images/bowl-panner.png") !!}' alt="">
+             </div>
+            <div class="home-fourth-sec-img">
+                <div class="home-fourth-right">
+                    <h2 class="sec-head text-left">A MENU WITH RICH BUTTERY FLAVOURS</h2>
+                    <p>Every dish here at Punjabi By Nature has its own story from authentic traditional recipes. With an seasoned team of cooks and chefs who have left their mark on our kitchen. We are always finding inspiration for our menu to keep it fresh. From new ingredients, new approaches, and infuzed partnership of modern and traditional cooking styles to bring our customers dishes they are sure to love.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="fifth-sec-home">
+    <div class="container">
+        <div class="about-box fifth-section-home">
+            <div class="sectionhome-contant">
+                <h2 class="sec-head text-left">Live Catering <br/>Make It Memorable</h2>
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="sixth-sec-home fourth-sec-home">
+    <div class="container">
+        <div class="about-box fourth-section-home">
+            <div class="home-fourth-sec-img">
+                <div class="home-fourth-right">
+                    <h2 class="sec-head text-left">Live Catering</h2>
+                    <p>Whether you are looking for a special lunch or dinner to reward your team for their hard work, or to serve and important client a tasteful meal in your home, we can cater events with live-cooking as an added bonus from 5 to 400 guests.</p>
+                </div>
+            </div>
+            <div class="about-contant">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/vpUM1y9S8Gg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+             </div>
+            
+        </div>
+    </div>
+</section>
+<section class="fourth-sec-home">
+    <div class="container">
+        <div class="about-box fourth-section-home">
+            <div class="about-contant">
+                <img src='{!! asset("http://localhost/punjabibynature/storage/app/public/assets/images/next-event.jpg") !!}' alt="">
+             </div>
+            <div class="home-fourth-sec-img">
+                <div class="home-fourth-right">
+                    <h2 class="sec-head text-left">A MENU WITH RICH BUTTERY FLAVOURS</h2>
+                    <p>Every dish here at Punjabi By Nature has its own story from authentic traditional recipes. With an seasoned team of cooks and chefs who have left their mark on our kitchen. We are always finding inspiration for our menu to keep it fresh. From new ingredients, new approaches, and infuzed partnership of modern and traditional cooking styles to bring our customers dishes they are sure to love.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
+<!-- 
 <section class="about-sec">
     <div class="container">
         <div class="about-box">
@@ -131,7 +213,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 <section class="review-sec">
     <div class="container">
