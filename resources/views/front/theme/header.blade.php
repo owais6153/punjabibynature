@@ -181,7 +181,7 @@
 									Catering</a>
 								</li>
 								<li class="nav-item {{ request()->is('about') ? 'active' : '' }}">
-									<a class="nav-link" href="{{URL::to('/about')}}">
+									<a class="nav-link" href="{{URL::to('/aboutus')}}">
 										<i class="fas fa-utensils"></i>
 									About Us</a>
 								</li>

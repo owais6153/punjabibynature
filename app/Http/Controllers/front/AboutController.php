@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\TermsCondition;
 use App\About;
+use App\Category;
 use App\User;
 use Validator;
 
@@ -19,13 +20,16 @@ class AboutController extends Controller
     public function index()
     {
         $getabout = About::where('id','=','1')->first();
-        return view('aboutus',compact('getabout'));
+        $getdata=User::select('currency')->where('type','1')->first();
+        $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
+        return view('aboutus',compact('getabout','getcategory','getdata'));
     }
 
     public function about()
     {
         $getdata=User::select('currency')->where('type','1')->first();
         $getabout = About::where('id','=','1')->first();
-        return view('front.about',compact('getabout','getdata'));
+        $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
+        return view('front.about',compact('getabout','getdata','getcategory'));
     }
 }

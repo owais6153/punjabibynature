@@ -132,7 +132,7 @@
         </div>
     </div>
 </section>
-<section class="third-sec-home">
+<section class="third-sec-home" style="background:url('storage/app/public/assets/images/Appetizer.jpg');">
     <div class="container">
         <div class="about-box third-section-home">
             <div class="sectionhome-contant">
@@ -149,7 +149,7 @@
             <div class="about-contant">
                 <img src='{!! asset("http://localhost/punjabibynature/storage/app/public/assets/images/bowl-panner.png") !!}' alt="">
              </div>
-            <div class="home-fourth-sec-img">
+            <div class="home-fourth-sec-img" style="background: url('storage/app/public/assets/images/border_white1-663x399.png');">
                 <div class="home-fourth-right">
                     <h2 class="sec-head text-left">A MENU WITH RICH BUTTERY FLAVOURS</h2>
                     <p>Every dish here at Punjabi By Nature has its own story from authentic traditional recipes. With an seasoned team of cooks and chefs who have left their mark on our kitchen. We are always finding inspiration for our menu to keep it fresh. From new ingredients, new approaches, and infuzed partnership of modern and traditional cooking styles to bring our customers dishes they are sure to love.</p>
@@ -158,7 +158,7 @@
         </div>
     </div>
 </section>
-<section class="fifth-sec-home">
+<section class="fifth-sec-home" style="background: url('storage/app/public/assets/images/live-catring-video-img.jpg');">
     <div class="container">
         <div class="about-box fifth-section-home">
             <div class="sectionhome-contant">
@@ -171,7 +171,7 @@
 <section class="sixth-sec-home fourth-sec-home">
     <div class="container">
         <div class="about-box fourth-section-home">
-            <div class="home-fourth-sec-img">
+            <div class="home-fourth-sec-img" style="background: url('storage/app/public/assets/images/border_white1-663x399.png');">
                 <div class="home-fourth-right">
                     <h2 class="sec-head text-left">Live Catering</h2>
                     <p>Whether you are looking for a special lunch or dinner to reward your team for their hard work, or to serve and important client a tasteful meal in your home, we can cater events with live-cooking as an added bonus from 5 to 400 guests.</p>
@@ -186,14 +186,14 @@
 </section>
 <section class="fourth-sec-home">
     <div class="container">
-        <div class="about-box fourth-section-home">
+        <div class="about-box fourth-section-home sec-home">
             <div class="about-contant">
-                <img src='{!! asset("http://localhost/punjabibynature/storage/app/public/assets/images/next-event.jpg") !!}' alt="">
+                <img src='{!! asset("storage/app/public/assets/images/next-event.jpg") !!}' alt="">
              </div>
-            <div class="home-fourth-sec-img">
+            <div class="home-fourth-sec-img" style="background: url('storage/app/public/assets/images/border_white1-663x399.png');">
                 <div class="home-fourth-right">
-                    <h2 class="sec-head text-left">A MENU WITH RICH BUTTERY FLAVOURS</h2>
-                    <p>Every dish here at Punjabi By Nature has its own story from authentic traditional recipes. With an seasoned team of cooks and chefs who have left their mark on our kitchen. We are always finding inspiration for our menu to keep it fresh. From new ingredients, new approaches, and infuzed partnership of modern and traditional cooking styles to bring our customers dishes they are sure to love.</p>
+                    <h2 class="sec-head text-left">HOST YOUR NEXT EVENT AT PBN</h2>
+                    <p>We specialize in private parties, corporate and press events, weddings and other celebrations from groups 5 to 400. We feature private event space perfect for many occasions, as well as the option to book the entire restaurant.</p>
                 </div>
             </div>
         </div>
