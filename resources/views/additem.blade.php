@@ -203,7 +203,7 @@
                                     </div>
                                     <div class="col-sm-4 pt-3">
                                         <label for="make_combo">Make this product as combo product.</label><br>
-                                        <input type="checkbox" disabled="disabled" id="make_combo" name="make_combo" value="true">
+                                        <input type="checkbox" disabled="disabled" id="make_combo" name="make_combo" value="1">
                                     </div>
                                 </div>
                             </div>

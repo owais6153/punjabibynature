@@ -295,6 +295,36 @@
                                 </div>
                             </div>
 
+
+                            <h3 class="mt-4">Add Combo</h3>
+                            <div id="comboOptions">
+                                <div class="row">
+                                   <div class="col-sm-1">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-info mt-4" type="button"  onclick="addComboFields();"> + </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 pt-3">
+                                        <label for="make_combo">Make this product as combo product.</label><br>
+                                        <input type="checkbox" {{($item->is_default_combo == 1) ? 'checked' : '' }} disabled="disabled" id="make_combo" name="make_combo" value="1">
+                                    </div>
+                                </div>
+
+                                <?php
+                                    $combo_groups = explode(',', $item->combo_group_id);
+                                ?>
+
+                                @foreach ($combo_groups as $combo_group_id)
+                                <div class="row combo_row mb-4 removeclasscombo">
+                                    <div class="col-md-4"><label>Combo Group</label><select class="form-control" name="combo_group[]" required><option value="">Select Combo Group</option><?php foreach ($getComboGroup as $comboGroup) { ?> <option  {{ ($combo_group_id == $comboGroup->id) ? 'selected' : '' }} value="{{$comboGroup->id}}">{{$comboGroup->name}} (Items: {{$comboGroup->countCombos}})</option> <?php } ?></select></div><div class="col-md-1"><button class="btn btn-danger mt-4" type="button" onclick="remove_combo_row('+comboRoom+');"> - </button></div>         
+                                </div>
+                                @endforeach                   
+                            </div>
+
                             @if (env('Environment') == 'sendbox')
                                 <button type="button" class="btn btn-primary" onclick="myFunction()">{{ trans('labels.update') }}</button>
                             @else
@@ -742,17 +772,17 @@ function add_addons_field() {
     addonRoom++;
     var objTo = document.getElementById('add_group_addons')
     var divtest = document.createElement("div");
-    divtest.setAttribute("class", " removeclass"+addonRoom);
+    divtest.setAttribute("class", " removeclassAddons"+addonRoom);
     var rdiv = 'removeclassaddon'+addonRoom;
-    divtest.innerHTML = '<div class="row mt-3 addons_row"><div class="col-sm-4"><label>Select Addons Group</label><select name="addons_groups_id[]" required class="form-control addon_groups" id=""><option value="">Select Addons Group</option> <?php foreach ($addonGroups as $addonGroup) { ?> <option value="{{$addonGroup->id}}">{{$addonGroup->name}} (Addons: {{$addonGroup->countAddons}})</option> <?php } ?> </select> </div><div class="col-sm-4"><label>Option to be selected.</label><input required type="number" name="available_addons_option[]" min="1" required class="form-control" placeholder="Options to be selected"></div><div class="col-sm-3"><label>Allow all options to be selected.<br><input type="checkbox" name="available_addons_option[]" class="mt-3 allow_all" value="allow_all" ></label></div><div class="col-sm-1"><div class="form-group"><div class="input-group"><div class="input-group-btn"><button class="btn btn-danger mt-4" type="button"  onclick="remove_ingredient_field('+addonRoom+');"> - </button></div></div></div></div></div></div>';
+    divtest.innerHTML = '<div class="row mt-3 addons_row"><div class="col-sm-4"><label>Select Addons Group</label><select name="addons_groups_id[]" required class="form-control addon_groups" id=""><option value="">Select Addons Group</option> <?php foreach ($addonGroups as $addonGroup) { ?> <option value="{{$addonGroup->id}}">{{$addonGroup->name}} (Addons: {{$addonGroup->countAddons}})</option> <?php } ?> </select> </div><div class="col-sm-4"><label>Option to be selected.</label><input required type="number" name="available_addons_option[]" min="1" required class="form-control" placeholder="Options to be selected"></div><div class="col-sm-3"><label>Allow all options to be selected.<br><input type="checkbox" name="available_addons_option[]" class="mt-3 allow_all" value="allow_all" ></label></div><div class="col-sm-1"><div class="form-group"><div class="input-group"><div class="input-group-btn"><button class="btn btn-danger mt-4" type="button"  onclick="remove_addon_fields('+addonRoom+');"> - </button></div></div></div></div></div></div>';
 
 
 
     objTo.appendChild(divtest)
 }
-function remove_ingredient_field(rid) {
+function remove_addon_fields(rid) {
     "use strict";
-   $('.removeclass'+rid).remove();
+   $('.removeclassAddons'+rid).remove();
 }
 var addons_add = [];
         <?php
@@ -770,6 +800,44 @@ var addons_add = [];
            $(available_ing_option).attr('max', addons_add[$(this).val()]); 
         }
     })
+
+
+    var comboRoom = 1;
+    function addComboFields(){    
+        "use strict";
+        comboRoom++;
+        var objTo = document.getElementById('comboOptions')
+        var divtest = document.createElement("div");
+        divtest.setAttribute("class", "row combo_row mb-4 removeclasscombo"+comboRoom);
+        var rdiv = 'removeclassaddon'+comboRoom;
+        divtest.innerHTML = '<div class="col-md-4"><label>Combo Group</label><select class="form-control" name="combo_group[]" required><option value="">Select Combo Group</option><?php foreach ($getComboGroup as $comboGroup) { ?> <option value="{{$comboGroup->id}}">{{$comboGroup->name}} (Items: {{$comboGroup->countCombos}})</option> <?php } ?></select></div><div class="col-md-1"><button class="btn btn-danger mt-4" type="button" onclick="remove_combo_row('+comboRoom+');"> - </button></div>';
+
+
+
+        objTo.appendChild(divtest)
+        if ($('.combo_row').length > 0) {
+            $('#make_combo').removeAttr('disabled');   
+        }
+        else{
+            $('#make_combo').attr('disabled', 'disabled');  
+            $('#make_combo').prop('checked', false);  
+        } 
+    }
+function remove_combo_row(rid) {
+    "use strict";
+    $('.removeclasscombo'+rid).remove();
+    if ($('.combo_row').length > 0) {
+        $('#make_combo').removeAttr('disabled');   
+    }
+    else{
+        $('#make_combo').attr('disabled', 'disabled');  
+        $('#make_combo').prop('checked', false);  
+    } 
+}
+
+
+
+
 
 </script>
 @endsection

@@ -127,6 +127,11 @@ class ItemController extends Controller
         $item->addongroups_id = @implode(",", $request->addons_groups_id);
         $item->available_addons_option = @implode(",", $request->available_addons_option);
         $item->tax =$request->tax;
+        if (intval($request->make_combo) == '') {
+            $request->make_combo = 0;
+        }
+        $item->is_default_combo =$request->make_combo;
+        $item->combo_group_id = @implode(",",$request->combo_group);
         $item->save();
 
         $product_price = $request->product_price;
@@ -274,6 +279,11 @@ class ItemController extends Controller
         $item->addongroups_id = @implode(",", $request->addons_groups_id);
         $item->available_addons_option = @implode(",", $request->available_addons_option);
         $item->tax =$request->tax;
+        if (intval($request->make_combo) == '') {
+            $request->make_combo = 0;
+        }
+        $item->is_default_combo =intval($request->make_combo);
+        $item->combo_group_id = @implode(",",$request->combo_group);
         $item->save();   
 
         $product_price = $request->product_price;
