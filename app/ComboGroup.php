@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ComboGroup extends Model
 {
    protected $table='combo_group';
-   protected $fillable = ['name', 'group_id'];
+   protected $fillable = ['name', 'price'];
 
    public function ComboItem()
    {

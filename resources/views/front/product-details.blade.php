@@ -148,6 +148,14 @@
                         </ul>
                     @endif
                     <!-- End Paid Single Addon -->
+                    <!-- Combos -->
+                    @if (isset($ComboGroups[0]->name)) 
+                        <div id="comboGroup" style="flex: 0 0 100%; max-width: 100%;">
+                            <p>Make it Combo : {{$getdata->currency}}{{$totalComboPrice}}<input type="checkbox" id="makeItCombo" class="Checkbox" data-price="{{$totalComboPrice}}"></p>
+                            <div class="comboWrapp"></div>
+                        </div>
+                    @endif              
+                    <!-- End Combos -->
                     <div class="pro-details-add-wrap">
                         <p class="pricing">
                             @foreach ($getitem->variation as $key => $value)
@@ -249,7 +257,23 @@
 
 @include('front.theme.footer')
 <script type="text/javascript">
+$('#makeItCombo').click(function(){    
+    $('#temp-pricing').hide();
+    var total = parseFloat($("#price").val()); 
+    var html = `@foreach ($ComboGroups as $ComboGroup)<ul class="list-unstyled extra-food ComboGroups"  id=""><h3>{{$ComboGroup->name}}</h3>@foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->id}}"><p>{{$ComboItem->name}}</p></li>@endforeach</ul>@endforeach`;
 
+    if($(this).is(':checked')){
+        total += parseFloat($(this).attr('data-price')) || 0;
+        $('.comboWrapp').html(html);
+    }
+    else{
+        total -= parseFloat($(this).attr('data-price')) || 0;
+        $('.comboWrapp').html('');
+    }
+    $('p.pricing').text('{{$getdata->currency}}'+total.toFixed(2));
+
+    $('#price').val(total.toFixed(2));
+})
 
 $('input[type="checkbox"]').change(function() {
     let option_allowed = $(this).attr('data-option-allowed');
@@ -328,6 +352,7 @@ $('.addon_group.paid input').change(function() {
 $(".readers").change(function() {
     "use strict";
     $('input[type=checkbox]').prop('checked',false);
+    $('.comboWrapp').html('');
     $(".readers option:selected").each(function() {
         $('#temp-pricing').hide();
         $('#card2-oldprice').hide();
