@@ -19,7 +19,8 @@ class ComboGroupController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(),[
-            'combo_group_name' => 'required'
+            'combo_group_name' => 'required',
+            'price' => 'required'
         ]);
         $error_array = array();
         $success_output = '';
@@ -33,7 +34,8 @@ class ComboGroupController extends Controller
         else
         {
             $ComboGroup = new ComboGroup;
-            $ComboGroup->name =$request->combo_group_name;            
+            $ComboGroup->name =$request->combo_group_name; 
+            $ComboGroup->price =$request->price;            
 	        $ComboGroup->save();
 
             $success_output = 'Combo Group Added Successfully!';
@@ -54,7 +56,8 @@ class ComboGroupController extends Controller
     {
 
         $validation = Validator::make($request->all(),[
-          'combo_group_name' => 'required'
+          'combo_group_name' => 'required',
+          'price' => 'required'
         ]);
 
         $error_array = array();
@@ -73,7 +76,8 @@ class ComboGroupController extends Controller
             $ComboGroup->id = $request->id;
 
 
-            $ComboGroup->name =$request->combo_group_name;             
+            $ComboGroup->name =$request->combo_group_name;  
+            $ComboGroup->price =$request->price;             
             $ComboGroup->save();           
 
             $success_output = 'Combo Group updated Successfully!';
@@ -89,7 +93,7 @@ class ComboGroupController extends Controller
         $getComboGroups = ComboGroup::all();
         return view('theme.comboGroupTable',compact('getComboGroups'));
     }
-    
+
     public function delete(Request $request)
     {
         $ComboGroup = ComboGroup::where('id', $request->id)->delete();

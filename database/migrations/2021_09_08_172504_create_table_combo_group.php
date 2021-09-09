@@ -16,6 +16,7 @@ class CreateTableComboGroup extends Migration
         Schema::create('combo_group', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100);
+            $table->string('price', 100)->nullable();
             $table->timestamps();
         });
     }

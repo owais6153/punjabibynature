@@ -25,8 +25,12 @@
                         <span id="msg"></span>
                         @csrf
                         <div class="form-group">
-                            <label for="ingredients" class="col-form-label">Combo group</label>
-                            <input type="text" class="form-control" name="combo_group_name" id="ingredients" placeholder="Enter combo group name">
+                            <label for="combo_group_name" class="col-form-label">Combo group</label>
+                            <input type="text" class="form-control" name="combo_group_name" id="combo_group_name" placeholder="Enter combo group name">
+                        </div>   
+                        <div class="form-group">
+                            <label for="price" class="col-form-label">Price</label>
+                            <input type="text" class="form-control" name="price" id="price" placeholder="Enter combo price">
                         </div>       
                     </div>
                     <div class="modal-footer">
@@ -61,6 +65,10 @@
                                 <label for="get_combo_group_name" class="col-form-label">Combo group</label>
                                 <input type="text" class="form-control" id="get_combo_group_name" name="combo_group_name" placeholder="Enter combo group name">
                             </div>
+                        <div class="form-group">
+                            <label for="price" class="col-form-label">Price</label>
+                            <input type="text" class="form-control" name="price" id="getprice" placeholder="Enter combo price">
+                        </div>    
                             
                         </div>
                         <div class="modal-footer">
@@ -138,7 +146,7 @@ $(document).ready(function() {
                     $('#message').html(msg);
                     $("#addComboGroup").modal('hide');
                     $("#add_combo_group")[0].reset();
-                    $('.gallery').html('');
+                    
                     setTimeout(function(){
                       $('#message').html('');
                     }, 5000);
@@ -206,6 +214,7 @@ function GetData(id) {
             jQuery("#EditComboGroup").modal('show');
             $('#id').val(response.ResponseData.id);
             $('#get_combo_group_name').val(response.ResponseData.name);
+            $('#getprice').val(response.ResponseData.price);
             $('#getis_admin').val(response.ResponseData.is_admin);            
             
         },

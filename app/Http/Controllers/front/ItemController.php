@@ -49,6 +49,7 @@ class ItemController extends Controller
     }
 
     public function productdetails(Request $request) {
+        $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
         $user_id  = Session::get('id');
         $getabout = About::where('id','=','1')->first();
 
@@ -115,8 +116,9 @@ class ItemController extends Controller
         }
 
         $getdata=User::select('currency')->where('type','1')->first();
+        $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
 
-        return view('front.product-details', compact('getitem','getabout','getimages','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups'));
+        return view('front.product-details', compact('getitem','getabout','getimages','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory'));
     }
 
     public function show(Request $request)
@@ -246,10 +248,6 @@ class ItemController extends Controller
                 $data = collect($guestCartData);
                 Session::put('guest_cart', $data);
             }
-
-            echo "<pre>";
-            print_r($data);
-            echo "</pre>";
         }
         else{
             try {

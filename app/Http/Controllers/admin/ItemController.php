@@ -12,6 +12,8 @@ use App\Ingredients;
 use App\IngredientTypes;
 use App\Addons;
 use App\AddonGroups;
+use App\ComboItem;
+use App\ComboGroup;
 use App\Cart;
 use Validator;
 
@@ -48,7 +50,11 @@ class ItemController extends Controller
         foreach ($addonGroups as $key => $value) {
            $value->countAddons = $value->addons()->count();
         }
-        return view('additem', compact('getcategory','getitem','getingredients','getaddons', 'getingredientTypes', 'addonGroups'));
+        $getComboGroup = ComboGroup::all();
+        foreach ($getComboGroup as $key => $value) {
+           $value->countCombos = $value->ComboItem()->count();
+        }        
+        return view('additem', compact('getcategory','getitem','getingredients','getaddons', 'getingredientTypes', 'addonGroups', 'getComboGroup'));
     }
 
     public function edititem($id) {
@@ -69,7 +75,12 @@ class ItemController extends Controller
         foreach ($addonGroups as $key => $value) {
            $value->countAddons = $value->addons()->count();
         }
-        return view('edititem', compact('item','getitem','getcategory','getingredients','getaddons','getvariation','getitemimages', 'getingredientTypes', 'addonGroups'));
+
+        $getComboGroup = ComboGroup::all();
+        foreach ($getComboGroup as $key => $value) {
+           $value->countCombos = $value->ComboItem()->count();
+        }        
+        return view('edititem', compact('item','getitem','getcategory','getingredients','getaddons','getvariation','getitemimages', 'getingredientTypes', 'addonGroups', 'getComboGroup'));
     }
 
     public function list()
