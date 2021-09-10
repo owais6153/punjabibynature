@@ -1,6 +1,6 @@
 @include('front.theme.header')
 
-<section class="favourite">
+<section class="favourite privacy-page">
     <div class="container">
         <h2 class="sec-head">{{ trans('labels.privacy_policy') }}</h2>
         <div class="row">

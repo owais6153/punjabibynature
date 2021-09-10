@@ -503,7 +503,98 @@ footer {
 }
 .price-detail {
     padding: 20px;
-    background-color: #fff;
+    /*background-color: #fff;*/
     border-radius: 10px;
+    /*box-shadow: 0 0 22px #0002;*/
+    display: block;
+    max-height: 260px;
+    padding-top: 30px;
+    padding-left: 30px !important;
+}
+/* Style the tab */
+.addons-box .tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.addons-box .tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 12px 10px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.addons-box .tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.addons-box .tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.addons-box .tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.addons-box .w3-bar.w3-black.tab {
+    width: 100%;
+}
+
+.addons-box .tab button {
+    width: 100%;
+    float: none;
+    text-align: left;
+}
+.addons-box {
+      padding: 20px;
+    border-radius: 10px;
+    padding-top: 10px;
+    margin-top: 0px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-bottom: 10px;
+}
+
+.addons-box .tab {
+    padding: 0px;
+    border: 0px;
+    background: transparent;
+}
+
+.addons-box .tab .w3-bar-item {
+    border: solid 1px #f88f12;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.addons-box .tab .w3-bar-item:hover {
     box-shadow: 0 0 22px #0002;
+    background: transparent;
+}
+.addons-box .tab .tabcontent {
+    margin-top: -22px;
+    margin-bottom: 20px;
+    border: 0px;
+    padding-top: 23px;
+}
+
+.addons-box .tab .tabcontent h4 {
+    text-transform: capitalize;
+}
+.addons-box .tab .tabcontent ul h3 {
+    text-transform: capitalize;
+}
+.product-details-sec {
+    margin-top: 60px;
 }
