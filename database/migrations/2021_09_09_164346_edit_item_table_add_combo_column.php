@@ -14,7 +14,7 @@ class EditItemTableAddComboColumn extends Migration
     public function up()
     {
         Schema::table('item', function (Blueprint $table) {
-            $table->integer('is_default_combo', 11)->default(0);
+            $table->boolean('is_default_combo')->default(0);
             $table->string('combo_group_id', 255)->nullable();
         });
     }

@@ -369,6 +369,10 @@ footer {
 .cart-dropdown.show .item-cart  .delete-item {
     justify-content: flex-end !important;
 }
+.nav-item.search ul.list-group {
+    max-height: 262px;
+    height: unset !important;
+}
 /*---------about page css---------*/
 .abt-sec-third .home-fourth-sec-img p {
     padding-top: 46px;
@@ -388,4 +392,118 @@ footer {
 }
 .abt-page-fifth .home-fourth-sec-img {
     padding-right: 81px;
+}
+/*------contact page-------*/
+.contact-page {
+    margin-top: 120px;
+    padding-top: 50px;
+}
+.address-box .contact-box {
+    border: 0px;
+    margin: 12px auto;
+}
+
+.address-box {
+    border: 1px solid var(--primary-color-hover);
+    width: 100%;
+    max-width: 520px;
+    border-radius: 10px;
+     padding-left: 25px;
+    padding-bottom: 25px;
+    padding-top: 35px;
+    margin-bottom: 25px;
+}
+.left-details-contact {
+    text-align: left;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+}
+
+.left-details-contact h2 {
+    text-align: left;
+    text-transform: capitalize;
+    font-size: 34px;
+    position: relative;
+}
+.left-details-contact h2:after {
+    content: '';
+    height: 2px;
+    width: 50px;
+    background-color: #faa817;
+    display: block;
+}
+
+.left-details-contact .contact-box {
+    margin: 20px;
+    margin-left: 0px;
+    max-width: 500px;
+}
+.address-box ul li {
+    font-size: 17px;
+    font-weight: 400;
+}
+.address-box ul li {
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 1);
+}
+
+.address-box h4 {
+    font-weight: bold;
+}
+
+.address-box ul {
+    padding-left: 70px;
+}
+
+.address-box i {
+    background-color: var(--primary-color-hover);
+    color: #fff;
+    min-width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+/*------product details page-------*/
+.pro-details-display .selectIngredients {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.pro-details-display .extra-food.addon_group {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.pro-details-display .extra-food.single-addon {
+    max-width: 100%;
+    flex: 0 0 100%;
+}
+.price-detail .pro-details-add-wrap, .price-detail .pro-details-add-wrap p, .price-detail .pro-details-add-wrap h3 {
+    text-align: left;
+}
+.price-detail .pro-details-add-wrap h3#card2-oldprice {
+    text-align: left;
+}
+
+.price-detail .pro-details-add-wrap .btn {
+    text-align: left;
+    margin: 0px;
+}
+.text-area-detail {
+    margin-top: 40px;
+}
+
+.text-area-detail h4 {
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+.price-detail h3#card2-oldprice {
+    color: #faa817;
+}
+.price-detail {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 22px #0002;
 }

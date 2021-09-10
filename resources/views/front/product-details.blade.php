@@ -30,6 +30,9 @@
                     @else
                         <a class="i" href="{{URL::to('/signin')}}"><i class="fal fa-heart i"></i></a>
                     @endif
+
+
+                    
                 </div>
 
                 <small>{{$getitem['category']->category_name}}</small>
@@ -51,12 +54,7 @@
                     </select>
 
                 @endif
-
-             
-     
-
-
-                <div class="extra-food-wrap">
+                <div class="col-md-8 extra-food-wrap">
                 <!-- Ingredients -->
                     @if (isset($getingredientsByTypes[0]->name)) 
                         <!-- <div id="ingredientsOptions" class="ingredientsOptions">  -->
@@ -148,7 +146,10 @@
                         </ul>
                     @endif
                     <!-- End Paid Single Addon -->
-                    <div class="pro-details-add-wrap">
+                   
+                </div>
+                <div class="col-md-3 price-detail">
+                <div class="pro-details-add-wrap">
                         <p class="pricing">
                             @foreach ($getitem->variation as $key => $value)
                                 <h3 id="temp-pricing" class="product-price">{{$getdata->currency}}{{number_format($value->product_price,2)}}</h3>
@@ -181,17 +182,18 @@
                         @endif
                     </div>
                 </div>
+                
+            </div>
+            <div class="col-12">
+                <h4 class="sec-head">{{ trans('labels.description') }}</h4>
+                <p>{{$getitem->item_description}}</p> 
+            </div>
+            <div class="col-md-12 text-area-detail">
+                <h4>Add Notes</h4>
                 <textarea id="item_notes" name="item_notes" placeholder="Write Notes..."></textarea>
             </div>
-
             
-            <div class="col-12">
-                
-                <h4 class="sec-head">{{ trans('labels.description') }}</h4>
-                <p>{{$getitem->item_description}}</p>
-
-               
-            </div>
+            
 
             <div class="col-12">
                 <h2 class="sec-head text-center">{{ trans('labels.related_food') }}</h2>

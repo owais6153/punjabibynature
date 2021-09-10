@@ -46,6 +46,13 @@ class HomeController extends Controller
         
         return view('front.home', compact('getslider','getcategory','getabout','getitem','getreview','getbanner','getdata'));
     }
+     public function contactus()
+    {
+        $getdata=User::select('currency')->where('type','1')->first();
+        $getabout = About::where('id','=','1')->first();
+        $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
+        return view('front.contactus',compact('getabout','getdata','getcategory'));
+    }
 
     public function contact(Request $request)
     {
@@ -73,7 +80,9 @@ class HomeController extends Controller
         } else {
             return response()->json(['status'=>2,'message'=>trans('messages.wrong')],200);
         }
+
     }
+
 
     public function checkpincode(Request $request)
     {
