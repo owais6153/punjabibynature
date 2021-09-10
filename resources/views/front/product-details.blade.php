@@ -174,8 +174,16 @@
                 <button class="w3-bar-item w3-button" onclick="openCity('combos')">Combo</button>
                 <div id="cobmos" class="addon tabcontent" style="display:none">
                     <div id="comboGroup" style="flex: 0 0 100%; max-width: 100%;">
-                        <p>Make it Combo : {{$getdata->currency}}{{$totalComboPrice}}<input type="checkbox" id="makeItCombo" class="Checkbox" data-price="{{$totalComboPrice}}"></p>
-                        <div class="comboWrapp"></div>
+                      <p>{{($getitem->is_default_combo == 0) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : 'Combo Option' }}
+                                @if ($getitem->is_default_combo == 0)
+                                    <input type="checkbox" id="makeItCombo" class="Checkbox" data-price="{{$totalComboPrice}}">
+                                @endif
+                            </p>
+                            <div class="comboWrapp">
+                                @if ($getitem->is_default_combo == 1)
+                                    @foreach ($ComboGroups as $ComboGroup)<ul class="list-unstyled extra-food ComboGroups"  id=""><h3>{{$ComboGroup->name}}</h3>@foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->id}}"><p>{{$ComboItem->name}}</p></li>@endforeach</ul>@endforeach
+                                @endif
+                            </div>
                     </div>
                 </div>
                 @endif
@@ -288,7 +296,7 @@
 
 @include('front.theme.footer')
 <script type="text/javascript">
-@if (isset($ComboGroups[0]->name)) 
+@if (isset($ComboGroups[0]->name) && $getitem->is_default_combo == 0) 
 $('#makeItCombo').click(function(){    
     $('#temp-pricing').hide();
     var total = parseFloat($("#price").val()); 

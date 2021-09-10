@@ -308,15 +308,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4 pt-3">
-                                        <label for="make_combo">Make this product as combo product.</label><br>
-                                        <input type="checkbox" {{($item->is_default_combo == 1) ? 'checked' : '' }} disabled="disabled" id="make_combo" name="make_combo" value="1">
-                                    </div>
-                                </div>
 
                                 <?php
                                     $combo_groups = explode(',', $item->combo_group_id);
                                 ?>
+                                    <div class="col-sm-4 pt-3">
+                                        <label for="make_combo">Make this product as combo product.</label><br>
+                                        <input type="checkbox" {{($item->is_default_combo == 1) ? 'checked' : '' }} 
+                                        {{(empty($combo_groups)) ? 'disabled="disabled"' : '' }} 
+                                         id="make_combo" name="make_combo" value="1">
+                                    </div>
+                                </div>
+
 
                                 @foreach ($combo_groups as $combo_group_id)
                                 <div class="row combo_row mb-4 removeclasscombo">
