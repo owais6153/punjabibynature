@@ -120,7 +120,7 @@ class ItemController extends Controller
         $ComboGroupIDs = explode(',', $getitem->combo_group_id);
         foreach ($ComboGroupIDs as $ComboGroupIDindex => $ComboGroupID) {
             $ComboGroups[] = ComboGroup::with('ComboItem')->where('combo_group.id', $ComboGroupID)->first();
-            $totalComboPrice += $ComboGroups[$ComboGroupIDindex]->price;
+            $totalComboPrice += ( isset($ComboGroups[$ComboGroupIDindex]->pric) ) ? $ComboGroups[$ComboGroupIDindex]->price : 0;
         }
         
 

@@ -54,6 +54,7 @@
                     </select>
 
                 @endif
+                <div class="row">
                 <div class="col-md-8 extra-food-wrap">
                 <!-- Ingredients -->
                     @if (isset($getingredientsByTypes[0]->name)) 
@@ -192,7 +193,7 @@
                         @endif
                     </div>
                 </div>
-                
+                </div>
             </div>
             <div class="col-12">
                 <h4 class="sec-head">{{ trans('labels.description') }}</h4>
@@ -261,6 +262,7 @@
 
 @include('front.theme.footer')
 <script type="text/javascript">
+@if (isset($ComboGroups[0]->name)) 
 $('#makeItCombo').click(function(){    
     $('#temp-pricing').hide();
     var total = parseFloat($("#price").val()); 
@@ -278,7 +280,7 @@ $('#makeItCombo').click(function(){
 
     $('#price').val(total.toFixed(2));
 })
-
+@endif
 $('input[type="checkbox"]').change(function() {
     let option_allowed = $(this).attr('data-option-allowed');
     if (option_allowed != 'all') {
