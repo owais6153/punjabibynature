@@ -146,22 +146,20 @@
                         </ul>
                     @endif
                     <!-- End Paid Single Addon -->
-<<<<<<< HEAD
-                   
-                </div>
-                <div class="col-md-3 price-detail">
-                <div class="pro-details-add-wrap">
-=======
-                    <!-- Combos -->
+
+                                       <!-- Combos -->
                     @if (isset($ComboGroups[0]->name)) 
                         <div id="comboGroup" style="flex: 0 0 100%; max-width: 100%;">
                             <p>Make it Combo : {{$getdata->currency}}{{$totalComboPrice}}<input type="checkbox" id="makeItCombo" class="Checkbox" data-price="{{$totalComboPrice}}"></p>
                             <div class="comboWrapp"></div>
                         </div>
-                    @endif              
-                    <!-- End Combos -->
-                    <div class="pro-details-add-wrap">
->>>>>>> 2fc5607db951b4647bcbce35660a91bb2789cb7e
+                    @endif   
+                </div>
+                <div class="col-md-3 price-detail">
+                <div class="pro-details-add-wrap">
+
+           
+
                         <p class="pricing">
                             @foreach ($getitem->variation as $key => $value)
                                 <h3 id="temp-pricing" class="product-price">{{$getdata->currency}}{{number_format($value->product_price,2)}}</h3>
