@@ -16,6 +16,8 @@ use App\About;
 use App\User;
 use App\Addons;
 use App\AddonGroups;
+use App\ComboItem;
+use App\ComboGroup;
 use Session;
 use URL;
 
@@ -114,11 +116,19 @@ class ItemController extends Controller
 
             }
         }
+        $totalComboPrice = 0;
+        $ComboGroupIDs = explode(',', $getitem->combo_group_id);
+        foreach ($ComboGroupIDs as $ComboGroupIDindex => $ComboGroupID) {
+            $ComboGroups[] = ComboGroup::with('ComboItem')->where('combo_group.id', $ComboGroupID)->first();
+            $totalComboPrice += $ComboGroups[$ComboGroupIDindex]->price;
+        }
+        
 
+        
         $getdata=User::select('currency')->where('type','1')->first();
         $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
 
-        return view('front.product-details', compact('getitem','getabout','getimages','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory'));
+        return view('front.product-details', compact('getitem','getabout','getimages','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory', 'ComboGroups', 'totalComboPrice'));
     }
 
     public function show(Request $request)
