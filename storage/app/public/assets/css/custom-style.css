@@ -598,3 +598,72 @@ footer {
 .product-details-sec {
     margin-top: 60px;
 }
+.combo-div p {
+    position: relative;
+    padding-left: 25px;
+}
+
+.combo-div p .checkbox-detail {
+    display: inline-block;
+    width: unset;
+}
+.combo-div p .checkbox-detail {
+    height: 0;
+    width: 0;
+}
+.combo-div p .checkbox-detail:before {
+    content: '';
+    height: 20px;
+    width: 20px;
+    border: 1px solid #fd3f32;
+    border-radius: 4px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.combo-div p .checkbox-detail:after {
+    content: '';
+    height: 20px;
+    width: 20px;
+    border: 1px solid #fd3f32;
+    border-radius: 4px;
+    background: #f00;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.combo-div p .checkbox-detail:checked:after {
+    opacity: 1;
+    visibility: visible;
+    border: 5px solid #fff;
+    box-shadow: 0px 0px 5px 0px rgb(253 63 50);
+}
+
+.combo-div p .checkbox-detail:checked:before {
+    opacity: 0;
+    visibility: hidden;
+}
+.addons-box .nav-tabs li {
+    padding: 10px;
+}
+
+.addons-box .nav-tabs {
+    margin-bottom: 20px;
+}
+/*--------privacy page-------*/
+.privacy-page {
+    margin-top: 40px !important;
+}
+.privacy-page p {
+    font-weight: 400;
+}
+/*------terms page--------*/
+.terms-page {
+    margin-top: 40px !important;
+}
+.terms-page p {
+    font-weight: 400;
+}

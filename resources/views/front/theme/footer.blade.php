@@ -182,10 +182,10 @@ aria-hidden="true">
     <div class="abt-f">
       <h3>About</h3>
       <ul>
-        <li><a href="#">About Us</a></li>
+        <li><a href="{{URL::to('/aboutus')}}">About Us</a></li>
         <li><a href="{{URL::to('/privacy')}}" style="color: #fff;"> {{ trans('labels.privacy_policy') }} </a></li>
         <li><a href="#">Delivery</a></li>
-        <li><a href="#">Terms & Conditions</a></li>
+        <li><a href="{{URL::to('/terms')}}">Terms & Conditions</a></li>
       </ul>
     </div>
     <div class="abt-f">
@@ -201,7 +201,7 @@ aria-hidden="true">
             
 
         
-        <li><a href="#">Contact</a></li>
+        <li><a href="{{URL::to('/contactus')}}">Contact</a></li>
         <li><a href="#">Site Map</a></li>
          
       </ul>
