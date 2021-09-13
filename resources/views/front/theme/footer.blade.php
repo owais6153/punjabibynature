@@ -286,11 +286,37 @@ aria-hidden="true">
 <!-- View order btn -->
 
 
+<div class="modal fade add_to_cart_modal" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add to Cart</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+            <div class="spinner-border text-danger" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal">Close</button>
+        <button type="button" disabled="" class="btn ">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <!-- bootstrap js -->
-<script src="{!! asset('storage/app/public/front/js/bootstrap.bundle.js') !!}"></script>
+<!-- <script src="{!! asset('storage/app/public/front/js/bootstrap.bundle.js') !!}"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
 <!-- owl.carousel js -->
 <script src="{!! asset('storage/app/public/front/js/owl.carousel.min.js') !!}"></script>
@@ -306,6 +332,28 @@ aria-hidden="true">
 <script src="{!! asset('storage/app/public/assets/plugins/sweetalert/js/sweetalert.min.js') !!}"></script>
 
 <script type="text/javascript">
+
+
+function openCartModal(item_id) {        
+    $('#addToCartModal').modal('show');
+    var CSRF_TOKEN = $('input[name="_token"]').val();
+
+    $.ajax({
+      headers: {
+          'X-CSRF-Token': CSRF_TOKEN 
+      },
+      url:"{{ url('/product/getOptions') }}",
+      method:'POST',
+      data: {id: item_id},
+      dataType: 'json',
+      success:function(data){
+        if (data.status == 1) {
+            $('#addToCartModal .modal-body').html(data.html);            
+            $('#addToCartModal .modal-header h5').text(data.title);
+        }          
+      }
+    });  
+}
 
   function myFunction() {
     "use strict";

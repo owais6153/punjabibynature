@@ -53,6 +53,7 @@ Route::group(['namespace' => 'front'], function () {
 	Route::post('/product/addtocart', 'ItemController@addtocart');
 	Route::get("/search","ItemController@search");
 	Route::post('product/searchitem', 'ItemController@searchitem');
+	Route::post('/product/getOptions', 'ItemController@getOptions');
 
 	Route::get('/cart', 'CartController@index');
 	Route::post('/cart/qtyupdate','CartController@qtyupdate');

@@ -334,4 +334,87 @@ class ItemController extends Controller
         }
         
     }
+    public function getOptions(Request $request){
+                $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
+        $user_id  = Session::get('id');
+        $getabout = About::where('id','=','1')->first();
+
+        $getitem = Item::with('category')->select('item.*',DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
+        ->leftJoin('favorite', function($query) use($user_id) {
+            $query->on('favorite.item_id','=','item.id')
+            ->where('favorite.user_id', '=', $user_id);
+        })->where('item.id','=',$request->id)->where('item.item_status','1')->where('item.is_deleted','2')->first();
+
+        if(empty($getitem)){ 
+            abort(404); 
+        } else {
+
+            $arr = explode(',', $getitem->addons_id);
+            foreach ($arr as $value) {
+                $freeaddons['value'] = Addons::whereIn('id',$arr)
+                ->where('is_available','=','1')
+                ->where('is_deleted','=','2')
+                ->where('price','=','0')
+                ->get();
+            };
+            foreach ($arr as $value) {
+                $paidaddons['value'] = Addons::whereIn('id',$arr)
+                ->where('is_available','=','1')
+                ->where('is_deleted','=','2')
+                ->where('price','!=',"0")
+                ->get();
+            };
+
+            $irr = explode(',', $getitem->ingredients_id);
+            $irrAvailable = explode(',', $getitem->available_ing_option);
+            $getingredientsByTypes = array();
+            foreach ($irr as $key => $value) {
+                $available_ing_option = ($irrAvailable[$key] == 'allow_all') ? "'all'" : intval($irrAvailable[$key]);
+                $getingredientsByTypes[] =  IngredientTypes::with(['ingredients'])->select('ingredient_types.*', \DB::raw($available_ing_option . ' AS available_ing_option'))->where('ingredient_types.id', $value)->first();
+               
+                // print_r($getingredientsByTypes[0]->ingredients[1]->ingredients);
+
+            }
+
+            $getimages = ItemImages::select(\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', image) AS image"))->where('item_id','=',$request->id)->get();
+
+            $getcategory = Item::where('id','=',$request->id)->first();
+
+            $user_id  = Session::get('id');
+            $relatedproduct = Item::with(['category','itemimage','variation'])->select('item.cat_id','item.id','item.item_name','item.item_description',DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
+            ->leftJoin('favorite', function($query) use($user_id) {
+                $query->on('favorite.item_id','=','item.id')
+                ->where('favorite.user_id', '=', $user_id);
+            })
+            ->where('item.item_status','1')->where('item.is_deleted','2')
+            ->where('cat_id','=',$getcategory->cat_id)->where('item.id','!=',$request->id)->orderBy('id', 'DESC')->get();
+
+
+            $addon_groups_id = explode(',', $getitem->addongroups_id);
+            $available_addons_option = explode(',', $getitem->available_addons_option);
+            foreach ($addon_groups_id as $key => $value) {
+                $available_add = ($available_addons_option[$key] == 'allow_all') ? "'all'" : intval($available_addons_option[$key]);
+                $getAddonsByGroups[] =  AddonGroups::with(['addons'])->select('addon_groups.*', \DB::raw($available_add . ' AS available_add_option'))->where('addon_groups.id', $value)->first();
+               
+                // print_r($getingredientsByTypes[0]->ingredients[1]->ingredients);
+
+            }
+        }
+        $totalComboPrice = 0;
+        $ComboGroupIDs = explode(',', $getitem->combo_group_id);
+        foreach ($ComboGroupIDs as $ComboGroupIDindex => $ComboGroupID) {
+            $ComboGroups[] = ComboGroup::with('ComboItem')->where('combo_group.id', $ComboGroupID)->first();
+            $totalComboPrice += ( isset($ComboGroups[$ComboGroupIDindex]->pric) ) ? $ComboGroups[$ComboGroupIDindex]->price : 0;
+        }
+        
+
+        
+        $getdata=User::select('currency')->where('type','1')->first();
+        $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
+
+
+
+        $output = view('theme.addToCartModalBody', compact('getitem','getabout','getimages','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory', 'ComboGroups', 'totalComboPrice'))->render();
+        return response()->json(['status'=>1,'html'=> $output, 'title' => $getitem->item_name],200);
+    }
 }

@@ -15,6 +15,7 @@
                 </div>
             </div>
             <div class="cat-product">
+                @csrf
                 <div class="cart-pro-head">
                     <h2 class="sec-head">{{ trans('labels.our_products') }}</h2>
                     <div class="btn-wrap" data-toggle="buttons">
@@ -68,17 +69,18 @@
                             </div>
                              @if (Session::get('id'))
                             @if ($item->item_status == '1')
-                                <button class="btn" onclick="AddtoCart('{{$item->id}}','{{Session::get('id')}}')">{{ trans('labels.add_to_cart') }}</button>
+                                <button class="btn"  onclick="openCartModal('{{$item->id}}')" >{{ trans('labels.add_to_cart') }}</button>
+
                             @else 
                                 <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>
                             @endif
                         @else
                             @if ($item->item_status == '1')
-                                <button class="btn" onclick="AddtoCart('{{$item->id}}','guest')">{{ trans('labels.add_to_cart') }}</button>
+                                <button class="btn" onclick="openCartModal('{{$item->id}}')">{{ trans('labels.add_to_cart') }}</button>
                             @else 
                                 <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>
                             @endif
-                        @endif
+                        @endif                        
                         </div>
                     </div>
                     @endforeach
@@ -148,5 +150,7 @@
         </div>
     </div>
 </section>
+
+
 
 @include('front.theme.footer')
