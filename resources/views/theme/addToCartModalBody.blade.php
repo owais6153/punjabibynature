@@ -6,7 +6,7 @@
                     @endforeach
                 <p class="pricing">
                             @foreach ($getitem->variation as $key => $value)
-                                <h3 id="temp-pricing" class="product-price">{{$getdata->currency}}{{number_format($value->product_price,2)}}</h3>
+                                <h3 id="temp-pricing" class="temp-pricing product-price">{{$getdata->currency}}{{number_format($value->product_price,2)}}</h3>
                                 @if ($value->sale_price > 0)
                                     <h3 id="card2-oldprice">{{$getdata->currency}}{{number_format($value->sale_price,2)}}</h3>
                                 @endif
@@ -187,7 +187,7 @@
                      <!-- -----combos tab start---- --> 
                         @if (isset($ComboGroups[0]->name)) 
                             <div id="comboGroup" class="combo-div" style="flex: 0 0 100%; max-width: 100%;">
-                            <p>
+                            <p class="{{($getitem->is_default_combo == 0) ? 'not_required' : 'required' }}">
                                 @if ($getitem->is_default_combo == 0)
                                     <input type="checkbox" id="makeItCombo" class="Checkbox checkbox-detail" data-price="{{$totalComboPrice}}">
                                 @endif
@@ -208,7 +208,7 @@
                 <script type="text/javascript">
                     @if (isset($ComboGroups[0]->name) && $getitem->is_default_combo == 0) 
 $('#makeItCombo').click(function(){    
-    $('#temp-pricing').hide();
+    $('.temp-pricing').hide();
     var total = parseFloat($("#price").val()); 
     var html = `@foreach ($ComboGroups as $ComboGroup)<ul class="list-unstyled extra-food ComboGroups"  id=""><h3>{{$ComboGroup->name}}</h3>@foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->id}}"><p>{{$ComboItem->name}}</p></li>@endforeach</ul>@endforeach`;
 
@@ -245,7 +245,7 @@ $('input[type="checkbox"]').change(function() {
 
 $('.single-addon input[type="checkbox"]').change(function() {
     "use strict";    
-    $('#temp-pricing').hide();
+    $('.temp-pricing').hide();
     var total = parseFloat($("#price").val()); 
 
     if($(this).is(':checked')){
@@ -269,7 +269,7 @@ $('.single-addon input[type="checkbox"]').change(function() {
 
 $('.addon_group.paid input').change(function() {
     "use strict";
-    $('#temp-pricing').hide();
+    $('.temp-pricing').hide();
     var total = parseFloat($("#price").val()); 
     var attrName = $(this).attr('name');
     if($(this).attr('type') == 'checkbox'){
@@ -304,7 +304,7 @@ $(".readers").change(function() {
     $('input[type=checkbox]').prop('checked',false);
     $('.comboWrapp').html('');
     $(".readers option:selected").each(function() {
-        $('#temp-pricing').hide();
+        $('.temp-pricing').hide();
         $('#card2-oldprice').hide();
         var ttl = parseFloat($(this).attr('data-price'));
         var ttlsaleprice = parseFloat($(this).attr('data-saleprice').replace(/"|\,|\./g, ''));
@@ -322,7 +322,7 @@ $(document).ready(function(){
     $('.readers').prop('selectedIndex',0);
 });
 
-function openCity(cityName) {queueMicrotask
+function openCity(cityName) {
   var i;
   var x = document.getElementsByClassName("addon");
   for (i = 0; i < x.length; i++) {

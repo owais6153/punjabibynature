@@ -498,6 +498,24 @@ function openCartModal(item_id) {
         }
     })
   };
+
+
+
+
+
+  function AddtoCart(id, user_id){
+    
+  }
+
+
+
+
+
+
+
+
+
+
   function AddtoCart(id,user_id) {
     "use strict";
     var price = $('#price').val();
@@ -616,6 +634,17 @@ function openCartModal(item_id) {
         }
     })
   };
+
+
+
+
+
+
+
+
+
+
+
   function Unfavorite(id,user_id) {
     "use strict";
     swal({
