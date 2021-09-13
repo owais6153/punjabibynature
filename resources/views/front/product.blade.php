@@ -66,6 +66,19 @@
                                     <p>{{ Str::limit($item->item_description, 60) }}</p>
                                 </div>
                             </div>
+                             @if (Session::get('id'))
+                            @if ($item->item_status == '1')
+                                <button class="btn" onclick="AddtoCart('{{$item->id}}','{{Session::get('id')}}')">{{ trans('labels.add_to_cart') }}</button>
+                            @else 
+                                <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>
+                            @endif
+                        @else
+                            @if ($item->item_status == '1')
+                                <button class="btn" onclick="AddtoCart('{{$item->id}}','guest')">{{ trans('labels.add_to_cart') }}</button>
+                            @else 
+                                <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>
+                            @endif
+                        @endif
                         </div>
                     </div>
                     @endforeach

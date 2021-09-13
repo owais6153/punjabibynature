@@ -33,7 +33,7 @@ class ItemController extends Controller
         $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
         $getabout = About::where('id','=','1')->first();
         $user_id  = Session::get('id');
-        $getitem = Item::with(['category','itemimage','variation'])->select('item.cat_id','item.id','item.item_name','item.item_description',DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
+        $getitem = Item::with(['category','itemimage','variation'])->select('item.cat_id','item.id','item.item_name','item.item_description','item.item_status' ,DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
         ->leftJoin('favorite', function($query) use($user_id) {
             $query->on('favorite.item_id','=','item.id')
             ->where('favorite.user_id', '=', $user_id);
@@ -136,7 +136,7 @@ class ItemController extends Controller
         $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
         $getabout = About::where('id','=','1')->first();
         $user_id  = Session::get('id');
-        $getitem = Item::with(['category','itemimage','variation'])->select('item.cat_id','item.id','item.item_name','item.item_description',DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
+        $getitem = Item::with(['category','itemimage','variation'])->select('item.cat_id','item.id','item.item_name','item.item_description', 'item.item_status',DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
         ->leftJoin('favorite', function($query) use($user_id) {
             $query->on('favorite.item_id','=','item.id')
             ->where('favorite.user_id', '=', $user_id);
