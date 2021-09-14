@@ -794,3 +794,6 @@ footer {
     top: 21px;
     font-weight: bold;
 }
+.add_to_cart_modal .modal-body .combo-div:after {
+    display: none;
+}

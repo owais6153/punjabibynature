@@ -76,6 +76,9 @@
       @if (isset($getAddonsByGroups[0]->name))
       <li><a data-toggle="tab" href="#paid">Paid Add-on</a></li>
       @endif
+      @if (isset($ComboGroups[0]->name)) 
+      <li class="combotab" style="display: none;"><a data-toggle="tab" href="#combocontent" >Combo</a></li>
+      @endif
     </ul>
 
     <div class="col-md-12 tab-content main-tab-content">
@@ -227,18 +230,18 @@
             </div>
                     <!-- End Paid Single Addon -->
         <!-- -----free single addon end---- -->
-       
-    </div>
-                     <!-- -----combos tab start---- --> 
-                        @if (isset($ComboGroups[0]->name)) 
-                            <div id="comboGroup" class="combo-div" style="flex: 0 0 100%; max-width: 100%;">
+         <!-- -----combos tab start---- --> 
+            @if (isset($ComboGroups[0]->name)) 
+
+               
+                            <!-- <div id="comboGroup" class="combo-div" style="flex: 0 0 100%; max-width: 100%;">
                             <p class="{{($getitem->is_default_combo == 0) ? 'not_required' : 'required_combo' }}">
                                 @if ($getitem->is_default_combo == 0)
                                     <input type="checkbox" id="makeItCombo" class="Checkbox checkbox-detail" data-price="{{$totalComboPrice}}">
                                 @endif
                                 {{($getitem->is_default_combo == 0) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : 'Combo Option' }}         
-                            </p>
-                            <div class="comboWrapp">
+                            </p> -->
+                            <div id="combocontent" class="comboWrapp tab-pane fade ">
                                 @if ($getitem->is_default_combo == 1)
                                     @foreach ($ComboGroups as $ComboGroup)<ul class="list-unstyled extra-food ComboGroups"  id=""><h3>{{$ComboGroup->name}}</h3>@foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->id}}"><p>{{$ComboItem->name}}</p></li>@endforeach</ul>@endforeach
                                 @endif
@@ -247,6 +250,17 @@
                         
                         @endif
                     <!-- -----combos tab end---- -->
+       
+    </div>
+                    
+                </div>
+                 <div id="comboGroup" class="w3-bar-item w3-button addons-tabs-cart combo-div" style="flex: 0 0 100%; max-width: 100%;">
+                        <p class="{{($getitem->is_default_combo == 0) ? 'not_required' : 'required_combo' }}">
+                                @if ($getitem->is_default_combo == 0)
+                                    <input type="checkbox" id="makeItCombo" class="Checkbox checkbox-detail" data-price="{{$totalComboPrice}}">
+                                @endif
+                                {{($getitem->is_default_combo == 0) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : 'Combo Option' }}         
+                        </p>
                 </div>
                 <textarea id="item_notes" name="item_notes" placeholder="Write Notes..."></textarea>
 
@@ -260,10 +274,13 @@ $('#makeItCombo').click(function(){
     if($(this).is(':checked')){
         total += parseFloat($(this).attr('data-price')) || 0;
         $('.comboWrapp').html(html);
+        $('.combotab').fadeIn();
     }
     else{
         total -= parseFloat($(this).attr('data-price')) || 0;
         $('.comboWrapp').html('');
+        $('.combotab').fadeOut();
+        $('ul.col-md-12.nav.nav-tabs li:first-child() a').click();
     }
     $('p.pricing').text('{{$getdata->currency}}'+total.toFixed(2));
 
