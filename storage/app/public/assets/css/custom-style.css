@@ -598,7 +598,7 @@ footer {
 .product-details-sec {
     margin-top: 60px;
 }
-.combo-div p:not(.required) {
+.combo-div p:not(.required_combo) {
     position: relative;
     padding-left: 25px;
 }
@@ -652,6 +652,13 @@ footer {
     color: #fff;
     margin: 0 5px;
     opacity: .5;
+    padding: 10px;
+    background: #fd3f32;
+    color: #fff;
+    margin: 0 5px;
+    border-radius: 6px;
+    background-color: var(--primary-color-hover);
+    box-shadow: 0 0 4px var(--primary-color-hover);
 }
 .addons-box .nav-tabs li a.active {
     opacity: 1;
@@ -706,4 +713,84 @@ footer {
 }
 .add_to_cart_modal .modal-content{
     border-radius: 10px;
+}
+/*.add_to_cart_modal .modal-dialog {
+    max-width: 730px !important;
+}*/
+.add_to_cart_modal .modal-body {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.add_to_cart_modal .modal-body h3#temp-pricing {
+    text-align: right;
+}
+
+.add_to_cart_modal .modal-body .mt-3 {
+    text-align: right;
+}
+
+.add_to_cart_modal .modal-body textarea#item_notes {
+    border: solid 1px #f88f12;
+    width: 97%;
+    margin-left: 8px;
+}
+.add_to_cart_modal .modal-body  .title-price {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.add_to_cart_modal .modal-body  .pricing {
+    text-align: right;
+    font-size: 1.75rem;
+    color: #000;
+    font-weight: 500;
+    margin-bottom: 0px;
+}
+.add_to_cart_modal .modal-body .addons-tabs-cart {
+    padding-top: 12px;
+    padding-bottom: 7px;
+    padding-left: 16px;
+    padding-right: 16px;
+    position:relative;
+}
+
+.add_to_cart_modal .modal-body .addons-tabs-cart h3 {
+    text-transform: capitalize;
+    font-size: 20px;
+    margin-bottom: 0px;
+}
+.add_to_cart_modal .modal-body .addons-tabs-cart:hover {
+    cursor: pointer;
+}
+.add_to_cart_modal .modal-body .title-price .col-md-9 p {
+    line-height: 1.2;
+}
+
+.add_to_cart_modal .modal-body .title-price .col-md-6 select#variation {
+    border: solid 1px #f88f12;
+    border-radius: 6px;
+}
+
+.add_to_cart_modal .modal-body .title-price .col-md-6 label {
+    margin: 0px 0px 5px;
+    text-transform: capitalize;
+    color: #000;
+    font-weight: 400;
+}
+
+.add_to_cart_modal .modal-body .title-price .col-md-6 .quantity {
+    border-radius: 6px;
+    border: solid 1px #f88f12;
+}
+.add_to_cart_modal .modal-body .addons-tabs-cart:after {
+    content: '\f078';
+    display: block;
+    font-size: 16px;
+    color: #f88f12;
+    font-family: 'Font Awesome 5 Pro';
+    position: absolute;
+    right: 12px;
+    top: 21px;
+    font-weight: bold;
 }
