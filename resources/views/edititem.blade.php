@@ -323,7 +323,7 @@
 
                                 @foreach ($combo_groups as $combo_group_id)
                                 <div class="row combo_row mb-4 removeclasscombo">
-                                    <div class="col-md-4"><label>Combo Group</label><select class="form-control" name="combo_group[]" required><option value="">Select Combo Group</option><?php foreach ($getComboGroup as $comboGroup) { ?> <option  {{ ($combo_group_id == $comboGroup->id) ? 'selected' : '' }} value="{{$comboGroup->id}}">{{$comboGroup->name}} (Items: {{$comboGroup->countCombos}})</option> <?php } ?></select></div><div class="col-md-1"><button class="btn btn-danger mt-4" type="button" onclick="remove_combo_row('+comboRoom+');"> - </button></div>         
+                                    <div class="col-md-4"><label>Combo Group</label><select class="form-control" name="combo_group[]" required><option value="">Select Combo Group</option><?php foreach ($getComboGroup as $comboGroup) { ?> <option  {{ ($combo_group_id == $comboGroup->id) ? 'selected' : '' }} value="{{$comboGroup->id}}">{{$comboGroup->name}} (Items: {{$comboGroup->countCombos}})</option> <?php } ?></select></div><div class="col-md-1"><button class="btn btn-danger mt-4" type="button" onclick="$(this).parents('.combo_row').remove();"> - </button></div>         
                                 </div>
                                 @endforeach                   
                             </div>

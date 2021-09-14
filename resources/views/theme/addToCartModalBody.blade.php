@@ -187,7 +187,7 @@
                      <!-- -----combos tab start---- --> 
                         @if (isset($ComboGroups[0]->name)) 
                             <div id="comboGroup" class="combo-div" style="flex: 0 0 100%; max-width: 100%;">
-                            <p class="{{($getitem->is_default_combo == 0) ? 'not_required' : 'required' }}">
+                            <p class="{{($getitem->is_default_combo == 0) ? 'not_required' : 'required_combo' }}">
                                 @if ($getitem->is_default_combo == 0)
                                     <input type="checkbox" id="makeItCombo" class="Checkbox checkbox-detail" data-price="{{$totalComboPrice}}">
                                 @endif

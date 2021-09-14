@@ -304,7 +304,7 @@ aria-hidden="true">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn" data-dismiss="modal">Close</button>
-        <button type="button" disabled="" class="btn ">Add to Cart</button>
+        <button type="button" disabled="" class="btn add_to_cart_btn">Add to Cart</button>
       </div>
     </div>
   </div>
@@ -500,12 +500,33 @@ function openCartModal(item_id) {
   };
 
 
+var comboFlag = false;
+
+$(document).on('change', 'div#comboGroup input', function(){
+    if ($('.required_combo').length > 0 ){
+      $('ul.ComboGroups').each(function (index, item){
+        if($(item).find('.comboItem:checked').length > 0){
+          comboFlag = true;
+        }
+        else{
+          comboFlag = false;
+          return false;
+        }
+      })
+    }
+    else{
+      comboFlag = true;
+    }
+
+    if (comboFlag == true) {
+      $('#addToCartModal .add_to_cart_btn').removeAttr('disabled');
+    }
 
 
+    console.log('workinf');
 
-  function AddtoCart(id, user_id){
-    
-  }
+});
+
 
 
 

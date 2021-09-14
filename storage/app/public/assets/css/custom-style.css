@@ -598,7 +598,7 @@ footer {
 .product-details-sec {
     margin-top: 60px;
 }
-.combo-div p:not(.required) {
+.combo-div p:not(.required_combo) {
     position: relative;
     padding-left: 25px;
 }
