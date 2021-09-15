@@ -286,7 +286,7 @@ aria-hidden="true">
 <!-- View order btn -->
 
 
-<div class="modal fade add_to_cart_modal" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade add_to_cart_modal loading" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <!-- <div class="modal-header">
@@ -336,6 +336,7 @@ aria-hidden="true">
 
 function openCartModal(item_id) {        
     $('#addToCartModal').modal('show');
+
     var CSRF_TOKEN = $('input[name="_token"]').val();
 
     $.ajax({
@@ -348,6 +349,7 @@ function openCartModal(item_id) {
       dataType: 'json',
       success:function(data){
         if (data.status == 1) {
+          $('#addToCartModal.loading').removeClass('loading');
             $('#addToCartModal .modal-body').html(data.html);            
             $('#addToCartModal .modal-header h5').text(data.title);
         }          
@@ -502,9 +504,9 @@ function openCartModal(item_id) {
 
 var comboFlag = false;
 
-$(document).on('change', 'div#comboGroup input', function(){
+$(document).on('change', 'div#combocontent input', function(){
     if ($('.required_combo').length > 0 ){
-      $('ul.ComboGroups').each(function (index, item){
+    $('ul.ComboGroups').each(function (index, item){
         if($(item).find('.comboItem:checked').length > 0){
           comboFlag = true;
         }

@@ -77,7 +77,7 @@
       <li><a data-toggle="tab" href="#paid">Paid Add-on</a></li>
       @endif
       @if (isset($ComboGroups[0]->name)) 
-      <li class="combotab" style="display: none;"><a data-toggle="tab" href="#combocontent" >Combo</a></li>
+      <li class="combotab" style="{{($getitem->is_default_combo != 1) ? 'display: none;' : '' }}"><a data-toggle="tab" href="#combocontent" >Combo</a></li>
       @endif
     </ul>
 
@@ -242,10 +242,25 @@
                                 {{($getitem->is_default_combo == 0) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : 'Combo Option' }}         
                             </p> -->
                             <div id="combocontent" class="comboWrapp tab-pane fade ">
+                                <div class="col-md-12 w3-bar w3-black tab">
                                 @if ($getitem->is_default_combo == 1)
-                                    @foreach ($ComboGroups as $ComboGroup)<ul class="list-unstyled extra-food ComboGroups"  id=""><h3>{{$ComboGroup->name}}</h3>@foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->id}}"><p>{{$ComboItem->name}}</p></li>@endforeach</ul>@endforeach
+                                    @foreach ($ComboGroups as $ComboGroup)
+                                    <div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{$ComboGroup->name}}{{$ComboGroup->id}}combo')">
+                                        <h3>{{$ComboGroup->name}}</h3>
+                                        <p>You can select 1 option.</p>
+                                    </div>
+
+                                    <div id="{{$ComboGroup->name}}{{$ComboGroup->id}}combo" class="addon tabcontent" style="display:none">
+                                        <ul class="list-unstyled extra-food single-addon ComboGroups">
+                                            <div id="pricelist">
+                                            @foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->id}}"><p>{{$ComboItem->name}}</p></li>@endforeach
+                                            </div>
+                                        </ul>
+                                        </div>
+                                        @endforeach
                                 @endif
                             </div>
+                        </div>
                             </div>
                         
                         @endif
@@ -259,7 +274,7 @@
                                 @if ($getitem->is_default_combo == 0)
                                     <input type="checkbox" id="makeItCombo" class="Checkbox checkbox-detail" data-price="{{$totalComboPrice}}">
                                 @endif
-                                {{($getitem->is_default_combo == 0) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : 'Combo Option' }}         
+                                {{($getitem->is_default_combo == 0) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : '' }}         
                         </p>
                 </div>
                 <textarea id="item_notes" name="item_notes" placeholder="Write Notes..."></textarea>
