@@ -1,5 +1,18 @@
               <img src='{{$getimages[0]->image }}' alt="">
                
+
+
+
+
+
+
+
+
+
+
+
+
+
                  @foreach ($getitem->variation as $key => $value)
                         <input type="hidden" name="price" id="price" value="{{$value->product_price}}">
                         @break
@@ -60,7 +73,7 @@
                         
                         
 
-
+<div class="alert alert-danger" style="display: none;" id="AddToCartError"></div>
           <div class="extra-food-wrap addons-box">
 
                         
@@ -90,11 +103,14 @@
                     <!-- <div id="ingredientsOptions" class="ingredientsOptions">  -->
                     @foreach($getingredientsByTypes as $ingredientsByType)
                     <!-- <button class="w3-bar-item w3-button" onclick="openCity('{{$ingredientsByType->name}}')">{{$ingredientsByType->name}}</button> -->
+                    <div class="ingredientsWrapper" option-allowed="{{$ingredientsByType->available_ing_option}}">
                     <div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{$ingredientsByType->name}}')">
                        <h3>{{$ingredientsByType->name}}</h3> 
                        <p>You can select {{$ingredientsByType->available_ing_option}} option<?php echo ($ingredientsByType->available_ing_option > 1 || $ingredientsByType->available_ing_option == 'all')? 's' : '' ; ?>.</p>
+                       <span class="required_label">Required</span>
+
                     </div>
-                    <div id="{{$ingredientsByType->name}}" class="addon tabcontent" >
+                    <div id="{{$ingredientsByType->name}}" class="addon tabcontent"  >
                         <div class="selectIngredients" >                                        
                             
                              <ul class="list-unstyled extra-food" ingredient_type="{{$ingredientsByType->name}}">
@@ -106,6 +122,7 @@
                              @endforeach
                              </ul>
                          </div>
+                    </div>
                     </div>
                     @endforeach
                     <!-- </div> -->
@@ -248,6 +265,7 @@
                                     <div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{$ComboGroup->name}}{{$ComboGroup->id}}combo')">
                                         <h3>{{$ComboGroup->name}}</h3>
                                         <p>You can select 1 option.</p>
+                                        <span class="required_label">Required</span>
                                     </div>
 
                                     <div id="{{$ComboGroup->name}}{{$ComboGroup->id}}combo" class="addon tabcontent" style="display:none">
@@ -284,7 +302,7 @@
 $('#makeItCombo').click(function(){    
     $('.temp-pricing').hide();
     var total = parseFloat($("#price").val()); 
-    var html = `@foreach ($ComboGroups as $ComboGroup)<ul class="list-unstyled extra-food ComboGroups"  id=""><h3>{{$ComboGroup->name}}</h3>@foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->id}}"><p>{{$ComboItem->name}}</p></li>@endforeach</ul>@endforeach`;
+    var html = `@foreach ($ComboGroups as $ComboGroup)<ul class="list-unstyled extra-food ComboGroups"  id=""><h3>{{$ComboGroup->name}}</h3><span class="required_label">Required</span>@foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->id}}"><p>{{$ComboItem->name}}</p></li>@endforeach</ul>@endforeach`;
 
     if($(this).is(':checked')){
         total += parseFloat($(this).attr('data-price')) || 0;

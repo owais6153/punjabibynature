@@ -352,6 +352,7 @@ function openCartModal(item_id) {
           $('#addToCartModal.loading').removeClass('loading');
             $('#addToCartModal .modal-body').html(data.html);            
             $('#addToCartModal .modal-header h5').text(data.title);
+            $('button.btn.add_to_cart_btn').removeAttr('disabled');
         }          
       }
     });  
@@ -502,10 +503,10 @@ function openCartModal(item_id) {
   };
 
 
-var comboFlag = false;
 
-$(document).on('change', 'div#combocontent input', function(){
-    if ($('.required_combo').length > 0 ){
+function validateCombo(){
+  var comboFlag = false;
+  if ($('.ComboGroups').length > 0 ){
     $('ul.ComboGroups').each(function (index, item){
         if($(item).find('.comboItem:checked').length > 0){
           comboFlag = true;
@@ -519,14 +520,64 @@ $(document).on('change', 'div#combocontent input', function(){
     else{
       comboFlag = true;
     }
+    return comboFlag;
+}
 
-    if (comboFlag == true) {
-      $('#addToCartModal .add_to_cart_btn').removeAttr('disabled');
+function validateIngredients(){
+  var ingFlag = false;
+  if ($('input.Checkbox.ingredients').length > 0 ){
+      $('.ingredientsWrapper').each(function (index, item){
+          let option_allowed = $(item).attr('option-allowed');
+          let attr_name = $(item).find('input').attr('name');
+          if (option_allowed != 'all') {
+            if($('input[name="'+attr_name+'"]:checked').length == option_allowed){
+              ingFlag = true;
+            }
+            else{
+              ingFlag = false;
+              return false;
+            }
+          // console.log(attr_name);
+          }
+          else{
+            if($('input[name="'+attr_name+'"]:checked').length == $('input[name="'+attr_name+'"]').length){
+              ingFlag = true;
+            }
+            else{
+              ingFlag = false;
+              return false;
+            }
+          // console.log(attr_name);
+          }
+          
+      })
+  }
+  else{
+    ingFlag = true;
+  }
+  return ingFlag;
+
+
+
+
+
+}
+
+$(document).on('click', '.add_to_cart_btn', function(){
+    $('#AddToCartError').fadeOut();
+    let comboFlag = validateCombo();
+    let ingFlag = validateIngredients();
+    if (ingFlag != true) {
+      $('#AddToCartError').text('Ingredients are required');
+      $('#AddToCartError').fadeIn();
     }
-
-
-    console.log('workinf');
-
+    else if ( comboFlag != true) {
+      $('#AddToCartError').text('Combo options are required');
+      $('#AddToCartError').fadeIn();
+    }
+    else if( comboFlag == true && ingFlag == true){
+      // Cart Functionality
+    }
 });
 
 

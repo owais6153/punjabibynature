@@ -805,3 +805,17 @@ footer {
     justify-content: center;
     align-items: center;
 }
+span.required_label {
+    position: absolute;
+    top: 22px;
+    right: 47px;
+    background: #f88f12a8;
+    border-radius: 15px;
+    padding: 0 18px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.w3-bar-item.w3-button.addons-tabs-cart p {
+    margin: 0;
+}
