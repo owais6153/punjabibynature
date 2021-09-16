@@ -304,7 +304,22 @@ aria-hidden="true">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn" data-dismiss="modal">Close</button>
-        <button type="button" disabled="" class="btn add_to_cart_btn">Add to Cart</button>
+
+          @if (Session::get('id'))
+                            @if ($getitem->item_status == '1')
+                                <button class="btn add_to_cart_btn" disabled="" onclick="AddtoCart('{{$getitem->id}}','{{Session::get('id')}}')">{{ trans('labels.add_to_cart') }}</button>
+                            @else 
+                                <button class="btn " disabled="">{{ trans('labels.unavailable') }}</button>
+                            @endif
+                        @else
+                            @if ($getitem->item_status == '1')
+                                <button class="btn add_to_cart_btn" disabled="" onclick="AddtoCart('{{$getitem->id}}','guest')">{{ trans('labels.add_to_cart') }}</button>
+                            @else 
+                                <button class="btn "  disabled="">{{ trans('labels.unavailable') }}</button>
+                            @endif
+                        @endif 
+
+        
       </div>
     </div>
   </div>
@@ -563,24 +578,6 @@ function validateIngredients(){
 
 }
 
-$(document).on('click', '.add_to_cart_btn', function(){
-    $('#AddToCartError').fadeOut();
-    let comboFlag = validateCombo();
-    let ingFlag = validateIngredients();
-    if (ingFlag != true) {
-      $('#AddToCartError').text('Ingredients are required');
-      $('#AddToCartError').fadeIn();
-    }
-    else if ( comboFlag != true) {
-      $('#AddToCartError').text('Combo options are required');
-      $('#AddToCartError').fadeIn();
-    }
-    else if( comboFlag == true && ingFlag == true){
-      // Cart Functionality
-    }
-});
-
-
 
 
 
@@ -592,6 +589,18 @@ $(document).on('click', '.add_to_cart_btn', function(){
 
   function AddtoCart(id,user_id) {
     "use strict";
+        $('#AddToCartError').fadeOut();
+    let comboFlag = validateCombo();
+    let ingFlag = validateIngredients();
+    if (ingFlag != true) {
+      $('#AddToCartError').text('Ingredients are required');
+      $('#AddToCartError').fadeIn();
+    }
+    else if ( comboFlag != true) {
+      $('#AddToCartError').text('Combo options are required');
+      $('#AddToCartError').fadeIn();
+    }
+    else if( comboFlag == true && ingFlag == true){
     var price = $('#price').val();
     var item_notes = $('#item_notes').val();
     var variation_id = $('#variation').val();
@@ -612,42 +621,42 @@ $(document).on('click', '.add_to_cart_btn', function(){
 
 
 // Ingredients
-    let ingredients_array = [];
-    $('.ingredientsOptions ul').each(function(index, item){
-      let ing_type = $(item).attr('ingredient_type');
-      let temp = [];
-      temp[ing_type] = [];      
-      $(item).find('.ingredients.Checkbox:checked').each(function(child_index, child_item){
-        temp[ing_type][child_index] = $(child_item).attr('ingredient_name');
-      })
-      ingredients_array[index]  = temp;
-    })
-    console.log('Ingredients', ingredients_array.serialize());
+//     let ingredients_array = [];
+//     $('.ingredientsOptions ul').each(function(index, item){
+//       let ing_type = $(item).attr('ingredient_type');
+//       let temp = [];
+//       temp[ing_type] = [];      
+//       $(item).find('.ingredients.Checkbox:checked').each(function(child_index, child_item){
+//         temp[ing_type][child_index] = $(child_item).attr('ingredient_name');
+//       })
+//       ingredients_array[index]  = temp;
+//     })
+//     console.log('Ingredients', ingredients_array.serialize());
 
-// Add-ons Groups
-    let addon_groups = [];
-    $('ul.addon_group').each(function(index, item){
-      let addon_group = $(item).attr('group_name');
-      let temp = [];
-      temp[addon_group] = [];      
-      $(item).find('.group_addon.Checkbox:checked').each(function(child_index, child_item){
-        temp[addon_group][child_index] = $(child_item).attr('addon_name');
-      })
-      addon_groups[index]  = temp;
-    })
-    console.log('Addon Group', addon_groups.serialize());
+// // Add-ons Groups
+//     let addon_groups = [];
+//     $('ul.addon_group').each(function(index, item){
+//       let addon_group = $(item).attr('group_name');
+//       let temp = [];
+//       temp[addon_group] = [];      
+//       $(item).find('.group_addon.Checkbox:checked').each(function(child_index, child_item){
+//         temp[addon_group][child_index] = $(child_item).attr('addon_name');
+//       })
+//       addon_groups[index]  = temp;
+//     })
+//     console.log('Addon Group', addon_groups.serialize());
 
-// Add-ons Price
-    let addon_groups_price = [];
+// // Add-ons Price
+//     let addon_groups_price = [];
 
-    $('ul.addon_group').each(function(index, item){
-      let addon_group = $(item).attr('group_name');
+//     $('ul.addon_group').each(function(index, item){
+//       let addon_group = $(item).attr('group_name');
 
-      let temp = [];
-      temp[addon_group] = $(item).attr('data-price');
-      addon_groups_price[index] = temp;
-    })
-    console.log('Addon Group Price', addon_groups_price.serialize());
+//       let temp = [];
+//       temp[addon_group] = $(item).attr('data-price');
+//       addon_groups_price[index] = temp;
+//     })
+//     console.log('Addon Group Price', addon_groups_price.serialize());
 
 
    
@@ -672,9 +681,9 @@ $(document).on('click', '.add_to_cart_btn', function(){
             variation_price: variation_price,
             variation: variation,
             item_notes: item_notes,
-            ingredients: ingredients_array,
-            addon_groups: addon_groups,
-            addon_groups_price: addon_groups_price,
+            // ingredients: ingredients_array,
+            // addon_groups: addon_groups,
+            // addon_groups_price: addon_groups_price,
             user_id: user_id,
 
         },
@@ -707,6 +716,7 @@ $(document).on('click', '.add_to_cart_btn', function(){
             // $('#errormsg').show();
         }
     })
+    }
   };
 
 
