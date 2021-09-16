@@ -305,18 +305,12 @@ aria-hidden="true">
       <div class="modal-footer">
         <button type="button" class="btn" data-dismiss="modal">Close</button>
 
-          @if (Session::get('id'))
-                            @if ($getitem->item_status == '1')
-                                <button class="btn add_to_cart_btn" disabled="" onclick="AddtoCart('{{$getitem->id}}','{{Session::get('id')}}')">{{ trans('labels.add_to_cart') }}</button>
-                            @else 
-                                <button class="btn " disabled="">{{ trans('labels.unavailable') }}</button>
-                            @endif
-                        @else
-                            @if ($getitem->item_status == '1')
-                                <button class="btn add_to_cart_btn" disabled="" onclick="AddtoCart('{{$getitem->id}}','guest')">{{ trans('labels.add_to_cart') }}</button>
-                            @else 
-                                <button class="btn "  disabled="">{{ trans('labels.unavailable') }}</button>
-                            @endif
+                      @if (Session::get('id'))
+                          <button class="btn add_to_cart_btn" disabled="" onclick="AddtoCart('{{Session::get('id')}}')">{{ trans('labels.add_to_cart') }}</button>
+
+                      @else
+                
+                                <button class="btn add_to_cart_btn" disabled="" onclick="AddtoCart('guest')">{{ trans('labels.add_to_cart') }}</button>                             
                         @endif 
 
         
@@ -587,7 +581,7 @@ function validateIngredients(){
 
 
 
-  function AddtoCart(id,user_id) {
+  function AddtoCart(user_id) {
     "use strict";
         $('#AddToCartError').fadeOut();
     let comboFlag = validateCombo();
@@ -601,6 +595,7 @@ function validateIngredients(){
       $('#AddToCartError').fadeIn();
     }
     else if( comboFlag == true && ingFlag == true){
+    var id = $('#item_id').val();
     var price = $('#price').val();
     var item_notes = $('#item_notes').val();
     var variation_id = $('#variation').val();

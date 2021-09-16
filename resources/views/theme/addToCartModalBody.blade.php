@@ -4,7 +4,7 @@
 
 
 
-
+                <input type="hidden" name="item_id" id="item_id" value="{{$getitem->id}}">
 
 
 
