@@ -819,3 +819,15 @@ span.required_label {
 .w3-bar-item.w3-button.addons-tabs-cart p {
     margin: 0;
 }
+.pro-box .btn:hover {
+    color: #f69e18;
+}
+.pro-box .btn {
+    background: transparent;
+    box-shadow: none;
+    color: #fd3f32;
+    text-transform: capitalize;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
