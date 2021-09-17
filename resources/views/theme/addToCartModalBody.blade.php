@@ -289,10 +289,10 @@
                 </div>
                  <div id="comboGroup" class="w3-bar-item w3-button addons-tabs-cart combo-div" style="flex: 0 0 100%; max-width: 100%;">
                         <p class="{{($getitem->is_default_combo == 0) ? 'not_required' : 'required_combo' }}">
-                                @if ($getitem->is_default_combo == 0)
+                                @if ($getitem->is_default_combo == 0 && isset($ComboGroups[0]->name))
                                     <input type="checkbox" id="makeItCombo" class="Checkbox checkbox-detail" data-price="{{$totalComboPrice}}">
                                 @endif
-                                {{($getitem->is_default_combo == 0) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : '' }}         
+                                {{($getitem->is_default_combo == 0 && isset($ComboGroups[0]->name)) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : '' }}         
                         </p>
                 </div>
                 <textarea id="item_notes" name="item_notes" placeholder="Write Notes..."></textarea>
@@ -302,16 +302,24 @@
 $('#makeItCombo').click(function(){    
     $('.temp-pricing').hide();
     var total = parseFloat($("#price").val()); 
-    var html = `@foreach ($ComboGroups as $ComboGroup)<ul class="list-unstyled extra-food ComboGroups"  id=""><h3>{{$ComboGroup->name}}</h3><span class="required_label">Required</span>@foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->id}}"><p>{{$ComboItem->name}}</p></li>@endforeach</ul>@endforeach`;
+    var html = `@foreach ($ComboGroups as $ComboGroup)<div class="comboWrapper"><div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{$ComboGroup->name}}{{$ComboGroup->id}}combo')">
+                                        <h3>{{$ComboGroup->name}}</h3>
+                                        <p>You can select 1 option.</p>
+                                        <span class="required_label">Required</span>
+                                    </div>
+                                    <div id="{{$ComboGroup->name}}{{$ComboGroup->id}}combo" class="addon tabcontent" style="display:none">
+                                    <ul class="list-unstyled extra-food single-addon ComboGroups">
+                                     <div id="pricelist">
+                                    @foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->id}}"><p>{{$ComboItem->name}}</p></li>@endforeach</div></ul></div></div>@endforeach`;
 
     if($(this).is(':checked')){
         total += parseFloat($(this).attr('data-price')) || 0;
-        $('.comboWrapp').html(html);
+        $('.comboWrapp > .w3-black').html(html);
         $('.combotab').fadeIn();
     }
     else{
         total -= parseFloat($(this).attr('data-price')) || 0;
-        $('.comboWrapp').html('');
+        $('.comboWrapp > .w3-black').html('');
         $('.combotab').fadeOut();
         $('ul.col-md-12.nav.nav-tabs li:first-child() a').click();
     }
