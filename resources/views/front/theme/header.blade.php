@@ -86,37 +86,41 @@
 								<div id="countryList" class="item-list"></div>
 							</li>
 							<li class="nav-item cart-btn dropdown">
-								<a class="nav-link dropdown-toggle " href="javascript:void(0)" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-shopping-cart"></i></a>
+								@foreach ($cartdata as $cart)
+								<?php
+                        		$data[] = array(
+                            		"total_price" => $cart->qty * $cart->price,
+                            		"tax" => ($cart->qty*$cart->price)*$cart->tax/100
+                        		);
+                    			?>
+								<a class="nav-link dropdown-toggle " href="{{URL::to('product-details/'.$cart->item_id)}}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-shopping-cart"></i></a>
 								<div class="dropdown-menu cart-dropdown" aria-labelledby="dropdownMenuButton">
 									<div class="item-cart">
 										<div class="images-cart">
-											<img src="http://localhost/punjabibynature/storage/app/public/images/category/category-613696ce00fa7.jpg">
+											<img src='{{$cart->item_image }}' alt="">
 										</div>
 										<div class="description-cart">
-											<p>Hello Products</p>
-											<p>29$</p>
+											<p>{{$cart->item_name}} - {{$cart->variation}}</p>
+											<p>{{$taxval->currency}}{{number_format($cart->qty * $cart->price,2)}}</p>
 										</div>
 										<div class="delete-item">
 											<a href="#"><i class="far fa-trash-alt"></i></a>
 										</div>	
 									</div>
-									<div class="item-cart">
-										<div class="images-cart">
-											<img src="http://localhost/punjabibynature/storage/app/public/images/category/category-613696ce00fa7.jpg">
-										</div>
-										<div class="description-cart">
-											<p>Hello Products</p>
-											<p>29$</p>
-										</div>
-										<div class="delete-item">
-											<a href="#"><i class="far fa-trash-alt"></i></a>
-										</div>	
-									</div>
+									<div class="cart-btn-header">
+	  								<!-- View order btn -->
+@if (Session::get('cart') && !request()->is('cart'))
+  <a href="{{URL::to('/cart')}}" class="head-cart">{{ trans('labels.view_my_order') }}</a>
+@else
+  <a href="{{URL::to('/cart')}}" class="head-cart">{{ trans('labels.view_my_order') }}</a>
+@endif
+<!-- View order btn -->
+	  							</div>	
 								</div>
-	  								
+	  							
 								
 							</li>
-						
+						@endforeach
 						@if (Session::get('id'))
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:void(0)">
