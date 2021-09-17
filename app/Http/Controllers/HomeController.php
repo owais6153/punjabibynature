@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\PrivacyPolicy;
 use App\Category;
+use App\Cart;
 use App\User;
 use App\Pincode;
 use App\Item;
@@ -41,6 +42,9 @@ class HomeController extends Controller
     {
         $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
         $getitems = Item::where('item_status','1')->where('is_deleted','2')->get();
+        $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+        ->where('user_id',$user_id)
+        ->where('is_available','=','1')->get();
         $getpincode = Pincode::all();
         $addons = Addons::where('is_available','1')->where('is_deleted','2')->get();
         $getreview = Ratting::all();
@@ -53,7 +57,7 @@ class HomeController extends Controller
         $banners = Banner::all();
         $getdriver = User::where('type','3')->get();
         $todayorders = Order::with('users')->select('order.*','users.name')->leftJoin('users', 'order.driver_id', '=', 'users.id')->where('order.created_at','LIKE','%' .date("Y-m-d") . '%')->get();
-        return view('home',compact('getcategory','getpincode','getitems','addons','getusers','driver','banners','getreview','getorders','order_total','order_tax','getpromocode','todayorders','getdriver'));
+        return view('home',compact('getcategory','getpincode','getitems','addons','getusers','driver','banners','getreview','getorders','order_total','order_tax','getpromocode','todayorders','getdriver','cartdata'));
     }
 
     public function auth(Request $request)

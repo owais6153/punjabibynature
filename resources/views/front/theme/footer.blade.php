@@ -277,13 +277,7 @@ aria-hidden="true">
 <!-- footer -->
 
 
-<!-- View order btn -->
-@if (Session::get('cart') && !request()->is('cart'))
-  <a href="{{URL::to('/cart')}}" class="view-order-btn">{{ trans('labels.view_my_order') }}</a>
-@else
-  <a href="{{URL::to('/cart')}}" class="view-order-btn" style="display: none;">{{ trans('labels.view_my_order') }}</a>
-@endif
-<!-- View order btn -->
+
 
 
 <div class="modal fade add_to_cart_modal loading" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
