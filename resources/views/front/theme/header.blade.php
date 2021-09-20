@@ -86,6 +86,9 @@
 								<div id="countryList" class="item-list"></div>
 							</li>
 							<li class="nav-item cart-btn dropdown">
+								@empty(!$cartdata)
+								
+							
 								@foreach ($cartdata as $cart)
 								<?php
                         		$data[] = array(
@@ -101,7 +104,6 @@
 										</div>
 										<div class="description-cart">
 											<p>{{$cart->item_name}} - {{$cart->variation}}</p>
-											<p>{{$taxval->currency}}{{number_format($cart->qty * $cart->price,2)}}</p>
 										</div>
 										<div class="delete-item">
 											<a href="#"><i class="far fa-trash-alt"></i></a>
@@ -119,8 +121,10 @@
 								</div>
 	  							
 								
-							</li>
+							
 						@endforeach
+						@endif
+						</li>
 						@if (Session::get('id'))
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:void(0)">

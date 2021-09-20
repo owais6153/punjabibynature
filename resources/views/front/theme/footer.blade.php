@@ -581,11 +581,22 @@ function validateIngredients(){
     let comboFlag = validateCombo();
     let ingFlag = validateIngredients();
     if (ingFlag != true) {
-      $('#AddToCartError').text('Ingredients are required');
+      $('#AddToCartError').text('Please select ingredients.');
       $('#AddToCartError').fadeIn();
     }
     else if ( comboFlag != true) {
-      $('#AddToCartError').text('Combo options are required');
+      $('#AddToCartError').text('Please selcet combo options.');
+      $('#AddToCartError').fadeIn();
+    }
+    else if($('#quantity').val() == ''){
+
+      $('#AddToCartError').text('Please enter quantity.');
+      $('#AddToCartError').fadeIn();
+    }
+
+    else if($('#quantity').val() < 1){
+
+      $('#AddToCartError').text('Quantity should be greater then 0.');
       $('#AddToCartError').fadeIn();
     }
     else if( comboFlag == true && ingFlag == true){
@@ -597,7 +608,9 @@ function validateIngredients(){
     var variation_price = $(".readers option:selected").attr("data-price");
     var ingredients = [];
     var combo = [];
-
+    var group_addons = [];
+    var qty = $('#quantity').val();
+// Ingredients
     if ($('input.Checkbox.ingredients').length > 0 ){
       $('.ingredientsWrapper').each(function (index, item){
           ingredients[index] = $(item).find('h3').text();
@@ -607,7 +620,7 @@ function validateIngredients(){
           }).get().join(', '));
       })
     }
-
+// Combo
     if ($('.ComboGroups').length > 0 ){
       $('.comboWrapper').each(function (index, item){
         combo[index] = $(item).find('h3').text();
@@ -617,13 +630,21 @@ function validateIngredients(){
         }).get().join(', '));
       })
     }
+// Group Addons
 
-    console.log('ingredients', ingredients);
-    console.log('combo', combo);
+    if ($('.group_addon_wrapper').length > 0 ){
+      $('.group_addon_wrapper').each(function (index, item){
+        group_addons[index] = $(item).find('h3').text();
+        group_addons[index] += ': ';
+        group_addons[index] += ($(item).find('.group_addon:checked').map(function(){
+          return this.value;
+        }).get().join(', '));
+      })
+    }
 
 
 
-
+// Single Addons
     var addons_id = ($('.single_addon.Checkbox:checked').map(function() {
         return this.value;
     }).get().join(', ')); 
@@ -632,55 +653,7 @@ function validateIngredients(){
       return $(this).attr('addons_name');
     }).get().join(', '));
 
-    // var ingredients = ($('ingredients.Checkbox:checked').parents('ul').map(function() {
-    //   return $(this).attr('ingredient_type') = [];
-    // }).get().join(', '));
 
-
-    console.log('addons_id', addons_id);
-    console.log('addons_name', addons_name);
-    // console.log('ingredients', ingredients);
-
-// Ingredients
-//     let ingredients_array = [];
-//     $('.ingredientsOptions ul').each(function(index, item){
-//       let ing_type = $(item).attr('ingredient_type');
-//       let temp = [];
-//       temp[ing_type] = [];      
-//       $(item).find('.ingredients.Checkbox:checked').each(function(child_index, child_item){
-//         temp[ing_type][child_index] = $(child_item).attr('ingredient_name');
-//       })
-//       ingredients_array[index]  = temp;
-//     })
-//     console.log('Ingredients', ingredients_array.serialize());
-
-// // Add-ons Groups
-//     let addon_groups = [];
-//     $('ul.addon_group').each(function(index, item){
-//       let addon_group = $(item).attr('group_name');
-//       let temp = [];
-//       temp[addon_group] = [];      
-//       $(item).find('.group_addon.Checkbox:checked').each(function(child_index, child_item){
-//         temp[addon_group][child_index] = $(child_item).attr('addon_name');
-//       })
-//       addon_groups[index]  = temp;
-//     })
-//     console.log('Addon Group', addon_groups.serialize());
-
-// // Add-ons Price
-//     let addon_groups_price = [];
-
-//     $('ul.addon_group').each(function(index, item){
-//       let addon_group = $(item).attr('group_name');
-
-//       let temp = [];
-//       temp[addon_group] = $(item).attr('data-price');
-//       addon_groups_price[index] = temp;
-//     })
-//     console.log('Addon Group Price', addon_groups_price.serialize());
-
-
-   
     var addons_price = ($('.Checkbox:checked').map(function() {
       return $(this).attr('price');
     }).get().join(', '));
@@ -693,18 +666,18 @@ function validateIngredients(){
         url:"{{ URL::to('/product/addtocart') }}",
         data: {
             item_id: id,
-            // addons_id: addons_id,
-            // addons_name: addons_name,
-            // addons_price: addons_price,
-            qty: '1',
+            addons_id: addons_id,
+            addons_name: addons_name,
+            addons_price: addons_price,
+            qty: qty,
             price: price,
             variation_id: variation_id,
             variation_price: variation_price,
             variation: variation,
             item_notes: item_notes,
             ingredients: ingredients,
-            // addon_groups: addon_groups,
-            // addon_groups_price: addon_groups_price,
+            combo: combo,
+            group_addons: group_addons,
             user_id: user_id,
 
         },

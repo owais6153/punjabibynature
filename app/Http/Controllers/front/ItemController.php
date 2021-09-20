@@ -127,8 +127,23 @@ class ItemController extends Controller
         
         $getdata=User::select('currency')->where('type','1')->first();
         $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
+        
 
-        return view('front.product-details', compact('getitem','getabout','getimages','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory', 'ComboGroups', 'totalComboPrice'));
+
+        if (Session::get('id')) {
+            $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+            ->where('user_id',$user_id)
+            ->where('is_available','=','1')->get();
+        }
+        else{
+            $cartdata_temp = Session::get('guest_cart');
+            $cartdata = json_decode(json_encode($cartdata_temp));
+       
+        //     // exit();
+        }
+
+
+        return view('front.product-details', compact('getitem','getabout','getimages','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory', 'ComboGroups', 'totalComboPrice', 'cartdata'));
     }
 
     public function show(Request $request)
@@ -212,9 +227,10 @@ class ItemController extends Controller
         if($request->user_id == ""){
             return response()->json(["status"=>0,"message"=>"User ID is required"],400);
         }
-        if ($request->user_id == "guest") {
-            $getitem=Item::with('itemimage')->select('item.id','item.item_name','item.tax')
+        $getitem=Item::with('itemimage')->select('item.id','item.item_name','item.tax')
                 ->where('item.id',$request->item_id)->first();
+        
+        if ($request->user_id == "guest") {
             $cartDetails = array(
                 array(
                     'item_id' => $request->item_id,
@@ -226,44 +242,39 @@ class ItemController extends Controller
                     'variation' => $request->variation,
                     'user_id' => 'guest',
                     'item_notes' => $request->item_notes,
-                    'item_name' => $request->item_name,
-                    'tax' => $request->tax,
-                    'item_image' => $getitem['itemimage']->image_name,
+                    'item_name' => $getitem->item_name,
+                    'tax' => $getitem->tax,
+                    'item_image' => url('/storage/app/public/images/item/') . '/' .  $getitem['itemimage']->image_name,
                     'addons_name' => $request->addons_name,
                     'addons_price' => $request->addons_price,   
                     'ingredients' => $request->ingredients,   
-                    'addon_group' => $request->addon_group,     
+                    'addon_group' => $request->addon_group,
+                    'combo' => $request->combo,
+                    'group_addons' => $request->group_addons,
                 )                               
             );
             $guestCartData = array();
             $data = collect($cartDetails);
             if (!Session::has('guest_cart')) {
-                $data = collect($cartDetails);
                 Session::put('guest_cart', $data);
+                return response()->json(['status'=>1,'message'=>'Item has been added to your cart','cartcnt'=>1]);
             }
             else{
                 $guestCartData = Session::get('guest_cart');
-                $found = false;
-                foreach ($guestCartData as $key => $item_details) {
-                    if ($item_details['item_id'] == $request->item_id) {
-                        if ($request->variation_id == $item_details['variation_id']) {
-                            $guestCartData[$key]['qty'] = $item_details['qty'] +  $request->qty;
-                            $found = true;
-                        }
-                    }
-                }
-                if (!$found) {
-                    $guestCartData[] = $cartDetails;                    
-                }
+                $guestCartData[] = $cartDetails;                    
                 $data = collect($guestCartData);
                 Session::put('guest_cart', $data);
+                $count = count($guestCartData);
+                Session::put('cart', $count);
+                //return response()->json(['ok' => 'okies2']);
+                return response()->json(['status'=>1,'message'=>'Item has been added 1 to your cart','cartcnt'=>$count],200);
+               
             }
         }
         else{
             try {
 
-                $getitem=Item::with('itemimage')->select('item.id','item.item_name','item.tax')
-                ->where('item.id',$request->item_id)->first();
+                
 
                 $cart = new Cart;
                 $cart->item_id =$request->item_id;
@@ -285,13 +296,13 @@ class ItemController extends Controller
                 $count=Cart::where('user_id',$request->user_id)->count();
 
                 Session::put('cart', $count);
-                return response()->json(['status'=>1,'message'=>'Item has been added to your cart','cartcnt'=>$count],200);
+                return response()->json(['status'=>1,'message'=>'Item has been 2 added to your cart','cartcnt'=>$count],200);
 
             } catch (\Exception $e){
 
                 return response()->json(['status'=>0,'message'=>'Something went wrong'],400);
             }
-        }
+        } 
     }
 
     public function search(Request $request)
