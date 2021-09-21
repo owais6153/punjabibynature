@@ -37,6 +37,9 @@ class ItemController extends Controller
         ->leftJoin('favorite', function($query) use($user_id) {
             $query->on('favorite.item_id','=','item.id')
             ->where('favorite.user_id', '=', $user_id);
+        $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+        ->where('user_id',$user_id)
+        ->where('is_available','=','1')->get();
         })
         ->where('item.item_status','1')->where('item.is_deleted','2')
         ->orderBy('id', 'DESC')->paginate(9);
@@ -46,7 +49,18 @@ class ItemController extends Controller
         if(empty($getitem)){ 
             abort(404); 
         } else {
-            return view('front.product',compact('getcategory','getabout','getitem','getdata'));   
+              if (Session::get('id')) {
+            $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+            ->where('user_id',$user_id)
+            ->where('is_available','=','1')->get();
+        }
+        else{
+            $cartdata_temp = Session::get('guest_cart');
+            $cartdata = json_decode(json_encode($cartdata_temp));
+       
+        //     // exit();
+        }
+            return view('front.product',compact('getcategory','getabout','getitem','getdata','cartdata'));   
         }
     }
 
@@ -148,6 +162,7 @@ class ItemController extends Controller
 
     public function show(Request $request)
     {
+        
         $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
         $getabout = About::where('id','=','1')->first();
         $user_id  = Session::get('id');
@@ -160,7 +175,18 @@ class ItemController extends Controller
         ->where('cat_id','=',$request->id)->orderBy('id', 'DESC')->paginate(9);
 
         $getdata=User::select('currency')->where('type','1')->first();
-        return view('front.product', compact('getcategory','getitem','getabout','getdata'));
+        if (Session::get('id')) {
+            $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+            ->where('user_id',$user_id)
+            ->where('is_available','=','1')->get();
+        }
+        else{
+            $cartdata_temp = Session::get('guest_cart');
+            $cartdata = json_decode(json_encode($cartdata_temp));
+       
+        //     // exit();
+        }
+        return view('front.product', compact('getcategory','getitem','getabout','getdata','cartdata'));
     }
 
     public function favorite(Request $request)

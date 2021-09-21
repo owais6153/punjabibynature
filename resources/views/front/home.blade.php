@@ -147,7 +147,7 @@
     <div class="container">
         <div class="about-box fourth-section-home">
             <div class="about-contant">
-                <img src='{!! asset("http://localhost/punjabibynature/storage/app/public/assets/images/bowl-panner.png") !!}' alt="">
+                <img src='{!! asset("/storage/app/public/assets/images/bowl-panner.png") !!}' alt="">
              </div>
             <div class="home-fourth-sec-img" style="background: url('storage/app/public/assets/images/border_white1-663x399.png');">
                 <div class="home-fourth-right">

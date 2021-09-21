@@ -56,7 +56,45 @@ class HomeController extends Controller
         $getdata=User::select('currency')->where('type','1')->first();
         $getabout = About::where('id','=','1')->first();
         $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
-        return view('front.contactus',compact('getabout','getdata','getcategory'));
+        if (Session::get('id')) {
+            $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+            ->where('user_id',$user_id)
+            ->where('is_available','=','1')->get();
+        }
+        else{
+            $cartdata_temp = Session::get('guest_cart');
+            $cartdata = json_decode(json_encode($cartdata_temp));
+       
+        //     // exit();
+        }
+        return view('front.contactus',compact('getabout','getdata','getcategory','cartdata'));
+    }
+     public function catering()
+    {
+        $getdata=User::select('currency')->where('type','1')->first();
+        $getabout = About::where('id','=','1')->first();
+        $user_id  = Session::get('id');
+        $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
+        $getitem = Item::with(['category','itemimage','variation'])->select('item.cat_id','item.id','item.item_name','item.item_description',DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
+        ->leftJoin('favorite', function($query) use($user_id) {
+            $query->on('favorite.item_id','=','item.id')
+            ->where('favorite.user_id', '=', $user_id);
+        })
+        ->where('item.item_status','1')
+        ->where('item.is_deleted','2')
+        ->orderby('cat_id')->get();
+        if (Session::get('id')) {
+            $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+            ->where('user_id',$user_id)
+            ->where('is_available','=','1')->get();
+        }
+        else{
+            $cartdata_temp = Session::get('guest_cart');
+            $cartdata = json_decode(json_encode($cartdata_temp));
+       
+        //     // exit();
+        }
+        return view('front.catering',compact('getabout','getdata','getcategory','cartdata','getitem'));
     }
 
     public function contact(Request $request)

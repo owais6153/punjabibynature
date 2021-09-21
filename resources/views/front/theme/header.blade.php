@@ -111,12 +111,12 @@
 									</div>
 									<div class="cart-btn-header">
 	  								<!-- View order btn -->
-@if (Session::get('cart') && !request()->is('cart'))
-  <a href="{{URL::to('/cart')}}" class="head-cart">{{ trans('labels.view_my_order') }}</a>
-@else
-  <a href="{{URL::to('/cart')}}" class="head-cart">{{ trans('labels.view_my_order') }}</a>
-@endif
-<!-- View order btn -->
+									@if (Session::get('cart') && !request()->is('cart'))
+									  <a href="{{URL::to('/cart')}}" class="head-cart">{{ trans('labels.view_my_order') }}</a>
+									@else
+									  <a href="{{URL::to('/cart')}}" class="head-cart">{{ trans('labels.view_my_order') }}</a>
+									@endif
+									<!-- View order btn -->
 	  							</div>	
 								</div>
 	  							

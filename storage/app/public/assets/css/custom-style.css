@@ -882,3 +882,115 @@ span.required_label {
     max-width: 100% !important ;
     flex: 0 0 100% !important;
 }
+.sec-catering {
+    margin-top: 120px;
+    padding-top: 100px;
+}
+.sec-catering.fifth-sec-home .fifth-section-home .sec-head {
+    margin: 80px 0 15px 0;
+    color: #fff;
+    font-size: 50px;
+    text-align: center !important;
+    font-weight: 900;
+}
+section.sec2-catering .sec-head {
+    text-align: left;
+    margin-bottom: 0px;
+}
+section.sec2-catering .cat-product {
+    padding-left: 0px;
+}
+.sec2-catering .cat-aside-wrap {
+    display: flex;
+}
+
+.sec2-catering .cat-aside-wrap a {
+    margin: 5px;
+    padding: 4px;
+    box-shadow: none;
+    background: transparent;
+}
+
+.sec2-catering .cat-aside-wrap a:first-child {
+    padding-left: 0px;
+    margin-left: 0px;
+}
+
+.sec2-catering .cat-aside-wrap {
+    padding-bottom: 0px;
+    border-bottom: solid 1px #00000099;
+}
+
+.sec2-catering .row.catering {
+    padding-top: 40px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.sec2-catering .cart-box-catering {
+    width: 392px;
+    margin-left: 20px;
+
+}
+.sec2-catering .cat-product {
+    max-width: calc(90% - 286px);
+}
+section.sec2-catering .cat-product .col-xl-4.col-md-6 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.cart-catering-body{
+    background-color: #fba40e !important;
+    border-radius: 8px;
+    box-shadow: 0 0 22px rgb(0 0 0 / 10%);
+    padding-left: 10px;
+    padding-top: 24px;
+    padding-bottom: 30px;
+    padding-right: 10px;
+    text-align: center;
+    color: #fff;
+}
+.cart-catering-body .checkout-btn {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    display: block;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    background-color: var(--primary-color-hover);
+    box-shadow: 0 0 4px var(--primary-color-hover);
+}
+section.sec2-catering .cat-product .col-xl-6.col-md-6 {
+    margin-bottom: 12px;
+    padding-left: 6px;
+    padding-right: 8px;
+}
+section.sec2-catering .cat-product .col-xl-6.col-md-6 .product-details:nth-child(2) {
+    display: block;
+    width: 100%;
+}
+
+section.sec2-catering .cat-product .col-xl-6.col-md-6 .product-details:nth-child(2) p {
+    max-width: 100%;
+    display: block !important;
+}
+
+/*-----cart css-----*/
+.cart-addons-wrap {
+    padding-top: 0px;
+    border-color: #fd3f32;
+}
+
+.cart-addons-wrap h5 {
+    background: #fd3f32;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.cart-addons {
+    border-color: #fd3f32;
+}
