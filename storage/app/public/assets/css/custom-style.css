@@ -882,3 +882,18 @@ span.required_label {
     max-width: 100% !important ;
     flex: 0 0 100% !important;
 }
+.cart-addons-wrap {
+    padding-top: 0px !important;
+    border-color: #fd3f32 !important;
+}
+
+.cart-addons-wrap h5 {
+    background: #fd3f32;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.cart-addons {
+    border-color: #fd3f32 !important;
+}

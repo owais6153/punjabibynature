@@ -51,6 +51,8 @@ class ItemController extends Controller
     }
 
     public function productdetails(Request $request) {
+        $guest_cart = Session::get('guest_cart');
+
         $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
         $user_id  = Session::get('id');
         $getabout = About::where('id','=','1')->first();
@@ -231,6 +233,9 @@ class ItemController extends Controller
                 ->where('item.id',$request->item_id)->first();
         
         if ($request->user_id == "guest") {
+            
+                      
+
             $cartDetails = array(
                 array(
                     'item_id' => $request->item_id,
@@ -251,6 +256,7 @@ class ItemController extends Controller
                     'addon_group' => $request->addon_group,
                     'combo' => $request->combo,
                     'group_addons' => $request->group_addons,
+                    'totalAddonPrice' => $request->totalAddonPrice,
                 )                               
             );
             $guestCartData = array();
@@ -260,7 +266,31 @@ class ItemController extends Controller
                 return response()->json(['status'=>1,'message'=>'Item has been added to your cart','cartcnt'=>1]);
             }
             else{
-                $guestCartData = Session::get('guest_cart');
+                $guestCartData = (Session::has('guest_cart')) ? Session::get('guest_cart') : array() ;
+                $cartDetails = 
+                array(
+                    'item_id' => $request->item_id,
+                    'addons_id' => $request->addons_id,
+                    'qty' => $request->qty,
+                    'price' => $request->price,
+                    'variation_id' => $request->variation_id,
+                    'variation_price' => $request->variation_price,
+                    'variation' => $request->variation,
+                    'user_id' => 'guest',
+                    'item_notes' => $request->item_notes,
+                    'item_name' => $getitem->item_name,
+                    'tax' => $getitem->tax,
+                    'item_image' => url('/storage/app/public/images/item/') . '/' .  $getitem['itemimage']->image_name,
+                    'addons_name' => $request->addons_name,
+                    'addons_price' => $request->addons_price,   
+                    'ingredients' => $request->ingredients,   
+                    'addon_group' => $request->addon_group,
+                    'combo' => $request->combo,
+                    'group_addons' => $request->group_addons,
+                    'totalAddonPrice' => $request->totalAddonPrice,
+                 );
+                
+
                 $guestCartData[] = $cartDetails;                    
                 $data = collect($guestCartData);
                 Session::put('guest_cart', $data);
@@ -415,7 +445,7 @@ class ItemController extends Controller
         $ComboGroupIDs = explode(',', $getitem->combo_group_id);
         foreach ($ComboGroupIDs as $ComboGroupIDindex => $ComboGroupID) {
             $ComboGroups[] = ComboGroup::with('ComboItem')->where('combo_group.id', $ComboGroupID)->first();
-            $totalComboPrice += ( isset($ComboGroups[$ComboGroupIDindex]->pric) ) ? $ComboGroups[$ComboGroupIDindex]->price : 0;
+            $totalComboPrice += ( isset($ComboGroups[$ComboGroupIDindex]->price) ) ? $ComboGroups[$ComboGroupIDindex]->price : 0;
         }
         
 

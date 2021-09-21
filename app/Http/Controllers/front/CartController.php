@@ -33,6 +33,17 @@ class CartController extends Controller
         $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
         ->where('user_id',$user_id)
         ->where('is_available','=','1')->get();
+
+
+        if (Session::get('id')) {
+            $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+            ->where('user_id',$user_id)
+            ->where('is_available','=','1')->get();
+        }
+        else{
+            $cartdata_temp = Session::get('guest_cart');
+            $cartdata = json_decode(json_encode($cartdata_temp));
+        }
         
 
         $getpromocode=Promocode::select('offer_name','offer_code','offer_amount','description')
@@ -49,6 +60,9 @@ class CartController extends Controller
         $getdata=User::select('max_order_qty','min_order_amount','max_order_amount')->where('type','1')->first();
 
         $getpaymentdata=Payment::select('payment_name','test_public_key','live_public_key','environment')->where('is_available','1')->orderBy('id', 'DESC')->get();
+//         echo "<pre>";
+//         print_r($cartdata);
+// exit();
 
         return view('front.cart', compact('cartdata','getabout','getpromocode','taxval','userinfo','getdata','getpaymentdata','addressdata','getcategory','getcategory'));
     }

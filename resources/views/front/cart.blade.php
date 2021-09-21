@@ -8,12 +8,20 @@
                 <p>No Data found</p>
             @else 
                 <div class="col-lg-8">
-                    @foreach ($cartdata as $cart)
+                    @foreach ($cartdata as $cartIndex => $cart)
                     <?php
                         $data[] = array(
                             "total_price" => $cart->qty * $cart->price,
                             "tax" => ($cart->qty*$cart->price)*$cart->tax/100
                         );
+
+                        if (isset($cart->id)) {
+                            $id = $cart->id;
+                        }
+                        else{
+                            $id = $cartIndex;
+                        }
+
                     ?>
                     <div class="cart-box">
                         <div class="cart-pro-img">
@@ -22,38 +30,66 @@
                         <div class="cart-pro-details">
                             <div class="cart-pro-edit">
                                 <a href="{{URL::to('product-details/'.$cart->item_id)}}" class="cart-pro-name">{{$cart->item_name}} - {{$cart->variation}}</a>
-                                <a href="javascript:void(0)"><i class="fal fa-trash-alt" onclick="RemoveCart('{{$cart->id}}')"></i></a>
+                                <a href="javascript:void(0)"><i class="fal fa-trash-alt" onclick="RemoveCart('{{$id}}')"></i></a>
                             </div>
                             <div class="cart-pro-edit">
                                 <input type="hidden" name="max_qty" id="max_qty" value="{{$getdata->max_order_qty}}">
                                 <div class="pro-add">
-                                    <div class="value-button sub" id="decrease" onclick="qtyupdate('{{$cart->id}}','{{$cart->item_id}}','decreaseValue')" value="Decrease Value">
+                                    <div class="value-button sub" id="decrease" onclick="qtyupdate('{{$id}}','{{$cart->item_id}}','decreaseValue')" value="Decrease Value">
                                         <i class="fal fa-minus-circle"></i>
                                     </div>
-                                    <input type="number" id="number_{{$cart->id}}" name="number" value="{{$cart->qty}}" readonly="" min="1" max="10" style="background-color: #f4f4f8;" />
-                                    <div class="value-button add" id="increase" onclick="qtyupdate('{{$cart->id}}','{{$cart->item_id}}','increase')" value="Increase Value">
+                                    <input type="number" id="number_{{$id}}" name="number" value="{{$cart->qty}}" readonly="" min="1" max="10" style="background-color: #f4f4f8;" />
+                                    <div class="value-button add" id="increase" onclick="qtyupdate('{{$id}}','{{$cart->item_id}}','increase')" value="Increase Value">
                                         <i class="fal fa-plus-circle"></i>
                                     </div>
                                 </div>
                                 <p class="cart-pricing">{{$taxval->currency}}{{number_format($cart->qty * $cart->price,2)}}</p>
                             </div>
-                                
-                            @if ($cart->addons_id != "")
-                                <div class="cart-addons-wrap">
+                                <a href="javascript:void(0)" class="view_addons">View more detail</a>
+                                <div class="cart-addons-wrap" style="display: none;">
 
-                                <?php 
-                                $addons_id = explode(",",$cart->addons_id);
-                                $addons_price = explode(",",$cart->addons_price);
-                                $addons_name = explode(",",$cart->addons_name);
-                                ?>
+                                    @empty (!$cart->ingredients)
+                                        <h5>Ingredients:</h5>
+                                        @foreach($cart->ingredients as $ingredient)
+                                            <div class="cart-addons">
+                                                <b>{{$ingredient}}</b>
+                                            </div>
+                                        @endforeach
+                                    @endif    
 
-                                @foreach ($addons_id as $key =>  $addons)                                
-                                    <div class="cart-addons">
-                                        <b>{{$addons_name[$key]}}</b> : <b style="color: #000; text-align: center;">{{$taxval->currency}}{{number_format($addons_price[$key], 2)}}</b>
-                                    </div>
-                                @endforeach
+                                    @if ($cart->addons_id != "" || $cart->group_addons != '')
+                                        <h5><span>Add-ons: </span><span class="pl-5">{{$taxval->currency}}{{$cart->totalAddonPrice}}</span></h5>
+                                        @if ($cart->addons_id != "")
+                                            <?php 
+                                            $addons_id = explode(",",$cart->addons_id);
+                                            $addons_price = explode(",",$cart->addons_price);
+                                            $addons_name = explode(",",$cart->addons_name);
+                                            ?>                                            
+                                            @foreach ($addons_id as $key =>  $addons)                                
+                                                <div class="cart-addons">
+                                                    <b>{{$addons_name[$key]}}</b>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                        @empty (!$cart->group_addons)
+                                            @foreach($cart->group_addons as $group_addon)
+                                                <div class="cart-addons">
+                                                    <b>{{$group_addon}}</b>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    @endif
+
+                                     @empty (!$cart->combo)
+                                     <h5>Combo Options</h5>
+                                        @foreach($cart->combo as $comb)
+                                            <div class="cart-addons">
+                                                <b>{{$comb}}</b>
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 </div>
-                            @endif
+                            
 
                             @if ($cart->item_notes != "")
                                 <textarea placeholder="{{ trans('messages.enter_order_note') }}" readonly="">{{$cart->item_notes}}</textarea>
@@ -119,7 +155,7 @@
                         @endif
 
                         <h4 class="sec-head openmsg mt-5" style="color: red; display: none;">Restaurant is closed.</h4>
-
+                         @if (Session::has('id'))
                         <div class="cart-delivery-type open">
                             <label for="cart-delivery">
                                 <input type="radio" name="cart-delivery" id="cart-delivery" checked value="1">
@@ -203,9 +239,11 @@
                             <input type="hidden" name="getpromo" id="getpromo" value="">
                         @endif
 
+                       
                         <div class="mt-3">                            
                             <button type="button" style="width: 100%;" class="btn open comman" onclick="WalletOrder()">{{ trans('labels.my_wallet') }} ({{$taxval->currency}}{{number_format($userinfo->wallet, 2)}})</button>
                         </div>
+                        
 
                         @foreach($getpaymentdata as $paymentdata)
 
@@ -242,7 +280,13 @@
                             @endif
 
                         @endforeach
+                        @else
+                          <a href="/signup" style="width: 100%;" class="btn mb-2 mt-4">Create an account</buatton>
+                          <a href="/login"  style="width: 100%;" class="btn mb-4">Login</a>
 
+
+                          <a href="/checkout"  style="width: 100%;" class="btn ">Guest checkout</a>
+                        @endif
                     </div>
                 </div>
             @endif
@@ -419,58 +463,58 @@
         var email = $('#email').val();
 
         if (order_type == "1") {
-            if (address == "" && lat == "" && lang == "") {
-                $('#ermsg').text('Address is required');            
-                $('#error-msg').addClass('alert-danger');
-                $('#error-msg').css("display","block");
+            // if (address == "" && lat == "" && lang == "") {
+            //     $('#ermsg').text('Address is required');            
+            //     $('#error-msg').addClass('alert-danger');
+            //     $('#error-msg').css("display","block");
 
-                setTimeout(function() {
-                    $("#error-msg").hide();
-                }, 5000);
-            } else if (lat == "") {
-                $('#ermsg').text('Please select the address from suggestion');
-                $('#error-msg').addClass('alert-danger');
-                $('#error-msg').css("display","block");
+            //     setTimeout(function() {
+            //         $("#error-msg").hide();
+            //     }, 5000);
+            // } else if (lat == "") {
+            //     $('#ermsg').text('Please select the address from suggestion');
+            //     $('#error-msg').addClass('alert-danger');
+            //     $('#error-msg').css("display","block");
 
-                setTimeout(function() {
-                    $("#error-msg").hide();
-                }, 5000);
+            //     setTimeout(function() {
+            //         $("#error-msg").hide();
+            //     }, 5000);
 
-            } else if (lang == "") {
-                $('#ermsg').text('Please select the address from suggestion');
-                $('#error-msg').addClass('alert-danger');
-                $('#error-msg').css("display","block");
+            // } else if (lang == "") {
+            //     $('#ermsg').text('Please select the address from suggestion');
+            //     $('#error-msg').addClass('alert-danger');
+            //     $('#error-msg').css("display","block");
 
-                setTimeout(function() {
-                    $("#error-msg").hide();
-                }, 5000);
+            //     setTimeout(function() {
+            //         $("#error-msg").hide();
+            //     }, 5000);
 
-            } else if (building == "") {
-                $('#ermsg').text('Door / Flat no. is required');
-                $('#error-msg').addClass('alert-danger');
-                $('#error-msg').css("display","block");
+            // } else if (building == "") {
+            //     $('#ermsg').text('Door / Flat no. is required');
+            //     $('#error-msg').addClass('alert-danger');
+            //     $('#error-msg').css("display","block");
 
-                setTimeout(function() {
-                    $("#error-msg").hide();
-                }, 5000);
+            //     setTimeout(function() {
+            //         $("#error-msg").hide();
+            //     }, 5000);
 
-            } else if (landmark == "") {
-                $('#ermsg').text('Landmark is required');
-                $('#error-msg').addClass('alert-danger');
-                $('#error-msg').css("display","block");
+            // } else if (landmark == "") {
+            //     $('#ermsg').text('Landmark is required');
+            //     $('#error-msg').addClass('alert-danger');
+            //     $('#error-msg').css("display","block");
 
-                setTimeout(function() {
-                    $("#error-msg").hide();
-                }, 5000);
-            } else if (postal_code == "") {
-                $('#ermsg').text('Postal Code is required');
-                $('#error-msg').addClass('alert-danger');
-                $('#error-msg').css("display","block");
+            //     setTimeout(function() {
+            //         $("#error-msg").hide();
+            //     }, 5000);
+            // } else if (postal_code == "") {
+            //     $('#ermsg').text('Postal Code is required');
+            //     $('#error-msg').addClass('alert-danger');
+            //     $('#error-msg').css("display","block");
 
-                setTimeout(function() {
-                    $("#error-msg").hide();
-                }, 5000);
-            } else {
+            //     setTimeout(function() {
+            //         $("#error-msg").hide();
+            //     }, 5000);
+            // } else {
                 handler.open({
                     name: 'Restaurant website',
                     description: 'Order payment',
@@ -483,7 +527,7 @@
                 $(window).on('popstate', function() {
                   handler.close();
                 });
-            }
+            // }
         } else {
 
             $.ajax({
@@ -1235,4 +1279,21 @@ $('body').on('click','.btn-select',function(e) {
         $('#country').val(country);
         $('#select_address').modal('hide');    
 });
+
+$('.view_addons').click(function (){
+    
+    if ($(this).hasClass('active')) {
+        $(this).text('View more detail');
+        
+        $(this).next('.cart-addons-wrap').slideUp();
+        $(this).removeClass('active');
+    }
+    else{
+        $(this).text('View less');
+        $(this).next('.cart-addons-wrap').slideDown();
+        $(this).addClass('active');
+    }
+    
+
+})
 </script>
