@@ -14,7 +14,7 @@
 
 
                  @foreach ($getitem->variation as $key => $value)
-                        <input type="hidden" name="price" id="price" value="{{$value->product_price}}">
+                        <input type="hidden" name="price" id="price" value="{{($getitem->is_default_combo != 1) ? $value->product_price : ($value->product_price + $totalComboPrice)}}">
                         @break
                     @endforeach
                     <div class="row title-price">
@@ -26,7 +26,7 @@
                        <p class="pricing">
                             @foreach ($getitem->variation as $key => $value)
 
-                                <h3 id="temp-pricing" class="temp-pricing product-price">{{$getdata->currency}}{{number_format($value->product_price,2)}}</h3>
+                                <h3 id="temp-pricing" class="temp-pricing product-price">{{$getdata->currency}}{{($getitem->is_default_combo != 1) ? number_format($value->product_price,2) : number_format($value->product_price + $totalComboPrice , 2)}}</h3>
                                 @if ($value->sale_price > 0)
                                     <h3 id="card2-oldprice">{{$getdata->currency}}{{number_format($value->sale_price,2)}}</h3>
                                 @endif

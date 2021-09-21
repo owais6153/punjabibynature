@@ -106,7 +106,7 @@
                 <input type="text" name="email" placeholder="{{ trans('messages.enter_email') }}" class="w-100" value="{{ Session::get('email') }}" readonly="">
                 <input type="hidden" id="country" name="country" value="91" />
                 <input name="mobile" type="text" class="w-100" id="mobile" placeholder="{{ trans('messages.enter_mobile') }}" value="{{ old('mobile') }}"/>
-                <input type="text" name="referral_code" placeholder="{{ trans('messages.enter_referral_code') }}" class="w-100" value="{{ Request()->referral_code }}">
+                
             @else
                 <input type="text" name="name" placeholder="{{ trans('messages.enter_fullname') }}" class="w-100" value="{{ old('name') }}">
                 <input type="text" name="email" placeholder="{{ trans('messages.enter_email') }}" class="w-100" value="{{ old('email') }}">
@@ -114,7 +114,7 @@
                 <input type="text" name="mobile" id="mobile" placeholder="{{ trans('messages.enter_mobile') }}" class="w-100" value="{{ old('mobile') }}">
                 <input type="password" name="password" placeholder="{{ trans('messages.enter_password') }}" class="w-50">
                 <input type="password" name="password_confirmation" placeholder="{{ trans('messages.enter_confirm_password') }}" class="w-50">
-                <input type="text" name="referral_code" placeholder="{{ trans('messages.enter_referral_code') }}" class="w-100" value="{{ Request()->referral_code }}">
+                
             @endif
             
             <label class="accept-check w-100" for="accept">

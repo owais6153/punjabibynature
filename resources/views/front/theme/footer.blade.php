@@ -610,6 +610,8 @@ function validateIngredients(){
     var combo = [];
     var group_addons = [];
     var qty = $('#quantity').val();
+    var totalAddonPrice = 0;
+
 // Ingredients
     if ($('input.Checkbox.ingredients').length > 0 ){
       $('.ingredientsWrapper').each(function (index, item){
@@ -621,25 +623,36 @@ function validateIngredients(){
       })
     }
 // Combo
-    if ($('.ComboGroups').length > 0 ){
+    if ($('.ComboGroups .comboItem:checked').length > 0 ){
       $('.comboWrapper').each(function (index, item){
+        
         combo[index] = $(item).find('h3').text();
         combo[index] += ': ';
         combo[index] += ($(item).find('.comboItem:checked').map(function(){
           return this.value;
         }).get().join(', '));
+      
       })
     }
+
+
 // Group Addons
 
     if ($('.group_addon_wrapper').length > 0 ){
       $('.group_addon_wrapper').each(function (index, item){
-        group_addons[index] = $(item).find('h3').text();
-        group_addons[index] += ': ';
-        group_addons[index] += ($(item).find('.group_addon:checked').map(function(){
-          return this.value;
-        }).get().join(', '));
+        if ($(item).find('.group_addon:checked').length > 0) {
+          group_addons[index] = $(item).find('.addon_group').attr('group_name');
+          group_addons[index] += ': ';
+          group_addons[index] += ($(item).find('.group_addon:checked').map(function(){
+            return this.value;
+          }).get().join(', '));
+
+          totalAddonPrice = parseInt($(item).find('.addon_group').attr('data-price')) + parseInt(totalAddonPrice);
+          
+        }
       })
+
+
     }
 
 
@@ -654,9 +667,12 @@ function validateIngredients(){
     }).get().join(', '));
 
 
-    var addons_price = ($('.Checkbox:checked').map(function() {
+    var addons_price = ($('.single_addon.Checkbox:checked').map(function() {
+      totalAddonPrice = parseInt($(this).attr('price')) + parseInt(totalAddonPrice);
       return $(this).attr('price');
     }).get().join(', '));
+
+        
      
     $('#preloader').show();
     $.ajax({
@@ -679,6 +695,7 @@ function validateIngredients(){
             combo: combo,
             group_addons: group_addons,
             user_id: user_id,
+            totalAddonPrice: totalAddonPrice
 
         },
         method: 'POST', //Post method,

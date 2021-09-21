@@ -882,6 +882,7 @@ span.required_label {
     max-width: 100% !important ;
     flex: 0 0 100% !important;
 }
+<<<<<<< HEAD
 .sec-catering {
     margin-top: 120px;
     padding-top: 100px;
@@ -980,8 +981,8 @@ section.sec2-catering .cat-product .col-xl-6.col-md-6 .product-details:nth-child
 
 /*-----cart css-----*/
 .cart-addons-wrap {
-    padding-top: 0px;
-    border-color: #fd3f32;
+    padding-top: 0px !important;
+    border-color: #fd3f32 !important;
 }
 
 .cart-addons-wrap h5 {
@@ -992,5 +993,5 @@ section.sec2-catering .cat-product .col-xl-6.col-md-6 .product-details:nth-child
 }
 
 .cart-addons {
-    border-color: #fd3f32;
+    border-color: #fd3f32 !important;
 }
