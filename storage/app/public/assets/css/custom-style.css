@@ -995,3 +995,12 @@ section.sec2-catering .cat-product .col-xl-6.col-md-6 .product-details:nth-child
 .cart-addons {
     border-color: #fd3f32 !important;
 }
+
+
+/*-----reponsive css-----*/
+
+@media only screen and (max-width: 1024px) {
+div#navbarNav .nav-item.search {
+    width: 410px;
+}
+}

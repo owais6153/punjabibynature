@@ -54,13 +54,14 @@
 			                
 			            </div>
 			            <div class="col-lg-6">
-			                <form class="contact-form" id="contactform" method="post">
+			                <form class="contact-form" id="contactform" method="post" action="{{url('/contactus/send')}}">
 			                    {{csrf_field()}}
 			                    <input type="text" name="firstname" placeholder="{{ trans('messages.enter_firstname') }}" id="firstname" required="">
 			                    <input type="text" name="lastname" placeholder="{{ trans('messages.enter_lastname') }}" id="lastname" required="">
 			                    <input type="email" name="email" placeholder="{{ trans('messages.enter_email') }}" id="email" required="">
 			                    <textarea name="message" placeholder="{{ trans('messages.enter_message') }}" id="message" required=""></textarea>
-			                    <button type="button" name="submit" class="btn" onclick="contact()">{{ trans('labels.submit') }}</button>
+			                   <!--  <button type="button" name="send" class="btn contact-btn"></button> -->
+			                   <input type="submit" name="send" class="btn contact-btn" value="{{ trans('labels.submit') }}">
 			                </form>
 			            </div>
 			        </div>

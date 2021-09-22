@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\EmailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +23,9 @@ Route::get('/clear-cache', function() {
     return "Cache is cleared";
 });
 
+Route::get('/contactus', 'SendEmailController@index');
+Route::post('/contactus/send', 'SendEmailController@send');
+
 if (\App\SystemAddons::where('unique_identifier', 'otp')->first() != null && \App\SystemAddons::where('unique_identifier', 'otp')->first()->activated) {
 	Route::get('auth/facebook', 'Auth\SocialotpController@redirectToFacebook');
 	Route::get('auth/facebook/callback', 'Auth\SocialotpController@handleFacebookCallback');
@@ -37,14 +40,15 @@ if (\App\SystemAddons::where('unique_identifier', 'otp')->first() != null && \Ap
 	Route::get('auth/google/callback', 'Auth\GoogleController@handleGoogleCallback');
 }
 
-Route::post('auth', 'HomeController@auth');
-
+	Route::post('auth', 'HomeController@auth');
+	
 Route::group(['namespace' => 'front'], function () {
 	Route::get('/', 'HomeController@index');
 	Route::get('/405', 'HomeController@notallow');
 	Route::post('/home/contact', 'HomeController@contact');
 	Route::post('/home/checkpincode', 'HomeController@checkpincode');
 	Route::get('/contactus', 'HomeController@contactus');
+	
 	Route::get('/catering', 'HomeController@catering');
 	Route::get('/product', 'ItemController@index');
 	Route::get('/product-details/{id}', 'ItemController@productdetails');
@@ -62,6 +66,8 @@ Route::group(['namespace' => 'front'], function () {
 	Route::post('/cart/deletecartitem', 'CartController@deletecartitem');
 	Route::post('/cart/removepromocode', 'CartController@removepromocode');
 	Route::get('/cart/isopenclose', 'CartController@isopenclose');
+	
+
 
 	Route::get('/favorite', 'FavoriteController@index');
 	
@@ -89,6 +95,7 @@ Route::group(['namespace' => 'front'], function () {
 		Route::post('/payment', 'RazorpayotpController@payment')->name('payment');
 
 		Route::post('/addmoney', 'RazorpayotpController@addmoney')->name('addmoney');
+
 
 		Route::post('/addmoneystripe', 'CheckoutotpController@addmoneystripe');
 		
@@ -155,6 +162,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 	});
 
 	Route::group(['middleware' => ['AdminAuth']],function(){
+		
 		Route::get('home', 'AdminController@home');
 		Route::post('changePassword', 'AdminController@changePassword');
 		Route::post('settings', 'AdminController@settings');
@@ -297,6 +305,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
 		Route::get('contact', 'ContactController@index');
 
+
 		Route::get('driver', 'DriverController@index');
 		Route::post('driver/store', 'DriverController@store');
 		Route::get('driver/list', 'DriverController@list');
@@ -327,7 +336,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 		Route::get('notification', 'NotificationController@index');
 		Route::post('notification/store', 'NotificationController@store');
 		Route::get('notification/list', 'NotificationController@list');
+
 		
+
 		Route::get('clear-cache', function() {
 		    Artisan::call('cache:clear');
 		    return redirect()->back()->with('clear', 'Cache is cleared');
