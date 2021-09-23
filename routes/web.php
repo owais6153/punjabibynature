@@ -23,8 +23,7 @@ Route::get('/clear-cache', function() {
     return "Cache is cleared";
 });
 
-Route::get('/contactus', 'SendEmailController@index');
-Route::post('/contactus/send', 'SendEmailController@send');
+
 
 if (\App\SystemAddons::where('unique_identifier', 'otp')->first() != null && \App\SystemAddons::where('unique_identifier', 'otp')->first()->activated) {
 	Route::get('auth/facebook', 'Auth\SocialotpController@redirectToFacebook');
@@ -43,6 +42,8 @@ if (\App\SystemAddons::where('unique_identifier', 'otp')->first() != null && \Ap
 	Route::post('auth', 'HomeController@auth');
 	
 Route::group(['namespace' => 'front'], function () {
+	Route::get('/sendemail', 'SendEmailController@index');
+Route::post('/sendemail/send', 'SendEmailController@send');
 	Route::get('/', 'HomeController@index');
 	Route::get('/405', 'HomeController@notallow');
 	Route::post('/home/contact', 'HomeController@contact');

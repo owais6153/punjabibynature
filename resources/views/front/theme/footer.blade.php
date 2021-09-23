@@ -967,6 +967,14 @@ function validateIngredients(){
         });
       });
     });
+  jQuery(document).scroll(()=>{
+    if (jQuery(this).scrollTop() > 200) {
+      jQuery('.nav-bottom-bar').addClass('fixed-top');
+    }
+    else {
+      jQuery('.nav-bottom-bar').removeClass('fixed-top');
+    }
+  });
 </script>
 @yield('script')
 </body>

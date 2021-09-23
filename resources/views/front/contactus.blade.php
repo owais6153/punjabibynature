@@ -54,7 +54,7 @@
 			                
 			            </div>
 			            <div class="col-lg-6">
-			                <form class="contact-form" id="contactform" method="post" action="{{url('/contactus/send')}}">
+			                <form class="contact-form" id="contactform" method="post" action="{{url('sendemail/send')}}">
 			                    {{csrf_field()}}
 			                    <input type="text" name="firstname" placeholder="{{ trans('messages.enter_firstname') }}" id="firstname" required="">
 			                    <input type="text" name="lastname" placeholder="{{ trans('messages.enter_lastname') }}" id="lastname" required="">

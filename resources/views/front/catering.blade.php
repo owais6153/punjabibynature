@@ -30,25 +30,13 @@
      	<h2 class="sec-head">Catering Menu</h2>
      	<div class="cat-aside-wrap">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                     @foreach ($getcategory as $category)
                     <a href="{{URL::to('/product/'.$category->id)}}" class="cat-check border-top-no @if (request()->id == $category->id) active @endif">
                         <p>{{$category->category_name}}</p>
                     </a>
                     @endforeach
                 </div>
+
 
                 <div class="row catering">
      	            <div class="cat-product">
@@ -118,6 +106,26 @@
             <div class="cart-box-catering">
                  <h3>Cart </h3>
                  <div class="cart-catering-body">
+
+                    <div class="cart-total items-descrip-price">
+                       <div class="total-values">
+                            <div>Food & Beverage</div>
+                            <div>$43.53</div>
+                        </div>
+
+                    </div>
+
+                    <div class="cart-total">
+                        <div class="total-values">
+                            <div><b>Total</b></div>
+                            <div><b>$43.53</b></div>
+                        </div>
+                        <div class="total-description">
+                            <div>Price Per Head</div>
+                            <a href="#">$7.26/person</a>
+                        </div>
+                    </div>
+
                  	<a href="#" class="checkout-btn">Checkout <i class="fas fa-arrow-right"></i></a>
                  	<p>$100.00 minimum for delivery</p>
                  </div> 
