@@ -215,7 +215,7 @@
     </div>
 </section> -->
 
-<section class="review-sec">
+<!-- <section class="review-sec">
     <div class="container">
         <h2 class="sec-head">{{ trans('labels.our_review') }}</h2>
         <div class="review-carousel owl-carousel owl-theme">
@@ -228,6 +228,100 @@
                 <p>{{$review->comment}}</p>
             </div>
             @endforeach
+        </div>
+
+    </div>
+</section> -->
+<section class="review-sec">
+    <div class="container">
+        <h2 class="sec-head">{{ trans('labels.our_review') }}</h2>
+        <div class="review-carousel owl-carousel owl-theme">
+            
+            <div class="item">
+                <div class="review-profile">
+                    <img src='{!! asset("storage/app/public/assets/images/boss.png") !!}' alt="">
+                </div>
+                <h3>Harry Jackson</h3>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <p>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </p>
+            </div>
+            <div class="item">
+                <div class="review-profile">
+                    <img src='{!! asset("storage/app/public/assets/images/boss.png") !!}' alt="">
+                </div>
+                <h3>Harry Jackson</h3>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <p>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </p>
+            </div>
+            <div class="item">
+                <div class="review-profile">
+                    <img src='{!! asset("storage/app/public/assets/images/boss.png") !!}' alt="">
+                </div>
+                <h3>Harry Jackson</h3>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <p>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </p>
+            </div>
+            <div class="item">
+                <div class="review-profile">
+                    <img src='{!! asset("storage/app/public/assets/images/boss.png") !!}' alt="">
+                </div>
+                <h3>Harry Jackson</h3>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <p>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </p>
+            </div>
+            <div class="item">
+                <div class="review-profile">
+                    <img src='{!! asset("storage/app/public/assets/images/boss.png") !!}' alt="">
+                </div>
+                <h3>Harry Jackson</h3>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <p>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </p>
+            </div>
+            <div class="item">
+                <div class="review-profile">
+                    <img src='{!! asset("storage/app/public/assets/images/boss.png") !!}' alt="">
+                </div>
+                <h3>Harry Jackson</h3>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <p>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </p>
+            </div>
+            
         </div>
 
     </div>

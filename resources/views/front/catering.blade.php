@@ -27,6 +27,7 @@
 </section>
      <section class="sec2-catering">
      	<div class="container">
+    
      	<h2 class="sec-head">Catering Menu</h2>
      	<div class="cat-aside-wrap">
 
@@ -36,7 +37,6 @@
                     </a>
                     @endforeach
                 </div>
-
 
                 <div class="row catering">
      	            <div class="cat-product">
@@ -106,16 +106,34 @@
             <div class="cart-box-catering">
                  <h3>Cart </h3>
                  <div class="cart-catering-body">
+                    <div class="cart-total-catering cart-items-catering">
+                        <div class="total-values">
+                            <div>6</div>
+                            <div>Traditional BreakFast<br/>serves 6</div>
+                            <div>$43.53</div>
+                            <div><a href="#"><i class="fas fa-times"></i></a></div>
+                        </div>
+                      
+                        
+                    </div>
 
-                    <div class="cart-total items-descrip-price">
+                    <div class="cart-total-catering">
                        <div class="total-values">
                             <div>Food & Beverage</div>
+                            <div>$43.53</div>
+                        </div>
+                        <div class="total-values">
+                            <div>Restaurant Delivery Fee</div>
+                            <div>$43.53</div>
+                        </div>
+                        <div class="total-values">
+                            <div>8.875% Sales Tax</div>
                             <div>$43.53</div>
                         </div>
 
                     </div>
 
-                    <div class="cart-total">
+                    <div class="cart-total-catering">
                         <div class="total-values">
                             <div><b>Total</b></div>
                             <div><b>$43.53</b></div>
@@ -131,7 +149,7 @@
                  </div> 
             </div>
          </div>
-		</div>
+    </div>
      </section>
 
 </body>

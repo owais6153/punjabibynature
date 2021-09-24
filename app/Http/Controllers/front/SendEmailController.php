@@ -30,4 +30,6 @@ class SendEmailController extends Controller
      return back()->with('success', 'Thanks for contacting us!');
 
     }
+
+
 }
