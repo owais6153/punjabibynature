@@ -1045,7 +1045,52 @@ section.review-sec {
     background-color: #fff;
     border-radius: 6px;
     padding: 20px;
+}   
+footer {
+    padding-top: 25px !important;
+}        
+.fanclub-sec {
+    padding-top: 60px;
+    margin-top: 130px;
 }
+
+.item-review .review-img {
+    display: flex;
+}
+
+.item-review .review-img img {
+    border-radius: 17%;
+    box-shadow: 0px 0px 30px #00000014;
+}
+
+.item-review .review-img .head-star {
+    padding-left: 13px;
+}
+
+.item-review .review-img .head-star h3 {
+    font-size: 20px;
+    padding-top: 10px;
+}
+
+.item-review .review-img .head-star p i {
+    color: #fbab10;
+}
+
+.item-review .des-review {
+    padding-top: 16px;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+}   
+.review-box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0px 0px 30px #00000014;
+}
+.item-review {
+    margin-bottom: 32px;
+}                                                                                                                                          
 /*-----cart css-----*/
 .cart-addons-wrap {
     padding-top: 0px !important;
@@ -1073,7 +1118,26 @@ section.review-sec {
     margin-top: 145px;
 }
 /*-----reponsive css-----*/
-
+@media only screen and (max-width: 1366px) {
+div#navbarNav .nav-item.search {
+    width: 630px;
+}
+div#navbarNav ul.sub-menu {
+    position: absolute;
+    width: 1292px;
+    left: 36px;
+}
+.fourth-sec-home .home-fourth-right p {
+    font-size: 14px;
+}
+.fourth-sec-home .fourth-section-home .sec-head {
+    font-size: 24px;
+}
+.home-fourth-sec-img {
+    padding-right: 70px;
+    padding-left: 70px;
+}
+}
 @media only screen and (max-width: 1024px) {
 div#navbarNav .nav-item.search {
     width: 410px;
@@ -1251,6 +1315,23 @@ section.sec2-catering .cat-product {
 }
 .sec-catering .fifth-section-home .sec-head {
     font-size: 30px !important;
+}
+.sec-catering {
+    margin-top: 100px;
+}
+.abt-page .abt-sec p {
+    font-size: 14px;
+    font-weight: 400;
+}
+.abt-page .favourite {
+    padding-top: 15px;
+}
+.abt-page-fifth .home-fourth-sec-img {
+    padding-right: 0px;
+}
+.contact-page {
+    margin-top: 52px;
+    padding-top: 50px;
 }
 }
 @media only screen and (max-width: 375px) {

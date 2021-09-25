@@ -291,6 +291,7 @@ class ItemController extends Controller
                 Session::put('guest_cart', $data);
                 return response()->json(['status'=>1,'message'=>'Item has been added to your cart','cartcnt'=>1]);
             }
+       
             else{
                 $guestCartData = (Session::has('guest_cart')) ? Session::get('guest_cart') : array() ;
                 $cartDetails = 
@@ -327,6 +328,11 @@ class ItemController extends Controller
                
             }
         }
+        
+
+
+
+        
         else{
             try {
 

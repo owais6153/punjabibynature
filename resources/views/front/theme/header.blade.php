@@ -199,6 +199,11 @@
 								</li>
 								<li class="nav-item {{ request()->is('contact') ? 'active' : '' }}">
 									<a class="nav-link" href="{{URL::to('/contactus')}}">
+										<i class="fas fa-pen-fancy"></i> 
+									Fan Club</a>
+								</li>
+								<li class="nav-item {{ request()->is('contact') ? 'active' : '' }}">
+									<a class="nav-link" href="{{URL::to('/contactus')}}">
 										<i class="fas fa-mobile"></i> 
 									Contact</a>
 								</li>

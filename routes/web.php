@@ -43,12 +43,13 @@ if (\App\SystemAddons::where('unique_identifier', 'otp')->first() != null && \Ap
 	
 Route::group(['namespace' => 'front'], function () {
 	Route::get('/sendemail', 'SendEmailController@index');
-Route::post('/sendemail/send', 'SendEmailController@send');
+	Route::post('/sendemail/send', 'SendEmailController@send');
 	Route::get('/', 'HomeController@index');
 	Route::get('/405', 'HomeController@notallow');
 	Route::post('/home/contact', 'HomeController@contact');
 	Route::post('/home/checkpincode', 'HomeController@checkpincode');
 	Route::get('/contactus', 'HomeController@contactus');
+	Route::get('/fanclub', 'HomeController@fanclub');
 	
 	Route::get('/catering', 'HomeController@catering');
 	Route::get('/product', 'ItemController@index');
