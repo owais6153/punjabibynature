@@ -82,7 +82,21 @@
                                 </div>
                             </div>
 
-                     
+                               <div class="row">
+                                <?php
+                                    $item_type = explode(",", $item->item_type);
+                                ?>
+                                    <div class="col-sm-3 col-md-6">
+                                        <h5>Item Type</h5>
+                                        <div class="form-group">
+                                            <select name="item_type[]" class="form-control selectpicker" multiple data-live-search="true" id="item_type">
+                                                <option value="catering" {{(in_array('catering' , $item_type)) ? 'selected' : ''}}>Catering</option>
+                                                <option value="product" {{(in_array('product' , $item_type)) ? 'selected' : ''}}>Product</option>     
+                                            </select>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
 
                             <div id="ingredient_field">
                                 <h5>Edit Ingredients</h5>
