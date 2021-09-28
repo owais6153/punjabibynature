@@ -1,20 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@include('front.theme.header')
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Catering</title>
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{!! asset('storage/app/public/images/about/favicon-61379b1f625c7.png') !!}">
-    <!-- Custom Stylesheet -->
-    <link href="{!! asset('storage/app/public/assets/css/style.css') !!}" rel="stylesheet">
 
-</head>
-<header>@include('front.theme.header')</header>
-
-<body>
 	<section class="fifth-sec-home sec-catering" style="background: url('storage/app/public/assets/images/live-catring-video-img.jpg');">
     <div class="container">
         <div class="about-box fifth-section-home">
@@ -113,6 +99,10 @@
 
                     @foreach ($getitem as $item)
 
+                    <?php 
+                    $item_type = explode(',', $item->item_type)                    
+                    ?>
+                    @if(in_array('product', $item_type))
                     <div class="col-xl-6 col-md-6">
                         <div class="pro-box">
                             <div class="pro-img">
@@ -165,6 +155,7 @@
                         @endif                        
                         </div>
                     </div>
+                    @endif
                     @endforeach
                 </div>
                 	
@@ -219,7 +210,5 @@
     </div>
      </section>
 
-</body>
 
-<footer>@include('front.theme.footer')</footer>
-</html>
+@include('front.theme.footer')

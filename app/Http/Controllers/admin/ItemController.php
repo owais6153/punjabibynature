@@ -110,6 +110,7 @@ class ItemController extends Controller
         $this->validate($request,[
             'cat_id' => 'required',
             'item_name' => 'required',
+            'item_type' => 'required',
             'file.*' => 'required|mimes:jpeg,png,jpg',
             'product_price.*' => 'required|numeric',
             'sale_price.*' => 'required|numeric',
@@ -120,6 +121,7 @@ class ItemController extends Controller
         $item->cat_id =$request->cat_id;
         $item->addons_id =@implode(",",$request->addons_id);
         $item->ingredients_id =@implode(",",$request->ingredients_id);
+        $item->item_type =@implode(",",$request->item_type);
         $item->item_name =$request->item_name;
         $item->item_description =$request->description;
         $item->delivery_time =$request->delivery_time;
@@ -256,6 +258,7 @@ class ItemController extends Controller
         $this->validate($request,[
             'getcat_id' => 'required',
             'item_name' => 'required',
+            'item_type' => 'required',
             'product_price.*' => 'required|numeric',
             'sale_price.*' => 'required|numeric',
         ]);
@@ -274,6 +277,7 @@ class ItemController extends Controller
         $item->ingredients_id =@implode(",",$request->ingredients_id);
         $item->available_ing_option = @implode(",", $request->available_ing_option);
         $item->item_name =$request->item_name;
+        $item->item_type =@implode(",",$request->item_type);
         $item->item_description =$request->getdescription;
         $item->delivery_time =$request->getdelivery_time;
         $item->addongroups_id = @implode(",", $request->addons_groups_id);

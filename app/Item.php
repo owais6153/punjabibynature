@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     protected $table='item';
-    protected $fillable=['cat_id','item_name','item_description','item_price','delivery_time', 'available_ing_option', 'is_default_combo', 'combo_group_id'];
+    protected $fillable=['cat_id','item_name','item_description','item_price','delivery_time', 'available_ing_option', 'is_default_combo', 'combo_group_id', 'item_type'];
 
     public function category(){
         return $this->hasOne('App\Category','id','cat_id');
