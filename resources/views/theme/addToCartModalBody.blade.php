@@ -17,7 +17,7 @@
 
 
                  @foreach ($getitem->variation as $key => $value)
-                        <input type="hidden" name="price" id="price" value="{{($getitem->is_default_combo != 1) ? $value->product_price : ($value->product_price + $totalComboPrice)}}">
+                        <input type="hidden" name="price" id="price" value="{{($getitem->is_default_combo != 1 && $source != 'product') ? $value->product_price : ($value->product_price + $totalComboPrice)}}">
                         @break
                     @endforeach
                     <div class="row title-price">
@@ -292,6 +292,7 @@
     </div>
                     
                 </div>
+                @if($source == 'product')
                  <div id="comboGroup" class="w3-bar-item w3-button addons-tabs-cart combo-div" style="flex: 0 0 100%; max-width: 100%;">
                         <p class="{{($getitem->is_default_combo == 0) ? 'not_required' : 'required_combo' }}">
                                 @if ($getitem->is_default_combo == 0 && isset($ComboGroups[0]->name))
@@ -300,10 +301,11 @@
                                 {{($getitem->is_default_combo == 0 && isset($ComboGroups[0]->name)) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : '' }}         
                         </p>
                 </div>
+                @endif
                 <textarea id="item_notes" name="item_notes" placeholder="Write Notes..."></textarea>
 
                 <script type="text/javascript">
-                    @if (isset($ComboGroups[0]->name) && $getitem->is_default_combo == 0) 
+                    @if (isset($ComboGroups[0]->name) && $getitem->is_default_combo == 0 && $source == 'catering') 
 $('#makeItCombo').click(function(){    
     $('.temp-pricing').hide();
     var total = parseFloat($("#price").val()); 
