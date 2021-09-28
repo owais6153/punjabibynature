@@ -1,8 +1,8 @@
-
-
-   
+@if($source == 'product')
               <img src='{{$getimages[0]->image }}' alt="">
-               
+
+
+@endif
 
 
 
@@ -10,7 +10,7 @@
                 <input type="hidden" name="item_id" id="item_id" value="{{$getitem->id}}">
 
                  @foreach ($getitem->variation as $key => $value)
-                        <input type="hidden" name="price" id="price" value="{{($getitem->is_default_combo != 1) ? $value->product_price : ($value->product_price + $totalComboPrice)}}">
+                        <input type="hidden" name="price" id="price" value="{{($getitem->is_default_combo != 1 && $source != 'product') ? $value->product_price : ($value->product_price + $totalComboPrice)}}">
                         @break
                     @endforeach
                     <div class="row title-price">
@@ -112,7 +112,7 @@
                              <ul class="list-unstyled extra-food" ingredient_type="{{$ingredientsByType->name}}">
                              @foreach($ingredientsByType->ingredients as $ingredientsItems)
                             <li class="{{($ingredientsByType->available_ing_option > 1 || $ingredientsByType->available_ing_option == 'all')? '' : 'Radio'}}">
-                                <input  class="Checkbox ingredients" type="{{($ingredientsByType->available_ing_option > 1 || $ingredientsByType->available_ing_option == 'all')? 'checkbox' : 'radio'}}" name="ingredients['{{$ingredientsByType->name}}']" value="{{$ingredientsItems->id}}" data-option-allowed="{{$ingredientsByType->available_ing_option}}" ingredient_name="{{$ingredientsItems->ingredients}}" >
+                                <input  class="Checkbox ingredients" type="{{($ingredientsByType->available_ing_option > 1 || $ingredientsByType->available_ing_option == 'all')? 'checkbox' : 'radio'}}" name="ingredients['{{$ingredientsByType->name}}']" value="{{$ingredientsItems->ingredients}}" data-option-allowed="{{$ingredientsByType->available_ing_option}}" ingredient_name="{{$ingredientsItems->ingredients}}" >
                                 <p>{{$ingredientsItems->ingredients}}</p>
                             </li>
                              @endforeach
@@ -147,7 +147,7 @@
                                  
                                 @foreach($getAddonsByGroup->addons as $addon)
                                     <li class="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? '' : 'Radio'}}">
-                                        <input type="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? 'checkbox' : 'radio'}}" name="addons['{{$getAddonsByGroup->name}}'][]" class="Checkbox group_addon" value="{{$addon->id}}" data-option-allowed="{{$getAddonsByGroup->available_add_option}}"  addon_name="{{$addon->name}}">
+                                        <input type="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? 'checkbox' : 'radio'}}" name="addons['{{$getAddonsByGroup->name}}'][]" class="Checkbox group_addon" value="{{$addon->name}}" data-option-allowed="{{$getAddonsByGroup->available_add_option}}"  addon_name="{{$addon->name}}">
                                         <p>{{$addon->name}}</p>
                                     </li>
                                 @endforeach
@@ -207,7 +207,7 @@
                             
                             @foreach($getAddonsByGroup->addons as $addon)
                                 <li class="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? '' : 'Radio'}}">
-                                    <input type="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? 'checkbox' : 'radio'}}" name="addons['{{$getAddonsByGroup->name}}'][]" class="Checkbox group_addon" value="{{$addon->id}}" data-option-allowed="{{$getAddonsByGroup->available_add_option}}" addon_name="{{$addon->name}}">
+                                    <input type="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? 'checkbox' : 'radio'}}" name="addons['{{$getAddonsByGroup->name}}'][]" class="Checkbox group_addon" value="{{$addon->name}}" data-option-allowed="{{$getAddonsByGroup->available_add_option}}" addon_name="{{$addon->name}}">
                                     <p>{{$addon->name}}</p>
                                </li>
                             @endforeach
@@ -269,7 +269,7 @@
                                     <div id="{{$ComboGroup->name}}{{$ComboGroup->id}}combo" class="addon tabcontent" style="display:none">
                                         <ul class="list-unstyled extra-food single-addon ComboGroups">
                                             <div id="pricelist">
-                                            @foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->id}}"><p>{{$ComboItem->name}}</p></li>@endforeach
+                                            @foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->name}}"><p>{{$ComboItem->name}}</p></li>@endforeach
                                             </div>
                                         </ul>
                                         </div>
@@ -285,6 +285,7 @@
     </div>
                     
                 </div>
+                @if($source == 'product')
                  <div id="comboGroup" class="w3-bar-item w3-button addons-tabs-cart combo-div" style="flex: 0 0 100%; max-width: 100%;">
                         <p class="{{($getitem->is_default_combo == 0) ? 'not_required' : 'required_combo' }}">
                                 @if ($getitem->is_default_combo == 0 && isset($ComboGroups[0]->name))
@@ -293,10 +294,11 @@
                                 {{($getitem->is_default_combo == 0 && isset($ComboGroups[0]->name)) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : '' }}         
                         </p>
                 </div>
+                @endif
                 <textarea id="item_notes" name="item_notes" placeholder="Write Notes..."></textarea>
 
                 <script type="text/javascript">
-                    @if (isset($ComboGroups[0]->name) && $getitem->is_default_combo == 0) 
+                    @if (isset($ComboGroups[0]->name) && $getitem->is_default_combo == 0 && $source == 'catering') 
 $('#makeItCombo').click(function(){    
     $('.temp-pricing').hide();
     var total = parseFloat($("#price").val()); 
@@ -308,7 +310,7 @@ $('#makeItCombo').click(function(){
                                     <div id="{{$ComboGroup->name}}{{$ComboGroup->id}}combo" class="addon tabcontent" style="display:none">
                                     <ul class="list-unstyled extra-food single-addon ComboGroups">
                                      <div id="pricelist">
-                                    @foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->id}}"><p>{{$ComboItem->name}}</p></li>@endforeach</div></ul></div></div>@endforeach`;
+                                    @foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->name}}"><p>{{$ComboItem->name}}</p></li>@endforeach</div></ul></div></div>@endforeach`;
 
     if($(this).is(':checked')){
         total += parseFloat($(this).attr('data-price')) || 0;

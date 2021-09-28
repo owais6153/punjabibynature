@@ -58,7 +58,7 @@
                                     @endif    
 
                                     @if ($cart->addons_id != "" || $cart->group_addons != '')
-                                        <h5><span>Add-ons: </span><span class="pl-5">{{$taxval->currency}}{{$cart->totalAddonPrice}}</span></h5>
+                                        <h5 class="cart-addon-h"><span>Add-ons: </span><span>{{$taxval->currency}}{{$cart->totalAddonPrice}}</span></h5>
                                         @if ($cart->addons_id != "")
                                             <?php 
                                             $addons_id = explode(",",$cart->addons_id);
@@ -281,8 +281,8 @@
 
                         @endforeach
                         @else
-                          <a href="/signup" style="width: 100%;" class="btn mb-2 mt-4">Create an account</buatton>
-                          <a href="/login"  style="width: 100%;" class="btn mb-4">Login</a>
+                          <a href="{{URL::to('/signup')}}" style="width: 100%;" class="btn mb-2 mt-4">Create an account</buatton>
+                          <a href="{{URL::to('/signin')}}"  style="width: 100%;" class="btn mb-4">Login</a>
 
 
                           <a href="/checkout"  style="width: 100%;" class="btn ">Guest checkout</a>
