@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
+use Validator;
 
 class SendEmailController extends Controller
 {
@@ -22,8 +23,9 @@ class SendEmailController extends Controller
      ]);
 
         $data = array(
-            'name'      =>  $request->name,
-            'message'   =>   $request->message
+            'name'      =>  $request->firstname . ' ' . $request->firstname,
+            'email'     =>  $request->email,
+            'message'   =>  $request->message
         );
 
      Mail::to('osama.arshad@geeksroot.com')->send(new SendMail($data));

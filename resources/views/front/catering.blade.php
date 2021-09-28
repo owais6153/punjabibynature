@@ -12,6 +12,8 @@
     </div>
 </section>
 
+<input type="hidden" id="type_catering" value="true" name="">
+
    <!--  <section class="testing-cat">
         <div class="row">
             @foreach ($getcategory as $category)

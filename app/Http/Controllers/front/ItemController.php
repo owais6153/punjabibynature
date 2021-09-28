@@ -483,9 +483,9 @@ class ItemController extends Controller
         $getdata=User::select('currency')->where('type','1')->first();
         $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
 
+        $source = $request->source;
 
-
-        $output = view('theme.addToCartModalBody', compact('getitem','getabout','getimages','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory', 'ComboGroups', 'totalComboPrice'))->render();
+        $output = view('theme.addToCartModalBody', compact('getitem','getabout','getimages','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory', 'ComboGroups', 'totalComboPrice', 'source'))->render();
         return response()->json(['status'=>1,'html'=> $output, 'title' => $getitem->item_name],200);
     }
 }

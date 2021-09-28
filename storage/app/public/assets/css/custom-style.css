@@ -1103,7 +1103,13 @@ footer {
     font-size: 16px;
     padding: 10px;
 }
-
+.cart-addons b {
+    width: 100% !important;
+}
+h5.cart-addon-h {
+    display: flex;
+    justify-content: space-between;
+}
 .cart-addons {
     border-color: #fd3f32 !important;
 }

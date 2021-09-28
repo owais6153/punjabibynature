@@ -4,8 +4,9 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use Mail;
+use Validator;
 
-class EmailController extends Controller
+class SendEmailController extends Controller
 {
         public function contactemail(){
                 return view('contactemail');

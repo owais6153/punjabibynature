@@ -339,6 +339,10 @@ aria-hidden="true">
 
 function openCartModal(item_id) {        
     $('#addToCartModal').modal('show');
+    let source = 'product';
+    if ($('input#type_catering').length == 1) {
+      source = 'catering';
+    }
 
     var CSRF_TOKEN = $('input[name="_token"]').val();
 
@@ -348,7 +352,7 @@ function openCartModal(item_id) {
       },
       url:"{{ url('/product/getOptions') }}",
       method:'POST',
-      data: {id: item_id},
+      data: {id: item_id, source: source},
       dataType: 'json',
       success:function(data){
         if (data.status == 1) {
