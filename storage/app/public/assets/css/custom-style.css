@@ -1333,6 +1333,10 @@ section.sec2-catering .cat-product {
     margin-top: 52px;
     padding-top: 50px;
 }
+.fanclub-sec {
+    padding-top: 60px;
+    margin-top: 75px;
+}
 }
 @media only screen and (max-width: 375px) {
 first-sec-home .sec-head {

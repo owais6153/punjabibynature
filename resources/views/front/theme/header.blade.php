@@ -198,7 +198,7 @@
 									About Us</a>
 								</li>
 								<li class="nav-item {{ request()->is('contact') ? 'active' : '' }}">
-									<a class="nav-link" href="{{URL::to('/contactus')}}">
+									<a class="nav-link" href="{{URL::to('/fanclub')}}">
 										<i class="fas fa-pen-fancy"></i> 
 									Fan Club</a>
 								</li>

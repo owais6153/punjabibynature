@@ -25,21 +25,88 @@
         </div>
     </div>
 </section>
+
+   <!--  <section class="testing-cat">
+        <div class="row">
+            @foreach ($getcategory as $category)
+                <h3>{{$category->category_name}}</h3>
+                          @foreach ($getitem as $item)
+                          
+                    <div class="col-xl-6 col-md-6">
+                        <div class="pro-box">
+                            <div class="pro-img">
+                                @foreach ($item->variation as $key => $value)
+                                    @if($value->sale_price > 0)
+                                        <div class="ribbon-wrapper">
+                                            <div class="ribbon">ON SALE</div>
+                                        </div>
+                                    @endif
+                                    @break
+                                @endforeach
+                                
+                                @if (Session::get('id'))
+                                    @if ($item->is_favorite == 1)
+                                        <i class="fas fa-heart i"></i>
+                                    @else
+                                        <i class="fal fa-heart i" onclick="MakeFavorite('{{$item->id}}','{{Session::get('id')}}')"></i>
+                                    @endif
+                                @endif
+                            </div>
+                            <div class="product-details-wrap">
+                                <div class="product-details">
+                                    <a href="{{URL::to('product-details/'.$item->id)}}">
+                                        <h4>{{$item->item_name}}</h4>
+                                    </a>
+                                    <p class="pro-pricing">
+                                        @foreach ($item->variation as $key => $value)
+                                            {{$getdata->currency}}{{number_format($value->product_price, 2)}}
+                                            @break
+                                        @endforeach
+                                    </p>
+                                </div>
+                                <div class="product-details">
+                                    <p>{{ Str::limit($item->item_description, 255) }}</p>
+                                </div>
+                            </div>
+                             @if (Session::get('id'))
+                            @if ($item->item_status == '1')
+                                <button class="btn"  onclick="openCartModal('{{$item->id}}')" >{{ trans('labels.add_to_cart') }}</button>
+
+                            @else 
+                                <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>
+                            @endif
+                        @else
+                            @if ($item->item_status == '1')
+                                <button class="btn" onclick="openCartModal('{{$item->id}}')">{{ trans('labels.add_to_cart') }}</button>
+                            @else 
+                                <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>
+                            @endif
+                        @endif                        
+                        </div>
+                    </div>
+                    @endforeach
+        
+            @endforeach
+
+
+        </div>
+    </section> -->
+
+
      <section class="sec2-catering">
      	<div class="container">
-    
      	<h2 class="sec-head">Catering Menu</h2>
      	<div class="cat-aside-wrap">
-
-                    @foreach ($getcategory as $category)
-                    <a href="{{URL::to('/product/'.$category->id)}}" class="cat-check border-top-no @if (request()->id == $category->id) active @endif">
-                        <p>{{$category->category_name}}</p>
-                    </a>
-                    @endforeach
-                </div>
+            @foreach ($getcategory as $category)
+            <a href="{{URL::to('/product/'.$category->id)}}" class="cat-check border-top-no @if (request()->id == $category->id) active @endif">
+                <p>{{$category->category_name}}</p>
+            </a>
+            @endforeach
+        </div>
 
                 <div class="row catering">
      	            <div class="cat-product">
+
                 @csrf
               <h3>{{$category->category_name}}</h3>
                 <div class="row">
