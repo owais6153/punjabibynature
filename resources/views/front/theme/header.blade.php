@@ -189,12 +189,12 @@
 								</li>
 								<li class="nav-item {{ request()->is('catering') ? 'active' : '' }}">
 									<a class="nav-link" href="{{URL::to('/catering')}}">
-										<i class="fas fa-home"></i>
+										<i class="far fa-knife-kitchen"></i>
 									Catering</a>
 								</li>
 								<li class="nav-item {{ request()->is('about') ? 'active' : '' }}">
 									<a class="nav-link" href="{{URL::to('/aboutus')}}">
-										<i class="fas fa-utensils"></i>
+										<i class="fal fa-hat-chef"></i>
 									About Us</a>
 								</li>
 								<li class="nav-item {{ request()->is('contact') ? 'active' : '' }}">
