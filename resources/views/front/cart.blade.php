@@ -58,7 +58,7 @@
                                     @endif    
 
                                     @if ($cart->addons_id != "" || $cart->group_addons != '')
-                                        <h5 class="cart-addon-h"><span>Add-ons: </span><span>{{$taxval->currency}}{{$cart->totalAddonPrice}}</span></h5>
+                                        <h5 class="cart-addon-h"><span>Add-ons: </span><span>{{$taxval->currency}}{{$cart->totalAddonPrice * $cart->qty}}</span></h5>
                                         @if ($cart->addons_id != "")
                                             <?php 
                                             $addons_id = explode(",",$cart->addons_id);
@@ -1188,41 +1188,6 @@ function qtyupdate(cart_id,item_id,type)
     }
 }
 
-function RemoveCart(cart_id) {
-    swal({
-        title: "{{ trans('messages.are_you_sure') }}",
-        type: 'error',
-        showCancelButton: true,
-        confirmButtonText: "{{ trans('messages.yes') }}",
-        cancelButtonText: "{{ trans('messages.no') }}"
-    },
-    function(isConfirm) {
-        if (isConfirm) {
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url:"{{ URL::to('/cart/deletecartitem') }}",
-                data: {
-                    cart_id: cart_id
-                },
-                method: 'POST',
-                success: function(response) {
-                    if (response == 1) {
-                        location.reload();
-                    } else {
-                        swal("Cancelled", "{{ trans('messages.wrong') }} :(", "error");
-                    }
-                },
-                error: function(e) {
-                    swal("Cancelled", "{{ trans('messages.wrong') }} :(", "error");
-                }
-            });
-        } else {
-            swal("Cancelled", "{{ trans('messages.record_safe') }} :)", "error");
-        }
-    });
-}
 
 $('body').on('click','.btn-copy',function(e) {
             

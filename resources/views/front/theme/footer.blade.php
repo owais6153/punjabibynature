@@ -365,6 +365,41 @@ function openCartModal(item_id) {
     });  
 }
 
+function RemoveCart(cart_id) {
+    swal({
+        title: "{{ trans('messages.are_you_sure') }}",
+        type: 'error',
+        showCancelButton: true,
+        confirmButtonText: "{{ trans('messages.yes') }}",
+        cancelButtonText: "{{ trans('messages.no') }}"
+    },
+    function(isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url:"{{ URL::to('/cart/deletecartitem') }}",
+                data: {
+                    cart_id: cart_id
+                },
+                method: 'POST',
+                success: function(response) {
+                    if (response == 1) {
+                        location.reload();
+                    } else {
+                        swal("Cancelled", "{{ trans('messages.wrong') }} :(", "error");
+                    }
+                },
+                error: function(e) {
+                    swal("Cancelled", "{{ trans('messages.wrong') }} :(", "error");
+                }
+            });
+        } else {
+            swal("Cancelled", "{{ trans('messages.record_safe') }} :)", "error");
+        }
+    });
+}
   function myFunction() {
     "use strict";
     var copyText = document.getElementById("myInput");

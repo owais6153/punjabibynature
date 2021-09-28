@@ -29,7 +29,7 @@ class CartController extends Controller
         $user_id  = Session::get('id');
         $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
         $getabout = About::where('id','=','1')->first();
-        $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
+        
         $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
         ->where('user_id',$user_id)
         ->where('is_available','=','1')->get();
@@ -64,7 +64,7 @@ class CartController extends Controller
 //         print_r($cartdata);
 // exit();
 
-        return view('front.cart', compact('cartdata','getabout','getpromocode','taxval','userinfo','getdata','getpaymentdata','addressdata','getcategory','getcategory'));
+        return view('front.cart', compact('cartdata','getabout','getpromocode','taxval','userinfo','getdata','getpaymentdata','addressdata','getcategory'));
     }
 
     public function applypromocode(Request $request)
@@ -123,39 +123,51 @@ class CartController extends Controller
         if($request->qty == ""){
             return response()->json(["status"=>0,"message"=>trans('messages.qty_required')],400);
         }
-
         $data=Item::where('item.id', $request['item_id'])
-        ->get()
-        ->first();
-
-        $cartdata=Cart::where('cart.id', $request['cart_id'])
-        ->get()
-        ->first();
-
+            ->get()
+            ->first();
         $getdata=User::select('max_order_qty','min_order_amount','max_order_amount')->where('type','1')
-        ->get()->first();
-
+            ->get()->first();
         if ($getdata->max_order_qty < $request->qty) {
           return response()->json(['status'=>0,'message'=>trans('messages.maximum_purchase')],200);
         }
 
-        $arr = explode(',', $cartdata->addons_id);
-        $d = Addons::whereIn('id',$arr)->get();
+        if(Session::get('id')){           
+            $cartdata=Cart::where('cart.id', $request['cart_id'])
+            ->get()
+            ->first();
 
-        $sum = 0;
-        foreach($d as $key => $value) {
-            $sum += $value->price; 
+            $arr = explode(',', $cartdata->addons_id);
+            $d = Addons::whereIn('id',$arr)->get();
+
+            $sum = 0;
+            foreach($d as $key => $value) {
+                $sum += $value->price; 
+            }
+
+            if ($request->type == "decreaseValue") {
+                $qty = $cartdata->qty-1;
+            } else {
+                $qty = $cartdata->qty+1;
+            }
+
+            $update=Cart::where('id',$request['cart_id'])->update(['item_id'=>$request->item_id,'qty'=>$qty]);
         }
+        else{
+            $guest_cart = Session::get('guest_cart');
+            $cartdata = json_decode(json_encode($guest_cart));
+            if ($request->type == "decreaseValue") {
+                $cartdata[$request->cart_id]->qty--;
+            }
+            else{
+                $cartdata[$request->cart_id]->qty++; 
+            }
 
-        if ($request->type == "decreaseValue") {
-            $qty = $cartdata->qty-1;
-        } else {
-            $qty = $cartdata->qty+1;
+            Session::put('guest_cart', $cartdata);
+
         }
-
-        $update=Cart::where('id',$request['cart_id'])->update(['item_id'=>$request->item_id,'qty'=>$qty]);
-
         return response()->json(['status'=>1,'message'=>trans('messages.qty_update')],200);
+
     }
 
     public function deletecartitem(Request $request)
@@ -163,19 +175,28 @@ class CartController extends Controller
         if($request->cart_id == ""){
             return response()->json(["status"=>0,"message"=>trans('messages.cart_id_required')],400);
         }
+        if(Session::get('id')){           
+            $cart=Cart::where('id', $request->cart_id)->delete();
 
-        $cart=Cart::where('id', $request->cart_id)->delete();
-
-        $count=Cart::where('user_id',Session::get('id'))->count();
-        
-        Session::put('cart', $count);
-        if($cart)
-        {
-            return 1;
+            $count=Cart::where('user_id',Session::get('id'))->count();
+            
+            Session::put('cart', $count);
+            if($cart)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
         }
-        else
-        {
-            return 2;
+        else{
+            $guest_cart = Session::get('guest_cart');
+            $cartdata = json_decode(json_encode($guest_cart));
+            unset($cartdata[$request->cart_id]);            
+            Session::put('guest_cart', $cartdata);
+
+            return 1;
         }
     }
 

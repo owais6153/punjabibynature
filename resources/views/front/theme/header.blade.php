@@ -90,12 +90,20 @@
 								
 								<a class="nav-link dropdown-toggle " href="{{URL::to('cart/')}}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-shopping-cart"></i></a>
 								<div class="dropdown-menu cart-dropdown" aria-labelledby="dropdownMenuButton">
-								@foreach ($cartdata as $cart)
+								@foreach ($cartdata as $cartIndex => $cart)
 								<?php
                         		$data[] = array(
                             		"total_price" => $cart->qty * $cart->price,
                             		"tax" => ($cart->qty*$cart->price)*$cart->tax/100
                         		);
+
+                        		if (isset($cart->id)) {
+		                            $id = $cart->id;
+		                        }
+		                        else{
+		                            $id = $cartIndex;
+		                        }
+
                     			?>
 							
 								
@@ -109,7 +117,7 @@
 											<p>{{$cart->price}}</p>
 										</div>
 										<div class="delete-item">
-											<a href="#"><i class="far fa-trash-alt"></i></a>
+											<a href="javascript:void(0)" onclick="RemoveCart({{$id}})"><i class="far fa-trash-alt"></i></a>
 										</div>	
 									</div>
 
