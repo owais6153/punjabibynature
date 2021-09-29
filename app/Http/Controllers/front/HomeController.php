@@ -93,29 +93,8 @@ class HomeController extends Controller
         $getabout = About::where('id','=','1')->first();
         $user_id  = Session::get('id');
         $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
-        // $getitem = Item::with(['category','itemimage','variation'])->select('item.*',DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
-        // ->leftJoin('favorite', function($query) use($user_id) {
-        //     $query->on('favorite.item_id','=','item.id')
-        //     ->where('favorite.user_id', '=', $user_id);
-        // })
-        // ->where('item.item_status','1')
-        // ->where('item.is_deleted','2')
-        // ->orderby('cat_id')->get();
-
-
-        // $getitem = Item::with(['itemimage','variation'])->select('item.*',DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
-        // ->leftJoin('favorite', function($query) use($user_id) {
-        //     $query->on('favorite.item_id','=','item.id')
-        //     ->where('favorite.user_id', '=', $user_id);
-        // })
-        // ->where('item.item_status','1')
-        // ->where('item.is_deleted','2')
-        // ->orderby('cat_id')->get();
-
         $catering_category = Category::select('categories.category_name', 'categories.id')
         ->join("item","item.cat_id","=","categories.id")
-        // ->join("item_images","item.id","=","item_images.item_id")
-        // ->join("variation","item.id","=","variation.item_id")
         ->groupBy('category_name')
         ->where('item.item_status', '1')
         ->where('item.is_deleted', '2')
@@ -132,16 +111,6 @@ class HomeController extends Controller
             ->get();
         }
 
-        // echo "<pre>";
-          
-        // // print_r($getitem);
-        // foreach ($getitem as $key => $value) {
-        //     echo $value . '<br>';
-        // }
-        // echo "</pre>";
-
-        // exit();
-
 
 
         if (Session::get('id')) {
@@ -152,8 +121,6 @@ class HomeController extends Controller
         else{
             $cartdata_temp = Session::get('guest_cart');
             $cartdata = json_decode(json_encode($cartdata_temp));
-       
-        //     // exit();
         }
 
 
