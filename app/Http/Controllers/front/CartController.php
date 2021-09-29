@@ -29,18 +29,20 @@ class CartController extends Controller
         $user_id  = Session::get('id');
         $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
         $getabout = About::where('id','=','1')->first();
-        
-        $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+             $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax','ingredients','combo','group_addons','totalAddonPrice',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
         ->where('user_id',$user_id)
         ->where('is_available','=','1')->get();
+   
 
 
         if (Session::get('id')) {
-            $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
-            ->where('user_id',$user_id)
-            ->where('is_available','=','1')->get();
+               $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax','ingredients','combo','group_addons','totalAddonPrice',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+        ->where('user_id',$user_id)
+        ->where('is_available','=','1')->get();
+        $islogin= true;
         }
         else{
+            $islogin= false;
             $cartdata_temp = Session::get('guest_cart');
             $cartdata = json_decode(json_encode($cartdata_temp));
         }
@@ -64,7 +66,7 @@ class CartController extends Controller
 //         print_r($cartdata);
 // exit();
 
-        return view('front.cart', compact('cartdata','getabout','getpromocode','taxval','userinfo','getdata','getpaymentdata','addressdata','getcategory'));
+        return view('front.cart', compact('cartdata','getabout','getpromocode','taxval','userinfo','getdata','getpaymentdata','addressdata','getcategory', 'islogin'));
     }
 
     public function applypromocode(Request $request)

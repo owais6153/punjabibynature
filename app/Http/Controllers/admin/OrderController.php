@@ -26,6 +26,9 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
+        $getingredients = Ingredients::where('is_deleted','2')->get();
+        $getaddons = Addons::where('is_deleted','2')->where('is_available','1')->get();
         $getorders = Order::with('users')->select('order.*','users.name')->leftJoin('users', 'order.driver_id', '=', 'users.id')->get();
         $getdriver = User::where('type','3')->get();
         // dd($getorders);
@@ -61,6 +64,7 @@ class OrderController extends Controller
      */
     public function invoice(Request $request)
     {
+
         $getusers = Order::with('users')->where('order.id', $request->id)->get()->first();
         $getorders=OrderDetails::with('itemimage')->select('order_details.id','order_details.qty','order_details.price as total_price','item.id','item.item_name','order_details.variation','order_details.variation_price','order_details.item_id','order_details.addons_id','order_details.item_notes')
         ->join('item','order_details.item_id','=','item.id')

@@ -25,10 +25,6 @@
             @endforeach
         </div>
 
-
-
-
-
 @csrf
                 <div class="row catering">
                      <div class="cat-product">
@@ -146,6 +142,15 @@
          </div>
     </div>
      </section>
+@section('script')
+<script type="text/javascript">
+    $( ".cat-aside-wrap a" ).click(function(e) {
+  e.preventDefault();
+$('html,body').animate({
+            scrollTop: $($(this).attr('href')).offset().top -100},
+        'slow');
+});
 
-
+</script>
+@endsection
 @include('front.theme.footer')

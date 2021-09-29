@@ -27,7 +27,7 @@ class AddColumnGroupIdInAddon extends Migration
     public function down()
     {
         Schema::table('addons', function (Blueprint $table) {
-            $table->dropColumn('addons');
+            $table->dropColumn('group_id');
         });
     }
 }
