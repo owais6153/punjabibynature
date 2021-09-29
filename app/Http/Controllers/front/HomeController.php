@@ -93,14 +93,57 @@ class HomeController extends Controller
         $getabout = About::where('id','=','1')->first();
         $user_id  = Session::get('id');
         $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
-        $getitem = Item::with(['category','itemimage','variation'])->select('item.*',DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
-        ->leftJoin('favorite', function($query) use($user_id) {
-            $query->on('favorite.item_id','=','item.id')
-            ->where('favorite.user_id', '=', $user_id);
-        })
-        ->where('item.item_status','1')
-        ->where('item.is_deleted','2')
-        ->orderby('cat_id')->get();
+        // $getitem = Item::with(['category','itemimage','variation'])->select('item.*',DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
+        // ->leftJoin('favorite', function($query) use($user_id) {
+        //     $query->on('favorite.item_id','=','item.id')
+        //     ->where('favorite.user_id', '=', $user_id);
+        // })
+        // ->where('item.item_status','1')
+        // ->where('item.is_deleted','2')
+        // ->orderby('cat_id')->get();
+
+
+        // $getitem = Item::with(['itemimage','variation'])->select('item.*',DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
+        // ->leftJoin('favorite', function($query) use($user_id) {
+        //     $query->on('favorite.item_id','=','item.id')
+        //     ->where('favorite.user_id', '=', $user_id);
+        // })
+        // ->where('item.item_status','1')
+        // ->where('item.is_deleted','2')
+        // ->orderby('cat_id')->get();
+
+        $catering_category = Category::select('categories.category_name', 'categories.id')
+        ->join("item","item.cat_id","=","categories.id")
+        // ->join("item_images","item.id","=","item_images.item_id")
+        // ->join("variation","item.id","=","variation.item_id")
+        ->groupBy('category_name')
+        ->where('item.item_status', '1')
+        ->where('item.is_deleted', '2')
+        ->where('item.item_type', 'like', '%catering%')
+        ->get();
+
+
+        foreach ($catering_category as $key => $value) {
+            $value->items = Item::with(['itemimage','variation'])->select('*')
+            ->where('item.item_status', '1')
+            ->where('item.is_deleted', '2')
+            ->where('item.item_type', 'like', '%catering%')
+            ->where('item.cat_id', $value->id)
+            ->get();
+        }
+
+        // echo "<pre>";
+          
+        // // print_r($getitem);
+        // foreach ($getitem as $key => $value) {
+        //     echo $value . '<br>';
+        // }
+        // echo "</pre>";
+
+        // exit();
+
+
+
         if (Session::get('id')) {
             $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
             ->where('user_id',$user_id)
@@ -112,7 +155,10 @@ class HomeController extends Controller
        
         //     // exit();
         }
-        return view('front.catering',compact('getabout','getdata','getcategory','cartdata','getitem'));
+
+
+
+        return view('front.catering',compact('getabout','getdata','getcategory','cartdata', 'catering_category'));
     }
 
     public function contact(Request $request)
