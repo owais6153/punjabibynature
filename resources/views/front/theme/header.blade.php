@@ -109,7 +109,11 @@
 								
 									<div class="item-cart">
 										<div class="images-cart">
+											@if (Session::get('id'))
 											<img src='{{$cart->item_image }}' alt="">
+											@else
+											<img src='{{url('/storage/app/public/images/item/') . '/' .$cart->item_image }}' alt="">
+											@endif
 										</div>
 										<div class="description-cart">
 											<p>{{$cart->item_name}} - {{$cart->variation}}</p>

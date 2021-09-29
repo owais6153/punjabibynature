@@ -25,7 +25,11 @@
                     ?>
                     <div class="cart-box">
                         <div class="cart-pro-img">
-                            <img src='{{$cart->item_image }}' alt="">
+                                @if (Session::get('id'))
+                                    <img src='{{$cart->item_image }}' alt="">
+                                @else
+                                    <img src='{{url('/storage/app/public/images/item/') . '/' .$cart->item_image }}' alt="">
+                                @endif
                         </div>
                         <div class="cart-pro-details">
                             <div class="cart-pro-edit">
