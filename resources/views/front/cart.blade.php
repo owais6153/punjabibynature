@@ -4,7 +4,7 @@
     <div class="container">
         <h2 class="sec-head">{{ trans('labels.my_cart') }}</h2>
         <div class="row">
-            @if (count($cartdata) == 0)
+            @empty ($cartdata) 
                 <p>No Data found</p>
             @else 
                 <div class="col-lg-8">
