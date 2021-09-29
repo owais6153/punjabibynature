@@ -104,7 +104,7 @@
                     <?php 
                     $item_type = explode(',', $item->item_type)                    
                     ?>
-                    @if(in_array('product', $item_type))
+                    @if(in_array('catering', $item_type))
                     <div class="col-xl-6 col-md-6">
                         <div class="pro-box">
                             <div class="pro-img">
