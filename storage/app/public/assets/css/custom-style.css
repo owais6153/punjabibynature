@@ -199,6 +199,9 @@ div#navbarNav ul li .sub-menu figure img {
     border-width: 1px;
     border-style: solid;
     border-color: rgba(221, 221, 221, 1);
+    height: 100px;
+    width: 100px;
+    object-fit: scale-down;
 }
 div#navbarNav ul li .sub-menu li:first-child {
     margin-left: 10px;

@@ -184,8 +184,6 @@
                     @foreach ($getAddonsByGroups as $getAddonsByGroup)
                         @if ($getAddonsByGroup->price != 0)
 
-                   <!--  <button class="w3-bar-item w3-button" onclick="openCity('{{$getAddonsByGroup->name}}{{$getAddonsByGroup->id}}paid')">{{$getAddonsByGroup->name}} : {{$getdata->currency}}{{number_format($getAddonsByGroup->price, 2)}}</button> -->
-
                    <div class="group_addon_wrapper">
                     <div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{$getAddonsByGroup->name}}{{$getAddonsByGroup->id}}paid')">
                         <h3>{{$getAddonsByGroup->name}} : {{$getdata->currency}}{{number_format($getAddonsByGroup->price, 2)}}</h3>
@@ -210,7 +208,6 @@
             <!-- End Paid Group Addon -->
                         <!-- Paid Single Addon --> 
                     @if (count($paidaddons['value']) != 0)
-                    <!-- <button class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{ trans('labels.paid_addons') }}')"></button> -->
 
                     <div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{ trans('labels.paid_addons') }}')">
                         <h3>{{ trans('labels.paid_addons') }}</h3>

@@ -276,8 +276,7 @@ class ItemController extends Controller
                     'item_image' =>  $getitem['itemimage']->image_name,
                     'addons_name' => $request->addons_name,
                     'addons_price' => $request->addons_price,   
-                    'ingredients' => $request->ingredients,   
-                    'addon_group' => $request->addon_group,
+                    'ingredients' => $request->ingredients, 
                     'combo' => $request->combo,
                     'group_addons' => $request->group_addons,
                     'totalAddonPrice' => $request->totalAddonPrice,
@@ -309,7 +308,6 @@ class ItemController extends Controller
                     'addons_name' => $request->addons_name,
                     'addons_price' => $request->addons_price,   
                     'ingredients' => $request->ingredients,   
-                    'addon_group' => $request->addon_group,
                     'combo' => $request->combo,
                     'group_addons' => $request->group_addons,
                     'totalAddonPrice' => $request->totalAddonPrice,
@@ -351,6 +349,12 @@ class ItemController extends Controller
                 $cart->item_image =$getitem['itemimage']->image_name;
                 $cart->addons_name =$request->addons_name;
                 $cart->addons_price =$request->addons_price;
+
+                $cart->ingredients = implode('|',$request->ingredients); 
+                $cart->combo = implode('|',$request->combo);
+                $cart->group_addons = implode('|',$request->group_addons);
+                $cart->totalAddonPrice =$request->totalAddonPrice;
+
                 $cart->save();
 
                 $count=Cart::where('user_id',$request->user_id)->count();

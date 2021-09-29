@@ -1,5 +1,6 @@
 @include('front.theme.header')
 
+
 <section class="cart">
     <div class="container">
         <h2 class="sec-head">{{ trans('labels.my_cart') }}</h2>
@@ -54,11 +55,23 @@
 
                                     @empty (!$cart->ingredients)
                                         <h5>Ingredients:</h5>
+                                        @if($islogin == false)
+
                                         @foreach($cart->ingredients as $ingredient)
                                             <div class="cart-addons">
                                                 <b>{{$ingredient}}</b>
                                             </div>
                                         @endforeach
+                                        @else
+                                        <?php
+                                        $ingredientsL= explode('|', $cart->ingredients);
+                                        ?>
+                                        @foreach($ingredientsL as $ingredient)
+                                            <div class="cart-addons">
+                                                <b>{{$ingredient}}</b>
+                                            </div>
+                                        @endforeach
+                                        @endif
                                     @endif    
 
                                     @if ($cart->addons_id != "" || $cart->group_addons != '')
@@ -76,21 +89,43 @@
                                             @endforeach
                                         @endif
                                         @empty (!$cart->group_addons)
+                                        @if($islogin==false)
                                             @foreach($cart->group_addons as $group_addon)
                                                 <div class="cart-addons">
                                                     <b>{{$group_addon}}</b>
                                                 </div>
                                             @endforeach
+                                            @else
+                                            <?php
+                                                $cart_addonL= explode('|', $cart->group_addons);
+                                            ?>
+                                            @foreach($cart_addonL as $group_addon)
+                                                <div class="cart-addons">
+                                                    <b>{{$group_addon}}</b>
+                                                </div>
+                                            @endforeach
+                                            @endif
                                         @endif
                                     @endif
 
                                      @empty (!$cart->combo)
                                      <h5>Combo Options</h5>
+                                     @if($islogin==false)
                                         @foreach($cart->combo as $comb)
                                             <div class="cart-addons">
                                                 <b>{{$comb}}</b>
                                             </div>
                                         @endforeach
+                                        @else
+                                        <?php
+                                        $comboL= explode('|', $cart->combo);
+                                        ?>
+                                        @foreach($comboL as $comb)
+                                            <div class="cart-addons">
+                                                <b>{{$comb}}</b>
+                                            </div>
+                                        @endforeach
+                                        @endif
                                     @endif
                                 </div>
                             
