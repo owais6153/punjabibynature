@@ -1090,7 +1090,10 @@ footer {
 }
 .item-review {
     margin-bottom: 32px;
-}                                                                                                                                          
+}   
+.cateringpopup {
+    padding-top: 26px;
+}                                                                                                                                       
 /*-----cart css-----*/
 .cart-addons-wrap {
     padding-top: 0px !important;

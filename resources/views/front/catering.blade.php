@@ -28,6 +28,7 @@
 
 
 
+
 @csrf
                 <div class="row catering">
                      <div class="cat-product">
@@ -40,6 +41,7 @@
                         @foreach ($category->items as $item)
 
  <div class="col-xl-6 col-md-6">
+
                         <div class="pro-box">
                             <div class="pro-img">
                                 @foreach ($item->variation as $key => $value)

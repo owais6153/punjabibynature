@@ -484,8 +484,15 @@ class ItemController extends Controller
         $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
 
         $source = $request->source;
+        if($source == 'product'){
 
         $output = view('theme.addToCartModalBody', compact('getitem','getabout','getimages','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory', 'ComboGroups', 'totalComboPrice', 'source'))->render();
+
+        }
+        else{
+            $output = view('theme.addtocartcateringmodal', compact('getitem','getabout','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory', 'source'))->render();
+
+        }
         return response()->json(['status'=>1,'html'=> $output, 'title' => $getitem->item_name],200);
     }
 }
