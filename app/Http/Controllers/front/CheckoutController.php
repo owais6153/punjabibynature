@@ -132,6 +132,12 @@ class CheckoutController extends Controller
                 $OrderPro->qty = $value['qty'];
                 $OrderPro->item_notes = $value['item_notes'];
                 $OrderPro->addons_id = $value['addons_id'];
+
+                $OrderPro->ingredients = $value['ingredients'];
+                $OrderPro->combo = $value['combo'];
+                $OrderPro->group_addons = $value['group_addons'];
+                $OrderPro->totalAddonPrice = $value['totalAddonPrice'];
+
                 $OrderPro->save();
             }
             $cart=Cart::where('user_id', Session::get('id'))->delete();
