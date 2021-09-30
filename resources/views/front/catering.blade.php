@@ -129,7 +129,12 @@
                         </div>
                     </div>
 
-                 	<a href="#" class="checkout-btn">Checkout <i class="fas fa-arrow-right"></i></a>
+           
+                        <label>Date & Time</label>
+                        <input type="datetime-local" name="calendar" id="calendar" class="quantity form-control">
+                    
+
+                 	<button disabled="" class="checkout-btn">Checkout <i class="fas fa-arrow-right"></i></button>
                  	<p>$100.00 minimum for delivery</p>
                  </div> 
             </div>

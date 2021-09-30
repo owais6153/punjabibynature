@@ -53,10 +53,6 @@
                         <label>Select Quantity</label>
                         <input type="number" name="quantity" id="quantity" value="1" min="1" max="1000" class="quantity form-control">
                     </div>
-                    <div class="col-md-6">
-                        <label>Date & Time</label>
-                        <input type="datetime-local" name="calendar" id="calendar" class="quantity form-control">
-                    </div>
                    </div>
                    <div class="alert alert-danger" style="display: none;" id="AddToCartError"></div>
                              <div class="extra-food-wrap addons-box">

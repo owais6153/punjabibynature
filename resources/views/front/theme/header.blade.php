@@ -86,9 +86,9 @@
 								<div id="countryList" class="item-list"></div>
 							</li>
 							<li class="nav-item cart-btn dropdown">
-								@empty(!$cartdata)
+								@isset($cartdata[0])
 								
-								<a class="nav-link dropdown-toggle " href="{{URL::to('cart/')}}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-shopping-cart"></i></a>
+								<a class="nav-link dropdown-toggle " href="{{URL::to('cart/')}}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fad fa-shopping-cart"></i></a>
 								<div class="dropdown-menu cart-dropdown" aria-labelledby="dropdownMenuButton">
 								@foreach ($cartdata as $cartIndex => $cart)
 								<?php
@@ -129,9 +129,7 @@
 						@endforeach
 							<div class="cart-btn-header">
 							  								<!-- View order btn -->
-@if (Session::get('cart') && !request()->is('cart') && !empty(Session::get('cart')))
-  <a href="{{URL::to('/cart')}}" class="head-cart">{{ trans('labels.view_my_order') }}</a>
-@else
+@if (Session::get('cart') && !request()->is('cart') && isset($cartdata[0]))
   <a href="{{URL::to('/cart')}}" class="head-cart">{{ trans('labels.view_my_order') }}</a>
 @endif
 <!-- View order btn -->
@@ -142,7 +140,7 @@
 						</li>
 						@endif
 						@if (Session::get('id'))
-							<li class="nav-item dropdown">
+							<li class="nav-item dropdown  {{(!isset($cartdata[0])) ? 'ml-2' : ''}}">
 								<a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:void(0)">
 									<img src='{!! asset("storage/app/public/images/profile/".Session::get("profile_image")) !!}' alt="">
 								</a>
@@ -221,11 +219,13 @@
 								@if (Session::get('id'))
 						
 							<li class="nav-item {{ request()->is('orders') ? 'active' : '' }}">
-								<a class="nav-link" href="{{URL::to('/orders')}}">{{ trans('labels.my_orders') }}</a>
+								<a class="nav-link" href="{{URL::to('/orders')}}"><i class="fal fa-shopping-cart"></i>
+								{{ trans('labels.my_orders') }}</a>
 
 							</li>
 							<li class="nav-item {{ request()->is('wallet') ? 'active' : '' }}">
-								<a class="nav-link" href="{{URL::to('/wallet')}}">{{ trans('labels.my_wallet') }}</a>
+								<a class="nav-link" href="{{URL::to('/wallet')}}"><i class="fas fa-wallet"></i>
+								{{ trans('labels.my_wallet') }}</a>
 							</li>
 							
 						
