@@ -160,11 +160,13 @@
                     
                 </div>
                 <div class="col-lg-4">
+                    @empty (!@$data)
                     <?php 
                     $order_total = array_sum(array_column(@$data, 'total_price'));
                     $tax = array_sum(array_column(@$data, 'tax'));
                     $total = array_sum(array_column(@$data, 'total_price'))+$tax;
                     ?>
+                    
                     <div class="cart-summary">
                         <h2 class="sec-head">{{ trans('labels.payment_summary') }}</h2>
 
@@ -327,6 +329,7 @@
                           <a href="/checkout"  style="width: 100%;" class="btn ">Guest checkout</a>
                         @endif
                     </div>
+                    @endif
                 </div>
             @endif
             
