@@ -13,8 +13,11 @@ class AddColumnInOrderDetail extends Migration
      */
     public function up()
     {
-        Schema::table('order_detail', function (Blueprint $table) {
-            //
+        Schema::table('order_details', function (Blueprint $table) {
+             $table->string('ingredients', 255)->nullable();
+           $table->string('combo', 255)->nullable();
+           $table->string('group_addons', 255)->nullable();
+           $table->integer('totalAddonPrice')->nullable();
         });
     }
 
@@ -25,8 +28,11 @@ class AddColumnInOrderDetail extends Migration
      */
     public function down()
     {
-        Schema::table('order_detail', function (Blueprint $table) {
-            //
+        Schema::table('order_details', function (Blueprint $table) {
+             $table->dropColumn('ingredients');
+             $table->dropColumn('combo');
+             $table->dropColumn('group_addons');
+             $table->dropColumn('totalAddonPrice');
         });
     }
 }

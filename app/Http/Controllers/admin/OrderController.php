@@ -65,7 +65,7 @@ class OrderController extends Controller
         
     $getusers = Order::with('users')->where('order.id', $request->id)->get()->first();
         
-        $getorders=OrderDetails::with('itemimage')->select('order_details.id','order_details.qty','order_details.price as total_price','item.id','item.item_name','order_details.variation','order_details.variation_price','order_details.item_id','order_details.addons_id','order_details.item_notes')
+        $getorders=OrderDetails::with('itemimage')->select('order_details.id','order_details.qty','order_details.price as total_price','item.id','item.item_name','order_details.variation','order_details.variation_price','order_details.item_id','order_details.addons_id','order_details.item_notes','order_details.ingredients','order_details.combo','order_details.group_addons','order_details.totalAddonPrice')
         ->join('item','order_details.item_id','=','item.id')
         ->join('order','order_details.order_id','=','order.id')
         ->where('order_details.order_id',$request->id)->get();
