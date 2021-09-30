@@ -20,15 +20,7 @@
                 <div class="pro-details-name-wrap">
                     <h3 class="sec-head mt-0">{{$getitem->item_name}}</h3>
                    
-                    @if (Session::get('id'))
-                        @if ($getitem->is_favorite == 1)
-                            <i class="fas fa-heart i"></i>
-                        @else
-                            <i class="fal fa-heart i" onclick="MakeFavorite('{{$getitem->id}}','{{Session::get('id')}}')"></i>
-                        @endif
-                    @else
-                        <a class="i" href="{{URL::to('/signin')}}"><i class="fal fa-heart i"></i></a>
-                    @endif
+            
                 </div>
 
                 <small>{{$getitem['category']->category_name}}</small>
@@ -99,15 +91,7 @@
                                 <a href="{{URL::to('product-details/'.$item->id)}}">
                                     <img src='{{$item["itemimage"]->image }}' alt="">
                                 </a>
-                                @if (Session::get('id'))
-                                    @if ($item->is_favorite == 1)
-                                        <i class="fas fa-heart i"></i>
-                                    @else
-                                        <i class="fal fa-heart i"  onclick="MakeFavorite('{{$item->id}}','{{Session::get('id')}}')"></i>
-                                    @endif
-                                @else
-                                    <a href="{{URL::to('/signin')}}"><i class="fal fa-heart i"></i></a>
-                                @endif
+                               
                             </div>
                             <div class="product-details-wrap">
                                 <div class="product-details">

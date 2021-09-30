@@ -47,13 +47,7 @@
                                 <a href="{{URL::to('product-details/'.$item->id)}}">
                                     <img src='{{$item["itemimage"]->image }}' alt="">
                                 </a>
-                                @if (Session::get('id'))
-                                    @if ($item->is_favorite == 1)
-                                        <i class="fas fa-heart i"></i>
-                                    @else
-                                        <i class="fal fa-heart i" onclick="MakeFavorite('{{$item->id}}','{{Session::get('id')}}')"></i>
-                                    @endif
-                                @endif
+                               
                             </div>
                             <div class="product-details-wrap">
                                 <div class="product-details">

@@ -1,3 +1,6 @@
+input#address {
+    background-position: 99% !important;
+}
 div#navbarNav .nav-item.search {
     width: 740px;
 }

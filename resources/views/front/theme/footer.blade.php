@@ -253,7 +253,7 @@ aria-hidden="true">
       </div>
       
       <div class="para-f-two col-md-4">
-        <p>Designed & Developed by <a href="geeksroot.com" target="_blank" style="color: #fd3f32;"><b>Geeks Root</b>.</a></p> 
+        <p>Designed & Developed by <a href="https://geeksroot.com" target="_blank" style="color: #fd3f32;"><b>Geeks Root</b>.</a></p> 
       </div>
 
       <div class="para-f-three col-md-4">

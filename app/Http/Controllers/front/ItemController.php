@@ -350,9 +350,9 @@ class ItemController extends Controller
                 $cart->addons_name =$request->addons_name;
                 $cart->addons_price =$request->addons_price;
 
-                $cart->ingredients = implode('|',$request->ingredients); 
-                $cart->combo = implode('|',$request->combo);
-                $cart->group_addons = implode('|',$request->group_addons);
+                $cart->ingredients =  (isset($request->ingredients) && !empty($request->ingredients)) ? implode('|',$request->ingredients) : null;
+                $cart->combo = (isset($request->combo) && !empty($request->combo)) ? implode('|',$request->combo) : null;
+                $cart->group_addons = (isset($request->group_addons) && !empty($request->group_addons)) ? implode('|',$request->group_addons) : null;
                 $cart->totalAddonPrice =$request->totalAddonPrice;
 
                 $cart->save();
@@ -364,7 +364,7 @@ class ItemController extends Controller
 
             } catch (\Exception $e){
 
-                return response()->json(['status'=>0,'message'=>'Something went wrong'],400);
+                return response()->json(['status'=>0,'message'=>'Something went wrong', 'error' => $e],400);
             }
         } 
     }

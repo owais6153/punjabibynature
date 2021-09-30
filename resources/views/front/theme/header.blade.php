@@ -129,7 +129,7 @@
 						@endforeach
 							<div class="cart-btn-header">
 							  								<!-- View order btn -->
-@if (Session::get('cart') && !request()->is('cart'))
+@if (Session::get('cart') && !request()->is('cart') && !empty(Session::get('cart')))
   <a href="{{URL::to('/cart')}}" class="head-cart">{{ trans('labels.view_my_order') }}</a>
 @else
   <a href="{{URL::to('/cart')}}" class="head-cart">{{ trans('labels.view_my_order') }}</a>
@@ -150,7 +150,6 @@
 									<a class="dropdown-item" href="" data-toggle="modal" data-target="#EditProfile">{{ trans('labels.hello') }}, {{Session::get('name')}}</a>
 									<a class="dropdown-item" href="{{URL::to('/address')}}">{{ trans('labels.my_address') }}</a>
 									<a class="dropdown-item" href="" data-toggle="modal" data-target="#AddReview">{{ trans('labels.add_review') }}</a>
-									<a class="dropdown-item" href="" data-toggle="modal" data-target="#Refer">{{ trans('labels.refer_earn') }}</a>
 									@if (Session::get('login_type') == "email")
 									<a class="dropdown-item" href="" data-toggle="modal" data-target="#ChangePasswordModal">{{ trans('labels.change_password') }}</a>
 									@endif
@@ -224,9 +223,6 @@
 							<li class="nav-item {{ request()->is('orders') ? 'active' : '' }}">
 								<a class="nav-link" href="{{URL::to('/orders')}}">{{ trans('labels.my_orders') }}</a>
 
-							</li>
-							<li class="nav-item {{ request()->is('favorite') ? 'active' : '' }}">
-								<a class="nav-link" href="{{URL::to('/favorite')}}">{{ trans('labels.favourite_list') }}</a>
 							</li>
 							<li class="nav-item {{ request()->is('wallet') ? 'active' : '' }}">
 								<a class="nav-link" href="{{URL::to('/wallet')}}">{{ trans('labels.my_wallet') }}</a>

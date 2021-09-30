@@ -136,7 +136,7 @@
                         </div>
                     </div>
                     @endforeach
-
+                    @empty (!@$data)
                     @if (Session::has('offer_amount'))
                         <div class="promo-code">
                             <form>
@@ -156,6 +156,7 @@
                             </form>
                             <p data-toggle="modal" data-target="#staticBackdrop">{{ trans('labels.select_promocode') }}</p>
                         </div>
+                    @endif
                     @endif
                     
                 </div>
