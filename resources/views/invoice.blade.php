@@ -67,8 +67,12 @@
                         <tr>
                             <th class="center">#</th>
                             <th>{{ trans('labels.item') }}</th>
+                            <th>Add-ons</th>
+                            <th>Ingredients</th>
+                            <th>Combo</th>
                             <th>{{ trans('labels.variation') }}</th>
                             <th class="right">{{ trans('labels.unit_cost') }}</th>
+                            
                             <th class="center">{{ trans('labels.qty') }}</th>
                             <th class="right">{{ trans('labels.total') }}</th>
                         </tr>
@@ -85,21 +89,55 @@
                         <tr>
                             <td class="center">{{$i}}</td>
                             <td class="left strong">
-                                {{$orders->item_name}}
+                                {{$orders->item_name}}                               
+
+                                @if ($orders->item_notes != "")
+                                    <br><b>{{ trans('labels.item_note') }}</b> : {{$orders->item_notes}}
+                                @endif
+                            </td>
+                            <td>
+                                 @empty(!$orders['addons'])
+                           
                                 @foreach ($orders['addons'] as $addons)
                                 <div class="cart-addons-wrap">
                                     <div class="cart-addons">
-                                        <b>{{$addons['name']}}</b> : {{Auth::user()->currency}}{{number_format($addons['price'], 2)}}
+                                {{$addons['name']}}
                                     </div>
                                 </div>
-                                @endforeach
+                           
 
-                                @if ($orders->item_notes != "")
-                                    <b>{{ trans('labels.item_note') }}</b> : {{$orders->item_notes}}
+                                @endforeach
+                                @endif
+                                                                @php
+                                    
+                                @endphp
+
+                            </td>
+                            
+                            <td>
+                                @empty(!$orders->ingredients)
+                                    @php
+                                        $ingredients = explode('|', $orders->ingredients);
+                                    @endphp
+                                    @foreach($ingredients as $ingredient)
+                                        <div>{{$ingredient}}</div>
+                                    @endforeach
+                                @endif
+                            </td>
+                            <td>
+                                
+                                @empty(!$orders->combo)
+                                    @php
+                                        $combo = explode('|', $orders->combo);
+                                    @endphp
+                                    @foreach($combo as $c)
+                                        <p>{{$c}}</p>
+                                    @endforeach
                                 @endif
                             </td>
                             <td class="left strong">{{$orders->variation}}</td>
                             <td class="left">{{Auth::user()->currency}}{{number_format($orders->variation_price, 2)}}</td>
+                            
                             <td class="center">{{$orders->qty}}</td>
                             <td class="right">{{Auth::user()->currency}}{{number_format($orders->total_price, 2)}}</td>
                         </tr>
@@ -120,6 +158,17 @@
                 <div class="col-lg-4 col-sm-5 ml-auto">
                     <table class="table table-clear">
                         <tbody>
+                            <tr>
+                                <td>
+                                    <strong>Total Unit Price</strong>
+                                </td>
+                                <td class="left">{{Auth::user()->currency}}{{number_format($orders->variation_price, 2) * $orders->qty}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total Add-on Price</strong></td>
+                                <td>{{Auth::user()->currency}}{{$orders->totalAddonPrice * $orders->qty}}</td>
+                            </tr>
+                            
                             <tr>
                                 <td class="left">
                                     <strong>{{ trans('labels.subtotal') }}</strong>
@@ -146,7 +195,7 @@
                                 </td>
                             </tr>
                             @endif
-                            <tr>
+                            <tr style="background: #fd3f32;color: #fff;">
                                 <td class="left">
                                     <strong>{{ trans('labels.total') }}</strong>
                                 </td>
