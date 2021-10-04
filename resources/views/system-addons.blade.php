@@ -64,6 +64,7 @@
                                     $obj = json_decode($payload);
                                     ?>
                                     <div class="row">
+                                        @if( isset($obj->data) && is_object($obj->data) )
                                         @foreach($obj->data as $item)
                                             <div class="col-md-6 col-lg-3">
                                                 <div class="card">
@@ -79,6 +80,7 @@
                                                 </div>
                                             </div>
                                         @endforeach
+                                        @endif
                                     </div>
                                     <!-- End Col -->
                                 </div>

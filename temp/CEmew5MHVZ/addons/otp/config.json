@@ -1,0 +1,71 @@
+{
+   "name":"OTP",
+   "unique_identifier":"otp",
+   "version":"6.0",
+   "addon_banner":"otp.jpg",
+   "minimum_item_version":"6",
+   "directory":"",
+   "sql_file":"",
+   "files":[
+      {
+         "root_directory"    : "addons/otp/controllers/admin/OTPConfigurationController.php",
+         "update_directory"  : "app/Http/Controllers/admin/OTPConfigurationController.php"
+      },
+      {
+         "root_directory"    : "addons/otp/controllers/admin/OrderotpController.php",
+         "update_directory"  : "app/Http/Controllers/admin/OrderotpController.php"
+      },
+      {
+         "root_directory"    : "addons/otp/controllers/Api/UserotpController.php",
+         "update_directory"  : "app/Http/Controllers/Api/UserotpController.php"
+      },
+      {
+         "root_directory"    : "addons/otp/controllers/Api/CheckoutotpController.php",
+         "update_directory"  : "app/Http/Controllers/Api/CheckoutotpController.php"
+      },
+      {
+         "root_directory"    : "addons/otp/controllers/Api/AdminotpController.php",
+         "update_directory"  : "app/Http/Controllers/Api/AdminotpController.php"
+      },
+      {
+         "root_directory"    : "addons/otp/controllers/Auth/GoogleotpController.php",
+         "update_directory"  : "app/Http/Controllers/Auth/GoogleotpController.php"
+      },
+      {
+         "root_directory"    : "addons/otp/controllers/Auth/SocialotpController.php",
+         "update_directory"  : "app/Http/Controllers/Auth/SocialotpController.php"
+      },
+      {
+         "root_directory"    : "addons/otp/controllers/front/UserotpController.php",
+         "update_directory"  : "app/Http/Controllers/front/UserotpController.php"
+      },
+      {
+         "root_directory"    : "addons/otp/controllers/front/OrderotpController.php",
+         "update_directory"  : "app/Http/Controllers/front/OrderotpController.php"
+      },
+      {
+         "root_directory"    : "addons/otp/controllers/front/CheckoutotpController.php",
+         "update_directory"  : "app/Http/Controllers/front/CheckoutotpController.php"
+      },
+      {
+         "root_directory"    : "addons/otp/controllers/front/RazorpayotpController.php",
+         "update_directory"  : "app/Http/Controllers/front/RazorpayotpController.php"
+      },
+      {
+         "root_directory":"addons/otp/models/OTPConfiguration.php",
+         "update_directory":"app/OTPConfiguration.php"
+      },
+      {
+         "root_directory":"addons/otp/views/otp-settings.blade.php",
+         "update_directory":"resources/views/otp-settings.blade.php"
+      },
+      {
+          "root_directory"    : "addons/otp/routes/otp.php",
+          "update_directory"  : "routes/otp.php"
+      },
+      {
+          "root_directory"    : "addons/otp/assets/otp.jpg",
+          "update_directory"  : "storage/app/public/addons/otp.jpg"
+      }
+   ]
+}

@@ -18,6 +18,8 @@ use App\Addons;
 use App\AddonGroups;
 use App\ComboItem;
 use App\ComboGroup;
+use App\Address;
+use App\Payment;
 use Session;
 use URL;
 
@@ -509,5 +511,29 @@ class ItemController extends Controller
 
         }
         return response()->json(['status'=>1,'html'=> $output, 'title' => $getitem->item_name],200);
+    }
+
+      public function guestcheckout(){
+        $user_id  = Session::get('id');
+        $getdata=User::select('currency')->where('type','1')->first();
+        $addressdata=Address::where('user_id',Session::get('id'))->orderBy('id', 'DESC')->get();
+        $userinfo=User::select('name','email','mobile','wallet')->where('id',$user_id)
+        ->get()->first();
+        $getpaymentdata=Payment::select('payment_name','test_public_key','live_public_key','environment')->where('is_available','1')->orderBy('id', 'DESC')->get();
+        $getabout = About::where('id','=','1')->first();
+        $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
+        $taxval=User::select('currency','map')->where('type','1')->first();
+        if (Session::get('id')) {
+            $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+            ->where('user_id',$user_id)
+            ->where('is_available','=','1')->get();
+        }
+        else{
+            $cartdata_temp = Session::get('guest_cart');
+            $cartdata = json_decode(json_encode($cartdata_temp));
+       
+        //     // exit();
+        }
+        return view('front.guestcheckout',compact('getabout','getdata','getcategory','cartdata','taxval','addressdata','userinfo','getpaymentdata'));
     }
 }

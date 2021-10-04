@@ -1,10 +1,11 @@
 @include('front.theme.header')
 
-
-<section class="cart">
-    <div class="container">
-        <h2 class="sec-head">{{ trans('labels.my_cart') }}</h2>
-        <div class="row">
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <section class="checkout">
+        	<div class="container">
+        		<div class="row">
             @empty ($cartdata) 
                 <p>No Data found</p>
             @else 
@@ -55,7 +56,7 @@
 
                                     @empty (!$cart->ingredients)
                                         <h5>Ingredients:</h5>
-                                        @if($islogin == false)
+                                       
 
                                         @foreach($cart->ingredients as $ingredient)
                                             <div class="cart-addons">
@@ -72,7 +73,7 @@
                                             </div>
                                         @endforeach
                                         @endif
-                                    @endif    
+                                     
 
                                     @if ($cart->addons_id != "" || $cart->group_addons != '')
                                         <h5 class="cart-addon-h"><span>Add-ons: </span><span>{{$taxval->currency}}{{$cart->totalAddonPrice * $cart->qty}}</span></h5>
@@ -206,13 +207,6 @@
                                     <p>{{ trans('labels.delivery') }}</p>
                                 </div>
                             </label>
-                            <!-- <label for="cart-pickup">
-                                <input type="radio" name="cart-delivery" id="cart-pickup" value="2">
-                                <div class="cart-delivery-type-box">
-                                    <img src="{!! asset('storage/app/public/front/images/delivery.png') !!}" height="40" width="40" alt="">
-                                    <p>{{ trans('labels.pickup') }}</p>
-                                </div>
-                            </label> -->
                         </div>
                         <div class="select_add">
                             @if (!$addressdata->isEmpty())
@@ -245,17 +239,17 @@
                             <textarea name="notes" id="notes" placeholder="{{ trans('messages.enter_order_note') }}" rows="3"></textarea>
                         </div>
 
-                        <input type="hidden" id="lat" name="lat" />
-                        <input type="hidden" id="lang" name="lang" />
-                        <input type="hidden" id="city" name="city" /> 
-                        <input type="hidden" id="state" name="state" /> 
-                        <input type="hidden" id="country" name="country" />
+                        <input type="" id="lat" name="lat" />
+                        <input type="" id="lang" name="lang" />
+                        <input type="" id="city" name="city" /> 
+                        <input type="" id="state" name="state" /> 
+                        <input type="" id="country" name="country" />
 
-                        <input type="hidden" name="order_total" id="order_total" value="{{$order_total}}">
-                        <input type="hidden" name="tax" id="tax" value="{{$tax}}">
-                        <input type="hidden" name="tax_amount" id="tax_amount" value="{{$tax}}">
-                        <input type="hidden" name="email" id="email" value="{{Session::get('email')}}">
-                        <input type="hidden" name="delivery_charge" id="delivery_charge" value="0">
+                        <input type="" name="order_total" id="order_total" value="{{$order_total}}">
+                        <input type="" name="tax" id="tax" value="{{$tax}}">
+                        <input type="" name="tax_amount" id="tax_amount" value="{{$tax}}">
+                        <input type="" name="email" id="email" value="{{Session::get('email')}}">
+                        <input type="" name="delivery_charge" id="delivery_charge" value="0">
 
                         @if (Session::has('offer_amount'))
                             <input type="hidden" name="discount_amount" id="discount_amount" value="{{$order_total*Session::get('offer_amount')/100}}">
@@ -327,7 +321,7 @@
                           <a href="{{URL::to('/signin')}}"  style="width: 100%;" class="btn mb-4">Login</a>
 
 
-                          <a href="{{URL::to('/guestcheckout')}}"  style="width: 100%;" class="btn ">Guest checkout</a>
+                          <a href="/checkout"  style="width: 100%;" class="btn ">Guest checkout</a>
                         @endif
                     </div>
                     @endif
@@ -335,72 +329,19 @@
             @endif
             
         </div>
-    </div>
-</section>
+        	</div>
 
-<!-- Promocode Modal -->
-<div class="promo-modal modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-head">
-                <h4>{{ trans('labels.select_promocode') }}</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @foreach ($getpromocode as $promocode)
-                <div class="promo-box">
-                    <button class="btn btn-copy" data-id="{{$promocode->offer_code}}">{{ trans('labels.copy') }}</button>
-                    <p class="promo-title">{{$promocode->offer_name}}</p>
-                    <p class="promo-code-here">{{ trans('labels.code') }} :: <span>{{$promocode->offer_code}}</span></p>
-                    <small>{{$promocode->description}}</small>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Address Modal -->
-<div class="promo-modal modal fade" id="select_address" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-head">
-                <h4>{{ trans('labels.select_address') }}</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @foreach ($addressdata as $address)
-                <div class="promo-box">
-                    <button class="btn btn-select" style="padding: 0px 18px;" data-address="{{$address->address}}" data-postal_code="{{$address->pincode}}" data-building="{{$address->building}}" data-landmark="{{$address->landmark}}" data-lat="{{$address->lat}}" data-lang="{{$address->lang}}" data-city="{{$address->city}}" data-state="{{$address->state}}" data-country="{{$address->country}}" data-deliverycharge="{{$address->delivery_charge}}">Select</button>
-                    <p class="promo-code-here">
-                        {{ trans('labels.type') }} :: 
-                        @if ($address->address_type == 1)
-                            Home
-                        @elseif ($address->address_type == 2)
-                            Work
-                        @else
-                            Other
-                        @endif
-                    </p>
-                    <p class="promo-title">{{$address->address}}</p>
-                    <small>{{$address->landmark}}, {{$address->building}}, {{$address->pincode}}</small>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</div>
+        </section>
+        <!--**********************************
+            Content body end
+        ***********************************-->
 
 @include('front.theme.footer')
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="https://checkout.stripe.com/v2/checkout.js"></script>
+
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{$taxval->map}}&libraries=places"></script>
+
+
 
 <script type="text/javascript">
 
