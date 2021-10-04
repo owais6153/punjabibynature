@@ -129,7 +129,7 @@
 						@endforeach
 							<div class="cart-btn-header">
 							  								<!-- View order btn -->
-@if (Session::get('cart') && !request()->is('cart') && isset($cartdata[0]))
+@if ( isset($cartdata[0]))
   <a href="{{URL::to('/cart')}}" class="head-cart">{{ trans('labels.view_my_order') }}</a>
 @endif
 <!-- View order btn -->
