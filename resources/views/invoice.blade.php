@@ -223,7 +223,7 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-    $(document).on('click', '.btn', function (event) {
+    $(document).on('click', '#doPrint', function (event) {
          var printContents = document.getElementById('printDiv').innerHTML;
          var originalContents = document.body.innerHTML;
          document.body.innerHTML = printContents;
