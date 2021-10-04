@@ -1102,6 +1102,10 @@ footer {
 }   
 .cateringpopup {
     padding-top: 26px;
+}
+section.checkout {
+    margin-top: 120px;
+    padding-top: 90px;
 }                                                                                                                                       
 /*-----cart css-----*/
 .cart-addons-wrap {

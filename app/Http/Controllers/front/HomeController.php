@@ -69,8 +69,10 @@ class HomeController extends Controller
         }
         return view('front.contactus',compact('getabout','getdata','getcategory','cartdata'));
     }
+     
      public function fanclub()
     {
+
         $getdata=User::select('currency')->where('type','1')->first();
         $getabout = About::where('id','=','1')->first();
         $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();

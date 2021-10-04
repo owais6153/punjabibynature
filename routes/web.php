@@ -49,6 +49,7 @@ Route::group(['namespace' => 'front'], function () {
 	Route::post('/home/contact', 'HomeController@contact');
 	Route::post('/home/checkpincode', 'HomeController@checkpincode');
 	Route::get('/contactus', 'HomeController@contactus');
+	Route::get('/guestcheckout', 'ItemController@guestcheckout');
 	Route::get('/fanclub', 'HomeController@fanclub');
 	
 	Route::get('/catering', 'HomeController@catering');

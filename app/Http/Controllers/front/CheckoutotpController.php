@@ -14,14 +14,13 @@ use App\OrderDetails;
 use App\Payment;
 use App\User;
 use App\About;
-use App\Addons;
 use App\Cart;
 use App\Transaction;
 use Stripe\Stripe;
 use Stripe\Customer;
 use Stripe\Charge;
 
-class CheckoutController extends Controller
+class CheckoutotpController extends Controller
 {
 
     /**
@@ -34,14 +33,12 @@ class CheckoutController extends Controller
     
     public function charge(Request $request)
     {
-        $getdata=User::select('token','firebase','timezone')->where('type','1')->first();
-
-
         try {
 
             $getuserdata=User::where('id',Session::get('id'))
             ->get()->first();
 
+            $getdata=User::select('token','firebase','timezone')->where('type','1')->first();
             date_default_timezone_set($getdata->timezone);
 
             $delivery_charge = $request->delivery_charge;
@@ -132,46 +129,11 @@ class CheckoutController extends Controller
                 $OrderPro->qty = $value['qty'];
                 $OrderPro->item_notes = $value['item_notes'];
                 $OrderPro->addons_id = $value['addons_id'];
-
-                $OrderPro->ingredients = $value['ingredients'];
-                $OrderPro->combo = $value['combo'];
-                $OrderPro->group_addons = $value['group_addons'];
-                $OrderPro->totalAddonPrice = $value['totalAddonPrice'];
-
                 $OrderPro->save();
             }
             $cart=Cart::where('user_id', Session::get('id'))->delete();
             $count=Cart::where('user_id',Session::get('id'))->count();
 
-            try{
-                $getlogo = About::select('logo')->where('id','=','1')->first();
-                $getusers = Order::with('users')->where('order.id', $order_id)->get()->first();
-                $getorders=OrderDetails::with('itemimage')->select('order_details.id','order_details.qty','order_details.price as total_price','item.id','item.item_name','order_details.item_id','order_details.addons_id','order_details.item_notes','order_details.variation_price')
-                ->join('item','order_details.item_id','=','item.id')
-                ->join('order','order_details.order_id','=','order.id')
-                ->where('order_details.order_id',$order_id)->get()->toArray();
-
-                $arrayName = array();
-                foreach ($getorders as $key => $value) {
-                   $arr = explode(',', $value['addons_id']);
-                   $arrayName[$key]=$value;
-                   $arrayName[$key]['addons']=Addons::whereIn('id',$arr)->get()->toArray();
-                }; 
-                
-                $email=$getuserdata->email;
-                $name=$getuserdata->name;
-                $logo=$getlogo->logo;
-                $currency=$getdata->currency;
-
-                $data=['getusers'=>$getusers,'getorders'=>$arrayName,'email'=>$email,'name'=>$name,'logo'=>$logo,'currency'=>$currency];
-                Mail::send('Email.emailinvoice',$data,function($message)use($data){
-                    $message->from(env('MAIL_USERNAME'))->subject('Order');
-                    $message->to($data['email']);
-                } );
-            }catch(\Swift_TransportException $e){
-                $response = $e->getMessage() ;
-                return response()->json(['status'=>0,'message'=>trans('messages.email_error')],200);
-            }
             
             Session::put('cart', $count);
 
@@ -278,7 +240,5 @@ class CheckoutController extends Controller
             return response()->json(['status'=>0,'message'=>trans('messages.money_error')],200);
         }
     }
-
-  
     
 }
