@@ -78,6 +78,7 @@ Route::group(['namespace' => 'front'], function () {
 	if (\App\SystemAddons::where('unique_identifier', 'otp')->first() != null && \App\SystemAddons::where('unique_identifier', 'otp')->first()->activated) {
 		Route::get('/signin', 'UserotpController@index');
 		Route::post('/signin/login', 'UserotpController@login');
+		Route::post('/signin/login_without_otp', 'UserController@login');
 		Route::get('/signup', 'UserotpController@signup');
 		Route::post('/signup/signup', 'UserotpController@register');
 		Route::post('/home/editProfile', 'UserotpController@editProfile');
@@ -105,7 +106,7 @@ Route::group(['namespace' => 'front'], function () {
 		Route::post('stripe-payment/charge', 'CheckoutotpController@charge');
 	} else {
 		Route::get('/signin', 'UserController@index');
-		Route::post('/signin/login', 'UserController@login');
+		Route::post('/signin/login_without_otp', 'UserController@login');
 		Route::get('/signup', 'UserController@signup');
 		Route::post('/signup/signup', 'UserController@register');
 		Route::get('/forgot-password', 'UserController@forgot_password');

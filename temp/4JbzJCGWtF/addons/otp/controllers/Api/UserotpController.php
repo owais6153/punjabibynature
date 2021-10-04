@@ -90,7 +90,7 @@ class UserotpController extends Controller
                                 ->create($request->mobile, // to 
                         array( 
                             "from" => $getconfiguration->twilio_mobile_number,
-                            "body" => "Your Login Code for Punjabi By Nature is ".$otp 
+                            "body" => "Your Login Code ".$otp 
                        ) 
                     );
                 }

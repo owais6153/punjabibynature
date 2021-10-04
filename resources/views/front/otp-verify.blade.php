@@ -72,7 +72,7 @@
 
             
             <button type="submit" class="btn">{{ trans('labels.verify') }}</button>
-            <p class="already">{{ trans('labels.didnt_email') }} <span class="Btn" id="verifiBtn"></span><span id="timer"></span></p>
+            <p class="already">Did'nt get code? <span class="Btn" id="verifiBtn"></span><span id="timer"></span></p>
             @if (\Session::has('danger'))
                 <div class="alert alert-danger w-100">
                     {!! \Session::get('danger') !!}

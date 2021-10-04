@@ -61,16 +61,13 @@
                 <p>{{$getabout->short_title}}</p>
             </a>
         </div>
-        <form id="login" action="{{ URL::to('/signin/login') }}" method="post">
+        <form id="login" action="{{ URL::to('/signin/login_without_otp') }}" method="post">
             @csrf
 
-            @if (\App\SystemAddons::where('unique_identifier', 'otp')->first() != null && \App\SystemAddons::where('unique_identifier', 'otp')->first()->activated)
-                <input type="hidden" id="country" name="country" value="91" />
-                <input name="mobile" type="text" class="w-100" id="mobile" placeholder="{{ trans('messages.enter_mobile') }}" />
-            @else
+         
                 <input type="email" name="email" id="email" placeholder="{{ trans('messages.enter_email') }}" class="w-100" required="">
                 <input type="password" name="password" id="password" placeholder="{{ trans('messages.enter_password') }}" class="w-100" required="">
-            @endif
+        
 
             <button type="submit" class="btn w-100">{{ trans('labels.login') }}</button>
             <a href="{{ url('auth/google') }}" class="btn w-50 mt-3" style="background-color: #fff;">
