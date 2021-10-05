@@ -106,6 +106,9 @@ class UserController extends Controller
 
                             }
                             Session::forget('guest_cart');
+                            $count=Cart::where('user_id',$login->id)->count();
+
+                            Session::put('cart', $count);
                 
                         }
 
