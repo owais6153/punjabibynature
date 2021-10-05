@@ -159,6 +159,33 @@
                     @endif
                     @endif
                     
+                    @if($islogin == false)
+                        <form action="" class="d-block mt-5">
+                            <h3>Checkout</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" name="name" placeholder="Name">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="name" placeholder="Name">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="name" placeholder="Name">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="name" placeholder="Name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Guest Checkout</label>
+                                    <input type="radio" name="">
+
+                                    <label>Create My Account</label>
+                                    <input type="radio" name="">
+                                </div>
+                            </div>
+                        </form>
+                    @endif
+
                 </div>
                 <div class="col-lg-4">
                     @empty (!@$data)
@@ -197,7 +224,7 @@
                         @endif
 
                         <h4 class="sec-head openmsg mt-5" style="color: red; display: none;">Restaurant is closed.</h4>
-                         @if (Session::has('id'))
+                        
                         <div class="cart-delivery-type open">
                             <label for="cart-delivery">
                                 <input type="radio" name="cart-delivery" id="cart-delivery" checked value="1">
@@ -214,6 +241,7 @@
                                 </div>
                             </label>
                         </div>
+                         @if (Session::has('id'))
                         <div class="select_add">
                             @if (!$addressdata->isEmpty())
                                 <p data-toggle="modal" data-target="#select_address" style="width: 50%;" class="btn">{{ trans('labels.select_address') }}</p>
@@ -323,11 +351,10 @@
 
                         @endforeach
                         @else
-                          <a href="{{URL::to('/signup')}}" style="width: 100%;" class="btn mb-2 mt-4">Create an account</buatton>
-                          <a href="{{URL::to('/signin')}}"  style="width: 100%;" class="btn mb-4">Login</a>
+                          
+                          <a href="{{URL::to('/signin')}}"  style="width: 100%;" class="btn my-4">Login</a>
 
 
-                          <a href="{{URL::to('/guestcheckout')}}"  style="width: 100%;" class="btn ">Guest checkout</a>
                         @endif
                     </div>
                     @endif
