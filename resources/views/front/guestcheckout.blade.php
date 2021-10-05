@@ -5,7 +5,10 @@
         ***********************************-->
         <section class="checkout">
         	<div class="container">
+                 <h2>Checkout</h2>
         		<div class="row">
+               
+
             @empty ($cartdata) 
                 <p>No Data found</p>
             @else 
@@ -111,7 +114,7 @@
 
                                      @empty (!$cart->combo)
                                      <h5>Combo Options</h5>
-                                     @if($islogin==false)
+                                   
                                         @foreach($cart->combo as $comb)
                                             <div class="cart-addons">
                                                 <b>{{$comb}}</b>
@@ -127,7 +130,7 @@
                                             </div>
                                         @endforeach
                                         @endif
-                                    @endif
+                                 
                                 </div>
                             
 
@@ -148,18 +151,19 @@
                             </form>
                         </div>
                     @else
-                        <div class="promo-code">
-                            <form>
-                            <div class="promo-wrap">
-                                <input type="text" placeholder="{{ trans('messages.enter_promocode') }}" name="promocode" id="promocode" autocomplete="off" readonly="">
-                                <button class="btn" id="ajaxSubmit">{{ trans('labels.apply') }}</button>
-                            </div>
-                            </form>
-                            <p data-toggle="modal" data-target="#staticBackdrop">{{ trans('labels.select_promocode') }}</p>
+                     
+                    @endif
+                    @endif
+                    <div class="checkout-item">
+                        <div class="select_add">
+                            @if (!$addressdata->isEmpty())
+                                <p data-toggle="modal" data-target="#select_address" style="width: 50%;" class="btn">{{ trans('labels.select_address') }}</p>
+                            @else
+                                <a href="{{URL::to('/address')}}" style="width: 50%;" class="btn">{{ trans('labels.select_address') }}</a>
+                            @endif
+                            
                         </div>
-                    @endif
-                    @endif
-                    
+                    </div>
                 </div>
                 <div class="col-lg-4">
                     @empty (!@$data)
@@ -198,25 +202,7 @@
                         @endif
 
                         <h4 class="sec-head openmsg mt-5" style="color: red; display: none;">Restaurant is closed.</h4>
-                         @if (Session::has('id'))
-                        <div class="cart-delivery-type open">
-                            <label for="cart-delivery">
-                                <input type="radio" name="cart-delivery" id="cart-delivery" checked value="1">
-                                <div class="cart-delivery-type-box">
-                                    <img src="{!! asset('storage/app/public/front/images/pickup-truck.png') !!}" height="40" width="40" alt="">                                   
-                                    <p>{{ trans('labels.delivery') }}</p>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="select_add">
-                            @if (!$addressdata->isEmpty())
-                                <p data-toggle="modal" data-target="#select_address" style="width: 50%;" class="btn">{{ trans('labels.select_address') }}</p>
-                            @else
-                                <a href="{{URL::to('/address')}}" style="width: 50%;" class="btn">{{ trans('labels.select_address') }}</a>
-                            @endif
-                            
-                        </div>
-
+                         
                         @if (!$addressdata->isEmpty())
                             <div class="promo-wrap open mt-3">
                                 <input type="text" placeholder="{{ trans('messages.enter_delivery_address') }}" name="address" id="address" required="" readonly=""> 
@@ -238,18 +224,20 @@
                         <div class="promo-wrap open mt-3">
                             <textarea name="notes" id="notes" placeholder="{{ trans('messages.enter_order_note') }}" rows="3"></textarea>
                         </div>
+                        <a href="#" style="width: 100%;" class="btn mb-2 mt-4">Place Order</a>
+                    
 
-                        <input type="" id="lat" name="lat" />
-                        <input type="" id="lang" name="lang" />
-                        <input type="" id="city" name="city" /> 
-                        <input type="" id="state" name="state" /> 
-                        <input type="" id="country" name="country" />
+                        <input type="hidden" id="lat" name="lat" />
+                        <input type="hidden" id="lang" name="lang" />
+                        <input type="hidden" id="city" name="city" /> 
+                        <input type="hidden" id="state" name="state" /> 
+                        <input type="hidden" id="country" name="country" />
 
-                        <input type="" name="order_total" id="order_total" value="{{$order_total}}">
-                        <input type="" name="tax" id="tax" value="{{$tax}}">
-                        <input type="" name="tax_amount" id="tax_amount" value="{{$tax}}">
-                        <input type="" name="email" id="email" value="{{Session::get('email')}}">
-                        <input type="" name="delivery_charge" id="delivery_charge" value="0">
+                        <input type="hidden" name="order_total" id="order_total" value="{{$order_total}}">
+                        <input type="hidden" name="tax" id="tax" value="{{$tax}}">
+                        <input type="hidden" name="tax_amount" id="tax_amount" value="{{$tax}}">
+                        <input type="hidden" name="email" id="email" value="{{Session::get('email')}}">
+                        <input type="hidden" name="delivery_charge" id="delivery_charge" value="0">
 
                         @if (Session::has('offer_amount'))
                             <input type="hidden" name="discount_amount" id="discount_amount" value="{{$order_total*Session::get('offer_amount')/100}}">
@@ -275,12 +263,6 @@
                             <input type="hidden" name="getpromo" id="getpromo" value="">
                         @endif
 
-                       
-                        <div class="mt-3">                            
-                            <button type="button" style="width: 100%;" class="btn open comman" onclick="WalletOrder()">{{ trans('labels.my_wallet') }} ({{$taxval->currency}}{{number_format($userinfo->wallet, 2)}})</button>
-                        </div>
-                        
-
                         @foreach($getpaymentdata as $paymentdata)
 
                             @if ($paymentdata->payment_name == "COD")
@@ -302,31 +284,15 @@
 
                             @endif
 
-                            @if ($paymentdata->payment_name == "Stripe")
-                                <div class="mt-3">
-                                    <button id="customButton" class="btn comman" style="display: none; width: 100%;">{{ trans('labels.stripe_payment') }}</button>
-                                    <button class="btn open stripe comman" style="width: 100%;" onclick="stripe()">{{ trans('labels.stripe_payment') }}</button>
-                                </div>
-
-                                @if($paymentdata->environment=='1')
-                                    <input type="hidden" name="stripe" id="stripe" value="{{$paymentdata->test_public_key}}">
-                                @else
-                                    <input type="hidden" name="stripe" id="stripe" value="{{$paymentdata->live_public_key}}">
-                                @endif
-                            @endif
 
                         @endforeach
                         @else
-                          <a href="{{URL::to('/signup')}}" style="width: 100%;" class="btn mb-2 mt-4">Create an account</buatton>
-                          <a href="{{URL::to('/signin')}}"  style="width: 100%;" class="btn mb-4">Login</a>
-
-
-                          <a href="/checkout"  style="width: 100%;" class="btn ">Guest checkout</a>
+                          
                         @endif
                     </div>
                     @endif
                 </div>
-            @endif
+         
             
         </div>
         	</div>
