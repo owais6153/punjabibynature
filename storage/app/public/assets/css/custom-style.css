@@ -892,10 +892,7 @@ span.required_label {
   scrollbar-color: #fd3f32; /* thumb and track color */
   scrollbar-width: thin;
 }
-.cart-delivery-type label {
-    max-width: 100% !important ;
-    flex: 0 0 100% !important;
-}
+
 
 .sec-catering {
     margin-top: 120px;

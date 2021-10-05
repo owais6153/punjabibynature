@@ -206,13 +206,13 @@
                                     <p>{{ trans('labels.delivery') }}</p>
                                 </div>
                             </label>
-                            <!-- <label for="cart-pickup">
+                            <label for="cart-pickup">
                                 <input type="radio" name="cart-delivery" id="cart-pickup" value="2">
                                 <div class="cart-delivery-type-box">
                                     <img src="{!! asset('storage/app/public/front/images/delivery.png') !!}" height="40" width="40" alt="">
                                     <p>{{ trans('labels.pickup') }}</p>
                                 </div>
-                            </label> -->
+                            </label>
                         </div>
                         <div class="select_add">
                             @if (!$addressdata->isEmpty())
