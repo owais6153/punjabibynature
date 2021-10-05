@@ -215,46 +215,7 @@ class UserotpController extends Controller
                     );
 
 
-                     if (Session::get('guest_cart')) {
-                            $cartdata_temp = Session::get('guest_cart');
-                            $cartdata = json_decode(json_encode($cartdata_temp)); 
-
-
-
-                            foreach ($cartdata as $key => $value) {
-                                $getitem=Item::with('itemimage')->select('item.id','item.item_name','item.tax')
-                                ->where('item.id',$value->item_id)->first();
-                                $cart = new Cart;
-                                $cart->item_id =$value->item_id;
-                                $cart->addons_id =$value->addons_id;
-                                $cart->qty =$value->qty;
-                                $cart->price =$value->price;
-                                $cart->variation_id =$value->variation_id;
-                                $cart->variation_price =$value->variation_price;
-                                $cart->variation =$value->variation;
-                                $cart->user_id =$user->id;
-                                $cart->item_notes =$value->item_notes;
-                                $cart->item_name =$getitem->item_name;
-                                $cart->tax =$getitem->tax;
-                                $cart->item_image =$getitem['itemimage']->image_name;
-                                $cart->addons_name =$value->addons_name;
-                                $cart->addons_price =$value->addons_price;
-
-                                $cart->ingredients =  (isset($value->ingredients) && !empty($value->ingredients)) ? implode('|',$value->ingredients) : null;
-                                $cart->combo = (isset($value->combo) && !empty($value->combo)) ? implode('|',$value->combo) : null;
-                                $cart->group_addons = (isset($value->group_addons) && !empty($value->group_addons)) ? implode('|',$value->group_addons) : null;
-                                $cart->totalAddonPrice =$value->totalAddonPrice;
-
-                                $cart->save();
-
-
-                            }
-                            Session::forget('guest_cart');
-                            $count=Cart::where('user_id',$user->id)->count();
-
-                            Session::put('cart', $count);
-                
-                        }
+           
 
                     return response()->json(['status'=>1,'message'=>'Registration Successful','data'=>$arrayName],200);
                 }
