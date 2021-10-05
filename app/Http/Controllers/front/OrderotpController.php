@@ -16,6 +16,7 @@ use App\Addons;
 use App\Promocode;
 use App\Pincode;
 use Session;
+use App\Category;
 
 class OrderotpController extends Controller
 {
@@ -32,7 +33,19 @@ class OrderotpController extends Controller
         ->where('order.user_id',Session::get('id'))->groupBy('order_details.order_id')->orderby('order.id','desc')->paginate(9);
         
         $getdata=User::select('currency')->where('type','1')->first();
-        return view('front.orders',compact('orderdata','getabout','getdata'));
+
+        if (Session::get('id')) {
+            $user_id  = Session::get('id');
+            $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+            ->where('user_id',$user_id)
+            ->where('is_available','=','1')->get();
+        }
+        else{
+            $cartdata_temp = Session::get('guest_cart');
+            $cartdata = json_decode(json_encode($cartdata_temp));
+        }
+        $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
+        return view('front.orders',compact('orderdata','getabout','getdata', 'cartdata', 'getcategory'));
     }
 
     public function orderdetails(Request $request) {
@@ -89,7 +102,19 @@ class OrderotpController extends Controller
         }
 
         $getdata=User::select('currency')->where('type','1')->first();
-        return view('front.order-details',compact('orderdata','summery','getabout','getdata'));
+
+        if (Session::get('id')) {
+            $user_id  = Session::get('id');
+            $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+            ->where('user_id',$user_id)
+            ->where('is_available','=','1')->get();
+        }
+        else{
+            $cartdata_temp = Session::get('guest_cart');
+            $cartdata = json_decode(json_encode($cartdata_temp));
+        }
+        $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
+        return view('front.order-details',compact('orderdata','summery','getabout','getdata', 'cartdata', 'getcategory'));
     }
 
     public function cashondelivery(Request $request)
