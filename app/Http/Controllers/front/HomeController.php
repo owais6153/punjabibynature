@@ -25,6 +25,24 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function thankyou(){
+        $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
+        $getabout = About::where('id','=','1')->first();
+        if (Session::get('id')) {
+            $user_id  = Session::get('id');
+            $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+            ->where('user_id',$user_id)
+            ->where('is_available','=','1')->get();
+        }
+        else{
+            $cartdata_temp = Session::get('guest_cart');
+            $cartdata = json_decode(json_encode($cartdata_temp));
+        }
+         $getdata=User::select('currency')->where('type','1')->first();
+        return view('front.thankyou', compact('getcategory','cartdata', 'getabout', 'getdata'));
+    }
+
     public function index()
     {
         $getslider = Slider::all();
@@ -32,9 +50,18 @@ class HomeController extends Controller
         $getabout = About::where('id','=','1')->first();
         $user_id  = Session::get('id');
         $taxval=User::select('currency','map')->where('type','1')->first();
-        $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
-        ->where('user_id',$user_id)
-        ->where('is_available','=','1')->get();
+        if (Session::get('id')) {
+            $user_id  = Session::get('id');
+            $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
+            ->where('user_id',$user_id)
+            ->where('is_available','=','1')->get();
+        }
+        else{
+            $cartdata_temp = Session::get('guest_cart');
+            $cartdata = json_decode(json_encode($cartdata_temp));
+       
+        //     // exit();
+        }
         $getitem = Item::with(['category','itemimage','variation'])->select('item.cat_id','item.id','item.item_name','item.item_description',DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
         ->leftJoin('favorite', function($query) use($user_id) {
             $query->on('favorite.item_id','=','item.id')

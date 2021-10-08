@@ -45,6 +45,7 @@ Route::group(['namespace' => 'front'], function () {
 	Route::get('/sendemail', 'SendEmailController@index');
 	Route::post('/sendemail/send', 'SendEmailController@send');
 	Route::get('/', 'HomeController@index');
+	Route::get('/thankyou', 'HomeController@thankyou');
 	Route::get('/405', 'HomeController@notallow');
 	Route::post('/home/contact', 'HomeController@contact');
 	Route::post('/home/checkpincode', 'HomeController@checkpincode');

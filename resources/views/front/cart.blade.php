@@ -896,7 +896,7 @@
                         window.location.href = SITEURL + '/orders';
                     }
                     else{
-                        window.location.href = SITEURL + '/thank-you';
+                        window.location.href = SITEURL + '/thankyou';
                     }
                 } else {
                     $('#ermsg').text(response.message);
