@@ -37,6 +37,7 @@
                             <tbody>
                                 <?php
                                 foreach ($getpayment as $payment) {
+                                    if ($payment->payment_name == 'Stripe') {
                                 ?>
                                 <tr>
                                     <td>{{$payment->id}}</td>
@@ -60,6 +61,7 @@
                                 </tr>
                                 <?php
                                 }
+                            }
                                 ?>
                             </tbody>
                         </table>

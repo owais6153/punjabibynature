@@ -396,7 +396,8 @@ $('.addon_group.paid input').change(function() {
 $(".readers").change(function() {
     "use strict";
     $('input[type=checkbox]').prop('checked',false);
-    $('.comboWrapp').html('');
+    $('.comboWrapp > .w3-black').html('');
+    $('.combotab').fadeOut();
     $(".readers option:selected").each(function() {
         $('.temp-pricing').hide();
         $('#card2-oldprice').hide();

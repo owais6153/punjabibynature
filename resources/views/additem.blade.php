@@ -78,19 +78,11 @@
                                     </div>
                                 </div>
                             </div>
-                                  <div class="row">
+                                 
+                       
 
-                                    <div class="col-sm-3 col-md-6">
-                                        <h5>Item Type</h5>
-                                        <div class="form-group">
-                                            <select name="item_type[]" class="form-control selectpicker" multiple data-live-search="true" id="item_type">
-                                                <option value="catering">Catering</option>
-                                                <option value="product">Product</option>     
-                                            </select>
-                                        </div>
-                                    </div>
-                                   
-                                </div>
+                            <input type="hidden" name="item_type" value="product">
+                                 
                    
                             <div id="ingredient_field">
                                 <h5>Add Ingredients</h5>

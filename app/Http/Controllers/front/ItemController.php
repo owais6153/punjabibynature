@@ -36,6 +36,7 @@ class ItemController extends Controller
         $getabout = About::where('id','=','1')->first();
         $user_id  = Session::get('id');
         $getitem = Item::with(['category','itemimage','variation'])->select('item.cat_id','item.id','item.item_name','item.item_description','item.item_status', 'item.item_type' ,DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
+        ->where('item.item_type', '=', 'product')
         ->leftJoin('favorite', function($query) use($user_id) {
             $query->on('favorite.item_id','=','item.id')
             ->where('favorite.user_id', '=', $user_id);
@@ -169,6 +170,7 @@ class ItemController extends Controller
         $getabout = About::where('id','=','1')->first();
         $user_id  = Session::get('id');
         $getitem = Item::with(['category','itemimage','variation'])->select('item.cat_id','item.id','item.item_name','item.item_description', 'item.item_type', 'item.item_status',DB::raw('(case when favorite.item_id is null then 0 else 1 end) as is_favorite'))
+        ->where('item.item_type', '=', 'product')
         ->leftJoin('favorite', function($query) use($user_id) {
             $query->on('favorite.item_id','=','item.id')
             ->where('favorite.user_id', '=', $user_id);
@@ -185,8 +187,6 @@ class ItemController extends Controller
         else{
             $cartdata_temp = Session::get('guest_cart');
             $cartdata = json_decode(json_encode($cartdata_temp));
-       
-        //     // exit();
         }
         return view('front.product', compact('getcategory','getitem','getabout','getdata','cartdata'));
     }

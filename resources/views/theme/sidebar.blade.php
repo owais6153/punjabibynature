@@ -63,6 +63,13 @@
                     <i class="fa fa-plus"></i><span class="nav-text">{{ trans('labels.items') }}</span>
                 </a>
             </li>
+
+            <li>
+                <a href="{{URL::to('/admin/catering/category')}}" aria-expanded="false">
+                    <i class="fa fa-plus"></i><span class="nav-text">Catering Category</span>
+                </a>
+            </li>
+
             <li>
                 <a href="{{URL::to('/admin/banner')}}" aria-expanded="false">
                     <i class="fa fa-bullhorn"></i><span class="nav-text">{{ trans('labels.banners') }}</span>

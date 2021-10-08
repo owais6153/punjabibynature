@@ -260,6 +260,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 		Route::post('addons/groups/update', 'AddonGroupsController@update');
 		Route::post('addons/groups/delete', 'AddonGroupsController@delete');
 
+
+		Route::get('catering/category', 'CateringCategory@index');
+		Route::post('catering/category/store', 'CateringCategory@store');
+		Route::get('catering/category/list', 'CateringCategory@list');
+		Route::post('catering/category/show', 'CateringCategory@show');
+		Route::post('catering/category/update', 'CateringCategory@update');
+		Route::post('catering/category/delete', 'CateringCategory@delete');
+
 		Route::get('users', 'UserController@index');
 		Route::post('users/store', 'UserController@store');
 		Route::get('users/list', 'UserController@list');

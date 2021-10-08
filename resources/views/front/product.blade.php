@@ -29,10 +29,8 @@
                 </div>
                 <div class="row">
                     @foreach ($getitem as $item)
-                    <?php 
-                    $item_type = explode(',', $item->item_type)                    
-                    ?>
-                    @if(in_array('product', $item_type))
+ 
+                    
                     <div class="col-xl-4 col-md-6">
                         <div class="pro-box">
                             <div class="pro-img">
@@ -81,7 +79,7 @@
                         @endif                        
                         </div>
                     </div>
-                    @endif
+
                     @endforeach
                 </div>
                 <nav aria-label="Page navigation example">
