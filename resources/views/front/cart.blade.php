@@ -1,6 +1,5 @@
 @include('front.theme.header')
 
-
 <section class="cart">
     <div class="container">
         <h2 class="sec-head">{{ trans('labels.my_cart') }}</h2>
@@ -158,42 +157,167 @@
                         </div>
                     @endif
                     @endif
-                    
+                    @empty (!@$data)
+                        <?php 
+                        $order_total = array_sum(array_column(@$data, 'total_price'));
+                        $tax = array_sum(array_column(@$data, 'tax'));
+                        $total = array_sum(array_column(@$data, 'total_price'))+$tax;
+                        ?>
+                    @endif
                     @if($islogin == false)
-                        <form action="" class="d-block mt-5">
-                            <h3>Checkout</h3>
+                        <input type="hidden" name="get_new_userID" id="get_new_userID">
+                        <div class="d-block mt-5 cart-user-form">
+                            <h2>Checkout</h2>
+                            <h5 class="mt-4 mb-4">Personal Details</h5>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <input type="text" name="name" placeholder="Name">
+                                <div class="col-md-12">
+                                    <input type="text" name="name" id="name" placeholder="Full Name">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" name="name" placeholder="Name">
+                                    <input type="email" name="email" id="email" placeholder="Email">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" name="name" placeholder="Name">
+                                    <input type="hidden" id="country" name="country" value="91" />
+                <input type="text" name="mobile" id="mobile" placeholder="{{ trans('messages.enter_mobile') }}" class="w-100" value="{{ old('mobile') }}">
                                 </div>
-                                <div class="col-md-6">
-                                    <input type="text" name="name" placeholder="Name">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Guest Checkout</label>
-                                    <input type="radio" name="">
 
-                                    <label>Create My Account</label>
-                                    <input type="radio" name="">
-                                </div>
+                            <div class="col-md-12">
+                                
+                                <ul class="extra-food checkout" >
+
+                                    <li>
+                                        <input class="Checkbox" type="radio" name="register_type" value="1" checked="">
+                                        <p style="font-weight: 500;">Guset Checkout</p>
+                                    </li>
+                                    <li>
+                                        <input class="Checkbox" type="radio" name="register_type" value="2" >
+                                        <p style="font-weight: 500;">Create My Account</p>
+                                    </li>
+                                </ul>
                             </div>
-                        </form>
+                            <div class="col-md-12 row" id="pwd_div">
+                             
+                            </div>
+                        @csrf
+                    @if (env('Environment') == 'sendbox')
+                        <div class="mb-3 mt-4 col-md-12">
+                             <h5>Address</h5>
+                         </div>
+                         <div class="col-md-6">
+                            <div class="form-group">
+                                <select class="form-control" name="address_type" id="address_type" >
+                                    <option value="">{{ trans('messages.select_address_type') }}</option>
+                                    <option value="1">{{ trans('labels.home') }}</option>
+                                    <option value="2">{{ trans('labels.work') }}</option>
+                                    <option value="3">{{ trans('labels.other') }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                           
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="{{ trans('messages.enter_delivery_address') }}" name="address" id="address" value="New York, NY, USA" required="" readonly="" autocomplete="on" >
+                                <input type="hidden" id="lat" name="lat" value="" />
+                                <input type="hidden" id="lang" name="lang" value="" />
+                                <input type="hidden" name="order_total" id="order_total" value="{{$total}}">
+                                <input type="hidden" name="paid_amount" id="paid_amount" value="{{$total}}">
+                                <input type="hidden" name="tax" id="tax" value="{{$tax}}">
+                                <input type="hidden" name="tax_amount" id="tax_amount" value="{{$tax}}">
+                                <input type="hidden" name="discount_amount" id="discount_amount" value="">
+                                <input type="hidden" name="delivery_charge" id="delivery_charge" value="0">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                         <input type="text" id="city" name="city" placeholder="City"> 
+                            
+                        </div>
+                        <div class="col-md-4">
+                           <input type="text" id="state" name="state" placeholder="State"> 
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" id="country" name="country" placeholder="Country">
+                        </div>
+                        <div class="col-md-6">
+                           
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="landmark" id="landmark" placeholder="{{ trans('messages.enter_landmark') }}" value="Central Park" readonly="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="building" id="building" placeholder="{{ trans('messages.enter_building') }}" value="4043" readonly="">
+                            </div>
+                        </div>
+                    @else
+                        <div class="mb-3 mt-4 col-md-12">
+                              <h5>Address</h5>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                                <select class="form-control" name="address_type" id="address_type">
+                                    <option value="">{{ trans('messages.select_address_type') }}</option>
+                                    <option value="1">{{ trans('labels.home') }}</option>
+                                    <option value="2">{{ trans('labels.work') }}</option>
+                                    <option value="3">{{ trans('labels.other') }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="{{ trans('messages.enter_delivery_address') }}" name="address" id="address" autocomplete="on">
+                                <input type="hidden" id="lat" name="lat" />
+                                <input type="hidden" id="lang" name="lang" />
+                                <input type="hidden" name="order_total" id="order_total" value="{{$total}}">
+                                <input type="hidden" name="paid_amount" id="paid_amount" value="{{$total}}">
+                                <input type="hidden" name="tax" id="tax" value="{{$tax}}">
+                                <input type="hidden" name="tax_amount" id="tax_amount" value="{{$tax}}">
+                                <input type="hidden" name="delivery_charge" id="delivery_charge" value="0">
+                                <input type="hidden" name="discount_amount" id="discount_amount" value="">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                         <input type="text" id="city" name="city" placeholder="City"> 
+                            
+                        </div>
+                        <div class="col-md-4">
+                           <input type="text" id="state" name="state" placeholder="State"> 
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" id="country" name="country" placeholder="Country">
+                        </div>
+                        <div class="col-md-6">
+                            
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="landmark" id="landmark" placeholder="{{ trans('messages.enter_landmark') }}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="building" id="building" placeholder="{{ trans('messages.enter_building') }}">
+                            </div>
+                        </div>
+                        
+                    @endif
+                        <div class="col-md-12">
+                            <h5 class="mb-3 mt-4">Order Notes</h5>
+                            <textarea name="notes" id="notes" placeholder="{{ trans('messages.enter_order_note') }}" rows="3"></textarea>
+                        </div>
+                               
+                            </div>
+                            
+                                                                                   
+                          
+                        </div>
                     @endif
 
                 </div>
                 <div class="col-lg-4">
                     @empty (!@$data)
-                    <?php 
-                    $order_total = array_sum(array_column(@$data, 'total_price'));
-                    $tax = array_sum(array_column(@$data, 'tax'));
-                    $total = array_sum(array_column(@$data, 'total_price'))+$tax;
-                    ?>
                     
                     <div class="cart-summary">
                         <h2 class="sec-head">{{ trans('labels.payment_summary') }}</h2>
@@ -352,9 +476,18 @@
                         @endforeach
                         @else
                           
-                          <a href="{{URL::to('/signin')}}"  style="width: 100%;" class="btn my-4">Login</a>
-
-
+                          <a href="{{URL::to('/signin')}}"  style="width: 100%;" class="btn mt-4 mb-2">Login</a>
+                            @foreach($getpaymentdata as $paymentdata)
+                           @if ($paymentdata->payment_name == "Stripe")
+                               <button id="customButton" class="btn comman" style="display: none; width: 100%;">{{ trans('labels.stripe_payment') }}</button>
+                              <a href="javascript:void(0)" onclick="checkout_guest()"  style="width: 100%;" class="btn mb-4">Place Order (Stripe)</a>
+                                @if($paymentdata->environment=='1')
+                                    <input type="hidden" name="stripe" id="stripe" value="{{$paymentdata->test_public_key}}">
+                                @else
+                                    <input type="hidden" name="stripe" id="stripe" value="{{$paymentdata->live_public_key}}">
+                                @endif
+                             @endif
+                            @endforeach
                         @endif
                     </div>
                     @endif
@@ -424,13 +557,272 @@
     </div>
 </div>
 
+
+<div class="promo-modal modal fade" id="otp_verify" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-head">
+                <h4 class=" mt-3">Please verify code</h4>
+                <p>A code has been sent to your number. Please verify it.</p>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" style="display: none;" id="verification_error"></div>
+                <input type="text" readonly="readonly" id="get_otp_number" name="" class="form-control" disabled="disabled">
+                <input type="number" id="get_otp" name="" class="form-control">
+                <input type="button" id="verify_otp" value="Verify" class="btn" placeholder="Verification code">
+                <p id="didnt_get" style="font-size: 18px;text-align: center;font-weight: 400;margin-top: 20px;">Didn't get code <span id="timer"></span><span id="verifiBtn"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 @include('front.theme.footer')
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://checkout.stripe.com/v2/checkout.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{$taxval->map}}&libraries=places"></script>
 
 <script type="text/javascript">
+@if($islogin == false)
+    let timerOn = false;
 
+    function timer(remaining) {
+        "use strict";
+      var m = Math.floor(remaining / 60);
+      var s = remaining % 60;
+      
+      m = m < 10 ? '0' + m : m;
+      s = s < 10 ? '0' + s : s;
+      document.getElementById('timer').innerHTML = m + ':' + s;
+      remaining -= 1;
+      
+      if(remaining >= 0 && timerOn) {
+        setTimeout(function() {
+            timer(remaining);
+        }, 1000);
+        return;
+      }
+
+      if(!timerOn) {
+        // Do validate stuff here
+        return;
+      }
+      
+      // Do timeout stuff here
+      document.getElementById("verifiBtn").innerHTML = `<a href="javascript:void(0)" onclick="resendCode()">{{ trans('labels.resend') }}</a>`;
+      document.getElementById("timer").innerHTML = "";
+    }
+
+    function resendCode(){
+        if($('#get_otp_number').val() == ''){
+                $('#verification_error').text('Mobile Required');
+                $('#verification_error').fadeIn();
+        }
+        else{
+             $('#verification_error').fadeOut();
+            $('#preloader').show();
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url:"{{ URL::to('/resendcode_checkout') }}",
+                data: {mobile: $('#get_otp_number').val()},
+                method: 'POST',
+                success: function(response) {
+                    $('#preloader').hide();
+                    if (response.status == 1) {
+                        document.getElementById("didnt_get").innerHTML = 'Code resent successfully';
+
+                    } else {
+                        $('#verification_error').text(response.message);
+                        $('#verification_error').fadeIn();
+                    }
+                },
+                error: function(error) {
+                    $('#preloader').hide();
+                    $('#verification_error').text(error.responseJSON.message);
+                    $('#verification_error').fadeIn();
+                }
+            });
+        }
+    }
+
+    function checkout_guest(){
+        var error = '';
+        var data = {
+          name: $('#name').val(),
+          email : $('#email').val(),
+          mobile : $('#mobile').val(),
+          register_type: $('input[name="register_type"]:checked').val(),
+          address_type: $('#address_type').val(),
+          address: $('#address').val(),
+          city: $('#city').val(),
+          state: $('#state').val(),
+          country: $('#country').val(),
+          landmark: $('#landmark').val(),
+          building: $('#building').val(),
+          lat: $('#lat').val(),          
+          lang: $('#lang').val(),
+          notes: $('#notes').val(),
+          order_type : $("input:radio[name=cart-delivery]:checked").val()
+        };
+        if (data.register_type == 2) {
+            data.password =$('#password').val();
+            data.confirm_password =$('#confirm_password').val();
+        }
+        if (data.name == '') {
+            error = 'Name is required';
+        }
+        if (error == '') {
+            if (data.email == '') {
+                error = 'Email is required';
+            }
+        }
+        if (error == '') {
+            if (data.mobile == '') {
+                error = 'Mobile number is required';
+            }
+        }
+        if (error == '' && data.register_type == 2) {
+            if (data.password == '') {
+                error = 'Password is required';
+            }
+        }
+        if (error == '' && data.register_type == 2) {
+            if (data.confirm_password == '') {
+                error = 'Confirm Password is required';
+            }
+            if (error == '' && data.confirm_password != data.password) {
+                error = 'Password not matched';
+            }
+        }
+
+        if (error == '' && data.order_type == 1) 
+        {
+          if (data.address_type == '') {
+            error = 'Address type is required';
+          }
+          else if (data.address == '') {
+            error = 'Address is required';
+          }
+          else if (data.city == '') {
+            error = 'City is required';
+          }
+          else if (data.state == '') {
+            error = 'State is required';
+          }
+          else if (data.country == '') {
+            error = 'Country is required';
+          }
+          else if (data.landmark == '') {
+            error = 'Landmark is required';
+          }
+          else if (data.building == '') {
+            error = 'Building is required';
+          }
+        }
+
+        if (error != '') {
+            $('#ermsg').text(error);
+            $('#error-msg').addClass('alert-danger');
+            $('#error-msg').css("display","block");
+
+            setTimeout(function() {
+                $("#error-msg").hide();
+            }, 5000);
+        }
+        else{
+            $('#preloader').show();
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url:"{{ URL::to('/register_on_checkout') }}",
+                data: data,
+                method: 'POST',
+                success: function(response) {
+                    $('#preloader').hide();
+                    if (response.status == 1) {
+                            $('#get_new_userID').val(response.data.id);
+                            if (response.data.otp_status == false && response.data.otp_sent == true) {
+                                $('#get_otp_number').val(response.data.mobile);                            
+                                $('#otp_verify').modal('show');
+                                timerOn = true;
+                                timer(120);
+                            }
+                            else if (response.data.otp_status == true ) {
+                                $('#customButton').click();
+                            }
+
+
+                    } else {
+                        $('#ermsg').text(response.message);
+                        $('#error-msg').addClass('alert-danger');
+                        $('#error-msg').css("display","block");
+
+                        setTimeout(function() {
+                            $("#success-msg").hide();
+                        }, 5000);
+                    }
+                },
+                error: function(error) {
+                    $('#preloader').hide();
+                    $('#ermsg').text(error.responseJSON.message);
+                        $('#error-msg').addClass('alert-danger');
+                        $('#error-msg').css("display","block");
+
+                        setTimeout(function() {
+                            $("#success-msg").hide();
+                        }, 5000);
+                }
+            });
+        }
+
+    }
+
+    $(document).ready(function(){
+        $('#verify_otp').click(function(){
+            if ($('#get_otp').val() == '') {
+                $('#verification_error').text('Code Required');
+                $('#verification_error').fadeIn();
+            }
+            else if($('#get_otp_number').val() == ''){
+                $('#verification_error').text('Mobile Required');
+                $('#verification_error').fadeIn();
+            }
+            else{           
+                $('#verification_error').fadeOut();
+                $('#preloader').show()     
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url:"{{ URL::to('/verifyotp-checkout') }}",
+                    data: {
+                        code: $('#get_otp').val(),
+                        mobile: $('#get_otp_number').val()
+                    },
+                    method: 'POST',
+                    success: function(response) {
+                        $('#preloader').hide();
+                        if (response.status == 1) {
+                            $('#otp_verify').modal('hide');
+                            $('#customButton').click();
+                        } else {
+                            $('#verification_error').text(response.message);
+                            $('#verification_error').fadeIn();
+                        }
+                    },
+                    error: function(error) {
+                        $('#preloader').hide();
+                        $('#verification_error').text(error.responseJSON.message);
+                        $('#verification_error').fadeIn();
+                    }
+                });
+            }
+        })
+    })
+@endif
     var handler = StripeCheckout.configure({
       key: $('#stripe').val(),
       image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
@@ -467,7 +859,11 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url:"{{ URL::to('stripe-payment/charge') }}",
+            @if($islogin == true)
+                url:"{{ URL::to('stripe-payment/charge') }}",
+            @else
+                url:"{{ URL::to('stripe-payment/charge-guest') }}",
+            @endif            
             data: {
                 order_total : paid_amount ,
                 address: address , 
@@ -488,12 +884,20 @@
                 state : state,
                 country : country,
                 stripeToken : token,
+                @if($islogin == false)
+                    user_id: $('#get_new_userID').val()
+                @endif
             }, 
             method: 'POST',
             success: function(response) {
                 $('#preloader').hide();
                 if (response.status == 1) {
-                    window.location.href = SITEURL + '/orders';
+                    if (response.redirect_to == 1) {
+                        window.location.href = SITEURL + '/orders';
+                    }
+                    else{
+                        window.location.href = SITEURL + '/thank-you';
+                    }
                 } else {
                     $('#ermsg').text(response.message);
                     $('#error-msg').addClass('alert-danger');
@@ -506,7 +910,13 @@
             },
             error: function(error) {
 
-                // $('#errormsg').show();
+                $('#ermsg').text(error.responseJSON.message);
+                    $('#error-msg').addClass('alert-danger');
+                    $('#error-msg').css("display","block");
+
+                    setTimeout(function() {
+                        $("#error-msg").hide();
+                    }, 5000);
             }
         });
       },
@@ -586,7 +996,7 @@
             //     }, 5000);
             // } else {
                 handler.open({
-                    name: 'Restaurant website',
+                    name: 'Punjabi by Nature',
                     description: 'Order payment',
                     amount: paid_amount*100,
                     currency: "USD",
@@ -613,7 +1023,7 @@
                 success: function(result) {
                     if (result.status == 1) {
                         handler.open({
-                            name: 'Restaurant website',
+                            name: 'Punjabi by Nature',
                             description: 'Order payment',
                             amount: paid_amount*100,
                             currency: "USD",
@@ -642,8 +1052,21 @@
 </script>
 
 <script>
+
+
     $(document).ready(function() {
         "use strict";
+
+
+        $('input[name="register_type"]').change(function(){
+            let html = '<div class="mb-3 mt-4 col-md-12"><h5>Passwords</h5></div><div class="col-md-6"><input type="password" id="password" name="password" placeholder="Password"></div><div class="col-md-6"><input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password"></div>';
+            if ($(this).val() == 2) {
+                $('#pwd_div').html(html);
+            }
+            else{
+                 $('#pwd_div').html('');
+            }
+        })
         $("input[name$='cart-delivery']").click(function() {
             var test = $(this).val();
 
@@ -788,7 +1211,7 @@
                         var options = {
                             "key": $('#razorpay').val(),
                             "amount": (parseInt(paid_amount*100)), // 2000 paise = INR 20
-                            "name": "Restaurant website",
+                            "name": "Punjabi by Nature",
                             "description": "Order payment",
                             "image": '{!! asset("storage/app/public/images/about/".$getabout->logo) !!}',
                             "handler": function (response){
@@ -863,7 +1286,7 @@
                     var options = {
                         "key": $('#razorpay').val(),
                         "amount": (parseInt(paid_amount*100)), // 2000 paise = INR 20
-                        "name": "Restaurant website",
+                        "name": "Punjabi by Nature",
                         "description": "Order payment",
                         "image": '{!! asset("storage/app/public/images/about/".$getabout->logo) !!}',
                         "handler": function (response){
@@ -946,6 +1369,9 @@
         var postal_code = $('#postal_code').val();
         var building = $('#building').val();
         var landmark = $('#landmark').val();
+        var city = $('#city').val();
+        var state = $('#state').val();
+        var country = $('#country').val();
         var order_type = $("input:radio[name=cart-delivery]:checked").val();
 
         $('#preloader').show();
@@ -971,6 +1397,9 @@
                 postal_code : postal_code,
                 building : building,
                 landmark : landmark,
+                city : city,
+                state : state,
+                country : country,
             }, 
             method: 'POST',
             success: function(response) {
@@ -1062,7 +1491,16 @@
     function stripe() {
         var postal_code = $('#postal_code').val();
         var order_total = $('#order_total').val();
+        if ($('input[name="cart-delivery"]:checked').val() == 1 && ($('input#address').val() == '' || $('input#address').length == 0)) {
+             $('#ermsg').text('Address is required');
+                    $('#error-msg').addClass('alert-danger');
+                    $('#error-msg').css("display","block");
 
+                    setTimeout(function() {
+                        $("#error-msg").hide();
+                    }, 5000);
+        }
+        else{
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1088,6 +1526,8 @@
             },
         });
     }
+    }
+
 </script>
 
 <script>
@@ -1282,7 +1722,7 @@ $('body').on('click','.btn-select',function(e) {
     var city = $(this).attr('data-city');
     var state = $(this).attr('data-state');
     var country = $(this).attr('data-country');
-    var deliverycharge = $(this).attr('data-deliverycharge');
+    var deliverycharge = ($(this).attr('data-deliverycharge') != '') ? $(this).attr('data-deliverycharge') : 0;
 
     $('#shipping_charge').text('{{$taxval->currency}}'+deliverycharge);
     $('#delivery_charge').val(deliverycharge);
@@ -1331,4 +1771,71 @@ $('.view_addons').click(function (){
     
 
 })
+
 </script>
+@if (env('Environment') != 'sendbox')
+<script>
+    function initialize() {
+        "use strict";
+      var input = document.getElementById('address');
+      var autocomplete = new google.maps.places.Autocomplete(input);
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var place = autocomplete.getPlace();
+
+            for (var i = 0; i < place.address_components.length; i++) {
+                var addressType = place.address_components[i].types[0];
+                
+                if (addressType == "administrative_area_level_1") {
+                  document.getElementById("state").value = place.address_components[i].short_name;
+                }
+
+                if (addressType == "locality") {
+                  document.getElementById("city").value = place.address_components[i].short_name;
+                }
+
+                // for the country, get the country code (the "short name") also
+                if (addressType == "country") {
+                  document.getElementById("country").value = place.address_components[i].short_name;
+                }
+              }
+
+            document.getElementById('lat').value = place.geometry.location.lat();
+            document.getElementById('lang').value = place.geometry.location.lng();
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    function addinitialize() {
+        "use strict";
+      var input = document.getElementById('get_address');
+      var autocomplete = new google.maps.places.Autocomplete(input);
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var place = autocomplete.getPlace();
+
+            for (var i = 0; i < place.address_components.length; i++) {
+                var addressType = place.address_components[i].types[0];
+                
+                if (addressType == "administrative_area_level_1") {
+                  document.getElementById("get_state").value = place.address_components[i].short_name;
+                }
+
+                if (addressType == "locality") {
+                  document.getElementById("get_city").value = place.address_components[i].short_name;
+                }
+
+                // for the country, get the country code (the "short name") also
+                if (addressType == "country") {
+                  document.getElementById("get_country").value = place.address_components[i].short_name;
+                }
+              }
+
+            document.getElementById('get_lat').value = place.geometry.location.lat();
+            document.getElementById('get_lang').value = place.geometry.location.lng();
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', addinitialize);
+
+
+
+</script>
+@endif

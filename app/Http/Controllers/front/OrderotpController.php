@@ -441,16 +441,16 @@ class OrderotpController extends Controller
                 return response()->json(["status"=>0,"message"=>trans('messages.address_required')],200);
             }
 
-            if($request->lat == ""){
-                return response()->json(["status"=>0,"message"=>trans('messages.select_address')],200);
+            if($request->city == ""){
+                return response()->json(["status"=>0,"message"=>'City is required'],200);
             }
 
-            if($request->lang == ""){
-                return response()->json(["status"=>0,"message"=>trans('messages.select_address')],200);
+            if($request->state == ""){
+                return response()->json(["status"=>0,"message"=>'State is required'],200);
             }
 
-            if($request->postal_code == ""){
-                return response()->json(["status"=>0,"message"=>trans('messages.pincode_required')],200);
+            if($request->country == ""){
+                return response()->json(["status"=>0,"message"=>'Country is required'],200);
             }
 
             if($request->building == ""){
@@ -620,12 +620,12 @@ class OrderotpController extends Controller
                 
                 return response()->json(['status'=>1,'message'=>trans('messages.order_placed')],200);
             } else {
-                $pincode=Pincode::select('pincode')->where('pincode',$request->postal_code)
-                ->get()->first();
+                // $pincode=Pincode::select('pincode')->where('pincode',$request->postal_code)
+                // ->get()->first();
 
-                if(@$pincode['pincode'] == $request->postal_code) {
-                    if(!empty($pincode))
-                    {
+                // if(@$pincode['pincode'] == $request->postal_code) {
+                    // if(!empty($pincode))
+                    // {
                         $order_number = substr(str_shuffle(str_repeat("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 10)), 0, 10);
 
                         if ($request->order_type == "2") {
@@ -766,10 +766,10 @@ class OrderotpController extends Controller
                         session()->forget(['offer_amount','offer_code']);
                         
                         return response()->json(['status'=>1,'message'=>trans('messages.order_placed')],200);
-                    }
-                } else {
-                    return response()->json(['status'=>0,'message'=>trans('messages.delivery_unavailable')],200);
-                }
+                    // }
+                // } else {
+                //     return response()->json(['status'=>0,'message'=>trans('messages.delivery_unavailable')],200);
+                // }
             }
             
 

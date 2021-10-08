@@ -20,6 +20,9 @@ use App\Cart;
 
 class UserotpController extends Controller
 {
+
+
+
     public function register(Request $request )
     {
         $checkemail=User::where('email',$request->email)->first();

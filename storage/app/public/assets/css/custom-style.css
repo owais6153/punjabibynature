@@ -392,6 +392,14 @@ footer {
     max-height: 262px;
     height: unset !important;
 }
+div#otp_verify .modal-head {
+    display: block;
+}
+
+div#otp_verify .modal-head p {
+    margin-bottom: 10px;
+    font-weight: 400;
+}
 /*---------about page css---------*/
 .abt-sec-third .home-fourth-sec-img p {
     padding-top: 46px;
@@ -1103,7 +1111,39 @@ footer {
 section.checkout {
     margin-top: 120px;
     padding-top: 90px;
-}                                                                                                                                       
+}   
+.cart-user-form select, .cart-user-form #landmark, .cart-user-form #address, .cart-user-form #building {
+    border: 0px;
+    height: 60px !important;
+    padding: 16px 20px;
+    border-radius: 10px;
+}      
+.cart-user-form .col-md-6 {
+    position: relative;
+}
+
+.cart-user-form input#guest_radio {
+    position: absolute;
+    width: 100%;
+    left: -44%;
+    top: 15%;
+}
+
+.cart-user-form input#account_radio {
+    position: absolute;
+    left: -1%;
+    top: 16%;
+}
+
+.cart-user-form label {
+    padding-left: 55px;
+    padding-right: 30px;
+}
+ul.extra-food.checkout {list-style: none;padding: 0;display: flex;}
+
+ul.extra-food.checkout li {
+    margin-right: 16px;
+}                                                                                                                              
 /*-----cart css-----*/
 .cart-addons-wrap {
     padding-top: 0px !important;

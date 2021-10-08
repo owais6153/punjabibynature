@@ -722,17 +722,27 @@ class UserController extends Controller
 
     public function addaddress(Request $request)
     {
-        if ($request->lat == "") {
-            return Redirect::back()->with('danger', trans("messages.select_address"));
+        // if ($request->lat == "") {
+        //     return Redirect::back()->with('danger', trans("messages.select_address"));
+        // }
+        // if ($request->lang == "") {
+        //     return Redirect::back()->with('danger', trans("messages.select_address"));
+        // }
+        if ($request->city == "") {
+            return Redirect::back()->with('danger', 'City is required');
         }
-        if ($request->lang == "") {
-            return Redirect::back()->with('danger', trans("messages.select_address"));
+        if ($request->state == "") {
+            return Redirect::back()->with('danger', 'State is required');
+        }
+
+        if ($request->country == "") {
+            return Redirect::back()->with('danger', 'Country is required');
         }
 
         $pincode=Pincode::select('pincode','delivery_charge')->where('pincode',$request->pincode)
         ->get()->first();
 
-        if(@$pincode['pincode'] == $request->pincode) {
+        // if(@$pincode['pincode'] == $request->pincode) {
             try {
 
                 $address = new Address;
@@ -746,8 +756,8 @@ class UserController extends Controller
                 $address->country = $request->country;
                 $address->landmark = $request->landmark;
                 $address->building = $request->building;
-                $address->pincode = $request->pincode;
-                $address->delivery_charge =$pincode->delivery_charge;
+                
+                // $address->delivery_charge =$pincode->delivery_charge;
                 $address->save();
 
                 return Redirect::back()->with('success', trans("messages.success"));
@@ -756,18 +766,22 @@ class UserController extends Controller
                 $response = $e->getMessage() ;
                 return Redirect::back()->with('danger', trans("messages.wrong"));
             }
-        } else {
-            return Redirect::back()->with('danger', trans("messages.delivery_unavailable"));
-        }
+        // } else {
+        //     return Redirect::back()->with('danger', trans("messages.delivery_unavailable"));
+        // }
     }
 
     public function editaddress(Request $request)
     {
-        if ($request->lat == "") {
-            return Redirect::back()->with('danger', trans("messages.select_address"));
+        if ($request->city == "") {
+            return Redirect::back()->with('danger', 'City is required');
         }
-        if ($request->lang == "") {
-            return Redirect::back()->with('danger', trans("messages.select_address"));
+        if ($request->state == "") {
+            return Redirect::back()->with('danger', 'State is required');
+        }
+
+        if ($request->country == "") {
+            return Redirect::back()->with('danger', 'Country is required');
         }
         
         $validation = Validator::make($request->all(),[
@@ -775,7 +789,7 @@ class UserController extends Controller
             'address' => 'required',
             'landmark' =>'required',
             'building' =>'required',
-            'pincode' =>'required'
+            
         ]);
         if ($validation->fails())
         {
@@ -783,14 +797,14 @@ class UserController extends Controller
         }
         else
         {
-            $pincode=Pincode::select('pincode','delivery_charge')->where('pincode',$request->pincode)
-            ->get()->first();
+            // $pincode=Pincode::select('pincode','delivery_charge')->where('pincode',$request->pincode)
+            // ->get()->first();
 
-            if(@$pincode['pincode'] == $request->pincode) {
+            // if(@$pincode['pincode'] == $request->pincode) {
 
                 try {
 
-                    Address::where('id', $request->id)->update(['address_type'=>$request->address_type,'address'=>$request->address,'lat'=>$request->lat,'lang'=>$request->lang,'city'=>$request->city,'state'=>$request->state,'country'=>$request->country,'landmark'=>$request->landmark,'building'=>$request->building,'pincode'=>$request->pincode,'delivery_charge'=>$pincode->delivery_charge]);
+                    Address::where('id', $request->id)->update(['address_type'=>$request->address_type,'address'=>$request->address,'lat'=>$request->lat,'lang'=>$request->lang,'city'=>$request->city,'state'=>$request->state,'country'=>$request->country,'landmark'=>$request->landmark,'building'=>$request->building,'pincode'=>$request->pincode]);
 
 
                     return Redirect::back()->with('success', trans("messages.success"));
@@ -799,9 +813,9 @@ class UserController extends Controller
                     $response = $e->getMessage() ;
                     return Redirect::back()->with('danger', trans("messages.wrong"));
                 }
-            } else {
-                return Redirect::back()->with('danger', trans("messages.delivery_unavailable"));
-            }
+            // } else {
+            //     return Redirect::back()->with('danger', trans("messages.delivery_unavailable"));
+            // }
 
         }
         return Redirect::back()->with('danger', trans('messages.wrong'));

@@ -81,11 +81,16 @@ Route::group(['namespace' => 'front'], function () {
 		Route::post('/signin/login_without_otp', 'UserController@login');
 		Route::get('/signup', 'UserotpController@signup');
 		Route::post('/signup/signup', 'UserotpController@register');
+
+		Route::post('/register_on_checkout', 'UserotpController@register_on_checkout');
+		Route::post('/verifyotp-checkout', 'UserotpController@verifyotp_checkout');
+		
 		Route::post('/home/editProfile', 'UserotpController@editProfile');
 		Route::post('/home/addreview', 'UserotpController@addreview');
 		Route::get('/otp-verify', 'UserotpController@otp_verify');
 		Route::get('/resend-otp', 'UserotpController@resend_otp');
 		Route::post('/otp-verification', 'UserotpController@otp_verification');
+		Route::post('/resendcode_checkout', 'UserotpController@resendcode_checkout');
 
 		Route::get('/orders', 'OrderotpController@index');
 		Route::post('/orders/cashondelivery', 'OrderotpController@cashondelivery');
@@ -104,6 +109,7 @@ Route::group(['namespace' => 'front'], function () {
 		Route::post('/addmoneystripe', 'CheckoutotpController@addmoneystripe');
 		
 		Route::post('stripe-payment/charge', 'CheckoutotpController@charge');
+		Route::post('stripe-payment/charge-guest', 'CheckoutotpController@charge_guest');
 	} else {
 		Route::get('/signin', 'UserController@index');
 		Route::post('/signin/login_without_otp', 'UserController@login');
@@ -134,6 +140,7 @@ Route::group(['namespace' => 'front'], function () {
 		Route::post('/addmoneystripe', 'CheckoutController@addmoneystripe');
 		
 		Route::post('stripe-payment/charge', 'CheckoutController@charge');
+
 	}	
 
 	Route::get('/wallet', 'UserController@wallet');

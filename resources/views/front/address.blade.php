@@ -98,9 +98,9 @@
                             <input type="text" class="form-control" placeholder="{{ trans('messages.enter_delivery_address') }}" name="address" id="address" value="New York, NY, USA" required="" readonly="" autocomplete="on" >
                             <input type="hidden" id="lat" name="lat" value="40.7127753" />
                             <input type="hidden" id="lang" name="lang" value="-74.0059728" />
-                            <input type="hidden" id="city" name="city" placeholder="city" value="New York" /> 
-                            <input type="hidden" id="state" name="state" placeholder="state" value="NY" /> 
-                            <input type="hidden" id="country" name="country" placeholder="country" value="US" />
+                            <input type="text"  class="form-control"  id="city" name="city" placeholder="city" value="New York" /> 
+                            <input type="text"  class="form-control"  id="state" name="state" placeholder="state" value="NY" /> 
+                            <input type="text"  class="form-control"  id="country" name="country" placeholder="country" value="US" />
                         </div>
                         <label>{{ trans('labels.landmark') }}</label>
                         <div class="form-group">
@@ -134,9 +134,9 @@
                             <input type="text" class="form-control" placeholder="{{ trans('messages.enter_delivery_address') }}" name="address" id="address" autocomplete="on">
                             <input type="hidden" id="lat" name="lat" />
                             <input type="hidden" id="lang" name="lang" />
-                            <input type="hidden" id="city" name="city" /> 
-                            <input type="hidden" id="state" name="state" /> 
-                            <input type="hidden" id="country" name="country" />
+                            <input type="text"  class="form-control"  placeholder="City" id="city" name="city" /> 
+                            <input type="text"  class="form-control"  placeholder="State" id="state" name="state" /> 
+                            <input type="text"  class="form-control"  placeholder="Country" id="country" name="country" />
                         </div>
                         <label>{{ trans('labels.landmark') }}</label>
                         <div class="form-group">
@@ -146,15 +146,7 @@
                         <div class="form-group">
                             <input type="text" class="form-control" name="building" id="building" placeholder="{{ trans('messages.enter_building') }}">
                         </div>
-                        <label>{{ trans('labels.pincode') }}</label>
-                        <div class="form-group">
-                            <select class="form-control" name="pincode" id="pincode">
-                                <option value="">{{ trans('messages.select_pincode') }}</option>
-                                @foreach($getpincode as $pincode)
-                                <option value="{{$pincode->pincode}}">{{$pincode->pincode}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                       
                     @endif
                 </div>
                 <div class="modal-footer">
@@ -193,9 +185,9 @@
                         <input type="text" class="form-control" placeholder="{{ trans('messages.enter_delivery_address') }}" name="address" id="get_address" autocomplete="on">
                         <input type="hidden" id="get_lat" name="lat" />
                         <input type="hidden" id="get_lang" name="lang" />
-                        <input type="hidden" id="get_city" name="city" /> 
-                        <input type="hidden" id="get_state" name="state" /> 
-                        <input type="hidden" id="get_country" name="country" />
+                        <input type="text"  class="form-control"  placeholder="City" id="get_city" name="city" /> 
+                        <input type="text"  class="form-control"  placeholder="State" id="get_state" name="state" /> 
+                        <input type="text"  class="form-control"  placeholder="Country" id="get_country" name="country" />
                     </div>
                     <label>{{ trans('labels.landmark') }}</label>
                     <div class="form-group">
@@ -205,15 +197,7 @@
                     <div class="form-group">
                         <input type="text" class="form-control" name="building" id="get_building" placeholder="{{ trans('messages.enter_building') }}">
                     </div>
-                    <label>{{ trans('labels.pincode') }}</label>
-                    <div class="form-group">
-                        <select class="form-control" name="pincode" id="get_pincode">
-                            <option value="">{{ trans('messages.select_pincode') }}</option>
-                            @foreach($getpincode as $pincode)
-                            <option value="{{$pincode->pincode}}">{{$pincode->pincode}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                   
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('labels.close') }}</button>
@@ -242,10 +226,7 @@
                 }, 
                 building: {
                     required: true,
-                }, 
-                pincode: {
-                    required: true,
-                },                    
+                },
             },
 
         });    
@@ -263,10 +244,7 @@
                 }, 
                 building: {
                     required: true,
-                }, 
-                pincode: {
-                    required: true,
-                },                    
+                },                   
             },
 
         });      

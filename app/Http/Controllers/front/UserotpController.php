@@ -32,6 +32,305 @@ class UserotpController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function verifyotp_checkout(Request $request){
+        if($request->code == ""){
+            return response()->json(["status"=>0,"message"=>"Code Required"],400);
+        }
+        $checkmobile=User::where('otp',$request->code)->first();
+        if (empty($checkmobile)) {
+            return response()->json(["status"=>0,"message"=>"Wrong Code"],400);
+        }
+
+        if ($checkmobile->mobile != $request->mobile) {
+            return response()->json(["status"=>0,"message"=>"Wrong Number", 'num' => $checkmobile->mobile, 'verify_num' =>  $request->mobile],400);
+        }
+
+
+        if ($checkmobile->otp == $request->code) {
+            $update=User::where('mobile',$request->mobile)->update(['otp'=>NULL,'is_verified'=>'1']);
+
+            if ($checkmobile->login_type == 'email') {
+                 $cart=Cart::where('user_id',$checkmobile->id)->count();
+                 session ( [ 
+                    'id' => $checkmobile->id, 
+                    'name' => $checkmobile->name,
+                    'email' => $checkmobile->email,
+                    'mobile' => $checkmobile->mobile,
+                    'referral_code' => $checkmobile->referral_code,
+                    'profile_image' => 'unknown.png',
+                    'cart' => $cart,
+                ] );
+
+
+                if (Session::get('guest_cart')) {
+                    $cartdata_temp = Session::get('guest_cart');
+                    $cartdata = json_decode(json_encode($cartdata_temp)); 
+
+
+
+                    foreach ($cartdata as $key => $value) {
+                        $getitem=Item::with('itemimage')->select('item.id','item.item_name','item.tax')
+                        ->where('item.id',$value->item_id)->first();
+                        $cart = new Cart;
+                        $cart->item_id =$value->item_id;
+                        $cart->addons_id =$value->addons_id;
+                        $cart->qty =$value->qty;
+                        $cart->price =$value->price;
+                        $cart->variation_id =$value->variation_id;
+                        $cart->variation_price =$value->variation_price;
+                        $cart->variation =$value->variation;
+                        $cart->user_id =$checkmobile->id;
+                        $cart->item_notes =$value->item_notes;
+                        $cart->item_name =$getitem->item_name;
+                        $cart->tax =$getitem->tax;
+                        $cart->item_image =$getitem['itemimage']->image_name;
+                        $cart->addons_name =$value->addons_name;
+                        $cart->addons_price =$value->addons_price;
+
+                        $cart->ingredients =  (isset($value->ingredients) && !empty($value->ingredients)) ? implode('|',$value->ingredients) : null;
+                        $cart->combo = (isset($value->combo) && !empty($value->combo)) ? implode('|',$value->combo) : null;
+                        $cart->group_addons = (isset($value->group_addons) && !empty($value->group_addons)) ? implode('|',$value->group_addons) : null;
+                        $cart->totalAddonPrice =$value->totalAddonPrice;
+
+                        $cart->save();
+
+
+                    }
+                    Session::forget('guest_cart');
+                    $count=Cart::where('user_id',$checkmobile->id)->count();
+
+                    Session::put('cart', $count);
+        
+                }
+
+            }
+            
+
+            return response()->json(['status'=>1,'message'=>'Verified',],200);
+
+        }
+
+    }
+    public function resendcode_checkout(Request $request){
+        $otp = rand ( 100000 , 999999 );
+        if($request->mobile == ""){
+            return response()->json(["status"=>0,"message"=>trans('messages.email_required')],400);
+        }
+            $getconfiguration = OTPConfiguration::where('status','1')->first();
+          if ($getconfiguration->name == "twilio") {
+              $sid    = $getconfiguration->twilio_sid; 
+              $token  = $getconfiguration->twilio_auth_token; 
+              $twilio = new Client($sid, $token); 
+              
+              $message = $twilio->messages 
+                          ->create($request->mobile, // to 
+                  array( 
+                      "from" => $getconfiguration->twilio_mobile_number,
+                      "body" => "Your Login Code for Punjabi By Nature is ".$otp 
+                 ) 
+              );
+              $otp_sent = true;
+          }
+
+          if ($getconfiguration->name == "msg91") {
+              $curl = curl_init();
+
+              curl_setopt_array($curl, array(
+                  CURLOPT_URL => "https://api.msg91.com/api/v5/otp?template_id=".$getconfiguration->msg_template_id."&mobile=".$request->mobile."&authkey=".$getconfiguration->msg_authkey."",
+                  CURLOPT_RETURNTRANSFER => true,
+                  CURLOPT_ENCODING => "",
+                  CURLOPT_MAXREDIRS => 10,
+                  CURLOPT_TIMEOUT => 30,
+                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                  CURLOPT_CUSTOMREQUEST => "GET",
+                  CURLOPT_HTTPHEADER => array(
+                      "content-type: application/json"
+                  ),
+              ));
+
+              $response = curl_exec($curl);
+              $otp_sent = true;
+              $err = curl_error($curl);
+
+              curl_close($curl);
+          }
+          $update=User::where('mobile',$request->mobile)->update(['otp'=>$otp]);
+          return response()->json(['status'=>1,'message'=>'Code resent'],200);
+
+
+    }
+    public function register_on_checkout(Request $request){
+        $checkemail=User::where('email',$request->email)->first();
+        $checkmobile=User::where('mobile',$request->mobile)->first();
+        $str_result = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz'; 
+        $referral_code = substr(str_shuffle($str_result), 0, 10); 
+        $otp = rand ( 100000 , 999999 );
+        
+       if($request->email == ""){
+            return response()->json(["status"=>0,"message"=>trans('messages.email_required')],400);
+        }
+        if($request->name == ""){
+            return response()->json(["status"=>0,"message"=>trans('messages.full_name_required')],400);
+        }
+        if($request->mobile == ""){
+            return response()->json(["status"=>0,"message"=>trans('messages.mobile_required')],400);
+        }
+        if ($request->order_type == 1) {
+            if ($request->city == "") {
+               return response()->json(["status"=>0,"message"=>'City is required'],400);
+            }
+            if ($request->state == "") {
+                return response()->json(["status"=>0,"message"=>'State is required'],400);
+            }
+
+            if ($request->country == "") {
+                return response()->json(["status"=>0,"message"=>'Country is required'],400);
+            }
+        }
+
+        if(!empty($checkemail) && $checkemail->login_type != 'guest')
+        {
+           if ($request->register_type == 2) {     
+            return response()->json(['status'=>0,'message'=>trans('messages.email_exist') . '. Please Login or use diffrent email'],400);
+          }
+           if ($request->register_type == 1) {
+            return response()->json(['status'=>0,'message'=>'Email already exists. Please login first.'],400);
+           }     
+        }
+
+        if($request->register_type == 2 && $request->confirm_password != $request->password)
+        {
+            return response()->json(['status'=>0,'message'=> 'Password not matched'],400);
+        }
+
+        if(!empty($checkmobile) && $checkmobile->login_type != 'guest')
+        {
+            return response()->json(['status'=>0,'message'=>trans('messages.mobile_exist') . '. Please Login or use diffrent number'],400);
+        }
+        $otp_verified = $otp_sent = false;
+        if (!empty($checkmobile) && $checkmobile->login_type == 'guest' && $checkmobile->is_verified == 1) {
+          $otp_verified = true;
+        }
+        else{
+          $getconfiguration = OTPConfiguration::where('status','1')->first();
+          if ($getconfiguration->name == "twilio") {
+              $sid    = $getconfiguration->twilio_sid; 
+              $token  = $getconfiguration->twilio_auth_token; 
+              $twilio = new Client($sid, $token); 
+              
+              $message = $twilio->messages 
+                          ->create($request->mobile, // to 
+                  array( 
+                      "from" => $getconfiguration->twilio_mobile_number,
+                      "body" => "Your Login Code for Punjabi By Nature is ".$otp 
+                 ) 
+              );
+              $otp_sent = true;
+          }
+
+          if ($getconfiguration->name == "msg91") {
+              $curl = curl_init();
+
+              curl_setopt_array($curl, array(
+                  CURLOPT_URL => "https://api.msg91.com/api/v5/otp?template_id=".$getconfiguration->msg_template_id."&mobile=".$request->mobile."&authkey=".$getconfiguration->msg_authkey."",
+                  CURLOPT_RETURNTRANSFER => true,
+                  CURLOPT_ENCODING => "",
+                  CURLOPT_MAXREDIRS => 10,
+                  CURLOPT_TIMEOUT => 30,
+                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                  CURLOPT_CUSTOMREQUEST => "GET",
+                  CURLOPT_HTTPHEADER => array(
+                      "content-type: application/json"
+                  ),
+              ));
+
+              $response = curl_exec($curl);
+              $otp_sent = true;
+              $err = curl_error($curl);
+
+              curl_close($curl);
+          }
+        }
+        $password = (isset($request->password) ) ? Hash::make($request->get('password')) : 'password';
+        $data['name']=$request->get('name');
+        $data['mobile']=$request->get('mobile');
+        $data['email']=$request->get('email');
+        $data['profile_image']='unknown.png';
+        $data['password']= $password;
+        $data['referral_code']= $referral_code;
+        // $data['token'] = $request->get('token');
+        $data['login_type']= ($request->register_type == 2) ? 'email' : 'guest';
+        // $data['google_id']=$request->get('google_id');
+        // $data['facebook_id']=$request->get('facebook_id');
+        $data['otp']=$otp;
+        $data['type']='2';
+
+
+
+        if (empty($checkmobile) ) {
+            $user=User::create($data);
+        }
+        else{
+            $user=User::where('mobile', $request->mobile)->first();
+            if ($user->login_type == "guest" && $data['login_type'] == 'email') {
+                $update=User::where('mobile',$request->mobile)->update(['login_type'=>'email']);
+                 $cart=Cart::where('user_id',$user->id)->count();
+                 session ( [ 
+                    'id' => $user->id, 
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'mobile' => $user->mobile,
+                    'referral_code' => $user->referral_code,
+                    'profile_image' => 'unknown.png',
+                    'cart' => $cart,
+                ] );
+            }
+
+        }
+         $arrayName = array(
+            'id' => $user->id,
+            'name' => $user->name,
+            'mobile' => $user->mobile,
+            'email' => $user->email,
+            'login_type' => $user->login_type,
+            'referral_code' => $user->referral_code,
+            'profile_image' => url('/storage/app/public/images/profile/'.$user->profile_image),
+            'otp_status' => $otp_verified,
+            'otp_sent' => $otp_sent,
+        );
+
+        if ($data['login_type'] == 'email' ) {
+            if ($request->city == "" && $request->state == "" && $request->country == "") {
+                $address = new Address;
+                $address->user_id =  $user->id;
+                $address->address_type = $request->address_type;
+                $address->address = $request->address;
+                $address->lat = $request->lat;
+                $address->lang = $request->lang;
+                $address->city = $request->city;
+                $address->state = $request->state;
+                $address->country = $request->country;
+                $address->landmark = $request->landmark;
+                $address->building = $request->building;            
+                $address->delivery_charge = 0;
+                $address->save();
+            }            
+        }
+
+           
+        if (isset($user->id)) {
+
+          return response()->json(['status'=>1,'message'=>'Registration Successful','data'=>$arrayName],200);
+        }
+        else{
+          return response()->json(['status'=>0,'message'=> 'Error in creating user in DB'],400);
+        }
+        
+
+
+
+
+    }
     public function index() {
         $getabout = About::where('id','=','1')->first();
         Session::forget('facebook_id');
