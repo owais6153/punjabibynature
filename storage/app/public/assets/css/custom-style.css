@@ -708,7 +708,27 @@ div#otp_verify .modal-head p {
 .terms-page p {
     font-weight: 400;
 }
+.thanku-img {
+    text-align: center;
+}
+.thankyou-box {
+    text-align: center;
+}
 
+.thankyou-box p {
+    font-size: 18px;
+    font-weight: 400;
+}
+section.sec-thankyou {
+    margin-top: 150px;
+    padding-top: 60px;
+}
+.thankyou-box h1 {
+    font-size: 80px;
+    margin-top: 30px;
+    font-weight: 800;
+    color: #ec2127;
+}
 /*ADD TO CART MODAL*/
 
 .add_to_cart_modal img {
