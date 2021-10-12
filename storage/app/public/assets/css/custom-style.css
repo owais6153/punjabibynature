@@ -937,7 +937,7 @@ section.sec2-catering .sec-head {
     text-align: left;
     margin-bottom: 0px;
 }
-section.sec2-catering .cat-product {
+section.sec2-catering .cat-new-product {
     padding-left: 0px;
 }
 .sec2-catering .cat-aside-wrap {
@@ -967,14 +967,14 @@ section.sec2-catering .cat-product {
     margin-right: 0px;
 }
 .sec2-catering .cart-box-catering {
-    width: 392px;
-    margin-left: 20px;
+    /*width: 392px;*/
+    /*margin-left: 20px;*/
 
 }
-.sec2-catering .cat-product {
+/*.sec2-catering .cat-new-product {
     max-width: calc(90% - 286px);
-}
-section.sec2-catering .cat-product .col-xl-4.col-md-6 {
+}*/
+section.sec2-catering .cat-new-product .col-xl-4.col-md-6 {
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -1003,17 +1003,17 @@ section.sec2-catering .cat-product .col-xl-4.col-md-6 {
     background-color: var(--primary-color-hover);
     box-shadow: 0 0 4px var(--primary-color-hover);
 }
-section.sec2-catering .cat-product .col-xl-6.col-md-6 {
+section.sec2-catering .cat-new-product .col-xl-6.col-md-6 {
     margin-bottom: 12px;
     padding-left: 6px;
     padding-right: 8px;
 }
-section.sec2-catering .cat-product .col-xl-6.col-md-6 .product-details:nth-child(2) {
+section.sec2-catering .cat-new-product .col-xl-6.col-md-6 .product-details:nth-child(2) {
     display: block;
     width: 100%;
 }
 
-section.sec2-catering .cat-product .col-xl-6.col-md-6 .product-details:nth-child(2) p {
+section.sec2-catering .cat-new-product .col-xl-6.col-md-6 .product-details:nth-child(2) p {
     max-width: 100%;
     display: block !important;
 }
@@ -1378,18 +1378,18 @@ section.contact-from .left-details-contact h2 {
     font-size: 20px;
     text-transform: uppercase;
 }
-.cat-product .row {
+.cat-new-product .row {
     max-width: 100%;
     padding-left: 12px;
     margin-right: 0px;
 }
-section.sec2-catering .cat-product {
+section.sec2-catering .cat-new-product {
     padding-left: 0px;
-    flex-basis: 100%;
-    max-width: 100%;
+    /*flex-basis: 100%;
+    max-width: 100%;*/
 }
 .sec2-catering .cart-box-catering {
-    width: 360px;
+    /*width: 360px;*/
     margin-left: 0px;
 }
 .sec-catering .fifth-section-home .sec-head {
@@ -1471,18 +1471,18 @@ section.favourite.abt-sec h2 {
 .abt-page-fifth .home-fourth-sec-img {
     padding-right: 0px;
 }
-.cat-product .row {
+.cat-new-product .row {
     max-width: 100%;
     padding-left: 12px;
     margin-right: 0px;
 }
-section.sec2-catering .cat-product {
+section.sec2-catering .cat-new-product {
     padding-left: 0px;
-    flex-basis: 100%;
-    max-width: 100%;
+/*    flex-basis: 100%;
+    max-width: 100%;*/
 }
 .sec2-catering .cart-box-catering {
-    width: 325px;
+    /*width: 325px;*/
     margin-left: 0px;
 }
 .sec-catering .fifth-section-home .sec-head {

@@ -20,19 +20,19 @@
      	<div class="cat-aside-wrap">
             @foreach ($catering_category as $category)
             <a href="#category{{$category->id}}" class="cat-check border-top-no @if (request()->id == $category->id) active @endif">
-                <p>{{$category->category_name}}</p>
+                <p>{{$category->name}}</p>
             </a>
             @endforeach
         </div>
 
 @csrf
                 <div class="row catering">
-                     <div class="cat-product">
+                     <div class="cat-new-product col-md-8">
                     @foreach ($catering_category as $category)
      	         
 
                     
-                  <h3 id="category{{$category->id}}">{{$category->category_name}}</h3>
+                  <h3 id="category{{$category->id}}">{{$category->name}}</h3>
 <div class="row">
                         @foreach ($category->items as $item)
 
@@ -88,7 +88,7 @@
 @endforeach
                   
 </div>
-            <div class="cart-box-catering">
+            <div class="cart-box-catering col-md-4">
                  <h3>Cart </h3>
                  <div class="cart-catering-body">
                     <div class="cart-total-catering cart-items-catering">

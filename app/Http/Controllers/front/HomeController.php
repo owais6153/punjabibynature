@@ -17,6 +17,7 @@ use App\User;
 use App\Pincode;
 use Session;
 use Validator;
+use App\CateringCat;
 
 class HomeController extends Controller
 {
@@ -124,12 +125,12 @@ class HomeController extends Controller
         $getabout = About::where('id','=','1')->first();
         $user_id  = Session::get('id');
         $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
-        $catering_category = Category::select('categories.category_name', 'categories.id')
-        ->join("item","item.cat_id","=","categories.id")
-        ->groupBy('category_name')
+        $catering_category = CateringCat::select('catering_category.name', 'catering_category.id')
+        ->join("item","item.catering_cat_id","=","catering_category.id")
+        ->groupBy('name')
         ->where('item.item_status', '1')
         ->where('item.is_deleted', '2')
-        ->where('item.item_type', 'like', '%catering%')
+        ->where('item.item_type', 'like', 'catering')
         ->get();
 
 
@@ -137,14 +138,15 @@ class HomeController extends Controller
             $value->items = Item::with(['itemimage','variation'])->select('*')
             ->where('item.item_status', '1')
             ->where('item.is_deleted', '2')
-            ->where('item.item_type', 'like', '%catering%')
-            ->where('item.cat_id', $value->id)
+            ->where('item.item_type', 'like', 'catering')
+            ->where('item.catering_cat_id', $value->id)
             ->get();
         }
 
 
 
         if (Session::get('id')) {
+            $user_id = Session::get('id');
             $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
             ->where('user_id',$user_id)
             ->where('is_available','=','1')->get();
