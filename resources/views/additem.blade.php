@@ -40,26 +40,7 @@
                         <form method="post" action="{{ URL::to('admin/item/store') }}" name="about" id="about" enctype="multipart/form-data">
                             @csrf
 
-                            <div class="row">
-                                <div class="col-sm-3 col-md-12">
-                                    <div class="form-group">
-                                        <label for="cat_id" class="col-form-label">{{ trans('labels.category') }}</label>
-                                        <select name="cat_id" class="form-control" id="cat_id">
-                                            <option value="">{{ trans('messages.select_category') }}</option>
-                                            <?php
-                                            foreach ($getcategory as $category) {
-                                            ?>
-                                            <option value="{{$category->id}}">{{$category->category_name}}</option>
-                                            <?php
-                                            }
-                                            ?>
-                                        </select>
-                                        @if ($errors->has('cat_id'))
-                                            <span class="text-danger">{{ $errors->first('cat_id') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
+
                             
                             <div class="row">
                                 <div class="col-sm-3 col-md-6">
@@ -80,9 +61,72 @@
                             </div>
                                  
                        
+                            <div class="row mb-2 mt-2">
+                                <div class="col-md-4">
+                                    <h5>Food Type</h5>
+                                    <label class="mr-3">
+                                        <input type="radio" checked="" class="ml-1" name="food_type" value="Veg">
+                                        Veg
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="food_type" value="Non Veg">
+                                        Non Veg
+                                    </label>
+                                </div>
+                                <div class="col-md-4" id="p_type">
+                                    <h5>Product Type</h5>
+                                    <label class="mr-3">
+                                        <input type="radio" checked="" name="item_type" value="product">
+                                        Product
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="item_type" value="catering">
+                                        Catering
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="row" id="normalCat">
+                                <div class="col-sm-3 col-md-12">
+                                    <div class="form-group">
+                                        <label for="cat_id" class="col-form-label">{{ trans('labels.category') }}</label>
+                                        <select name="cat_id" class="form-control" id="cat_id">
+                                            <option value="">{{ trans('messages.select_category') }}</option>
+                                            <?php
+                                            foreach ($getcategory as $category) {
+                                            ?>
+                                            <option value="{{$category->id}}">{{$category->category_name}}</option>
+                                            <?php
+                                            }
+                                            ?>
+                                        </select>
+                                        @if ($errors->has('cat_id'))
+                                            <span class="text-danger">{{ $errors->first('cat_id') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
 
-                            <input type="hidden" name="item_type" value="product">
-                                 
+                            <div class="row" id="cateringCat" style="display: none;">
+                                <div class="col-sm-3 col-md-12">
+                                    <div class="form-group">
+                                        <label for="catering_cat_id" class="col-form-label">Catering {{ trans('labels.category') }}</label>
+                                        <select name="catering_cat_id" class="form-control" id="catering_cat_id">
+                                            <option value="">{{ trans('messages.select_category') }}</option>
+                                            <?php
+                                            foreach ($getcateringcat as $category) {
+                                            ?>
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                            <?php
+                                            }
+                                            ?>
+                                        </select>
+                                        @if ($errors->has('catering_cat_id'))
+                                            <span class="text-danger">{{ $errors->first('catering_cat_id') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                    
                             <div id="ingredient_field">
                                 <h5>Add Ingredients</h5>
@@ -228,6 +272,22 @@
 @endsection
 @section('script')
 <script type="text/javascript">
+
+    $('#p_type input[type="radio"]').change(function(){
+        if ($(this).val() == 'product') {
+            $('#comboOptions').show();            
+            $('#comboOptions').prev('h3').show();
+            $('#normalCat').show();
+            $('#cateringCat').hide();
+        }
+        else if($(this).val() == 'catering'){
+            $('#comboOptions').hide(); 
+            $('#comboOptions').prev('h3').hide();
+            $('#normalCat').hide();
+            $('#cateringCat').show();
+        }
+    })
+
     var room = 1;
     function education_fields() {
         "use strict";

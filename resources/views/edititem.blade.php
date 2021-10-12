@@ -42,26 +42,7 @@
 
                             <input type="hidden" class="form-control" id="id" name="id" value="{{$item->id}}">
 
-                            <div class="row">
-                                <div class="col-sm-3 col-md-12">
-                                    <div class="form-group">
-                                        <label for="getcat_id" class="col-form-label">{{ trans('labels.category') }}</label>
-                                        <select name="getcat_id" class="form-control" id="getcat_id">
-                                            <option value="">{{ trans('messages.select_category') }}</option>
-                                            <?php
-                                            foreach ($getcategory as $category) {
-                                            ?>
-                                            <option value="{{$category->id}}" {{ $item->cat_id == $category->id ? 'selected' : ''}}>{{$category->category_name}}</option>
-                                            <?php
-                                            }
-                                            ?>
-                                            @if ($errors->has('get_cat_id'))
-                                                <span class="text-danger">{{ $errors->first('get_cat_id') }}</span>
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+    
 
                             <div class="row">
                                 <div class="col-sm-3 col-md-6">
@@ -82,8 +63,72 @@
                                 </div>
                             </div>
 
-         
-                                <input type="hidden" name="item_type" value="product">
+                                
+                            <div class="row mb-2 mt-2">
+                                <div class="col-md-4">
+                                    <h5>Food Type</h5>
+                                    <label class="mr-3">
+                                        <input type="radio" {{($item->food_type == 'Veg') ? 'checked' : '' }} class="ml-1" name="food_type" value="Veg">
+                                        Veg
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="food_type" value="Non Veg" {{($item->food_type == 'Veg') ? 'checked' : '' }}>
+                                        Non Veg
+                                    </label>
+                                </div>
+                                <div class="col-md-4" id="p_type">
+                                    <h5>Product Type</h5>
+                                    <label class="mr-3">
+                                        <input type="radio" {{($item->item_type == 'product') ? 'checked' : '' }} name="item_type" value="product">
+                                        Product
+                                    </label>
+                                    <label>
+                                        <input type="radio" {{($item->item_type == 'catering') ? 'checked' : '' }} name="item_type" value="catering">
+                                        Catering
+                                    </label>
+                                </div>
+                            </div>
+
+                          <div class="row" id="normalCat" {{($item->item_type == 'catering') ? 'style=display:none;'  : ''}}>
+                                <div class="col-sm-3 col-md-12">
+                                    <div class="form-group">
+                                        <label for="getcat_id" class="col-form-label">{{ trans('labels.category') }}</label>
+                                        <select name="getcat_id" class="form-control" id="getcat_id">
+                                            <option value="">{{ trans('messages.select_category') }}</option>
+                                            <?php
+                                            foreach ($getcategory as $category) {
+                                            ?>
+                                            <option value="{{$category->id}}" {{ $item->cat_id == $category->id ? 'selected' : ''}}>{{$category->category_name}}</option>
+                                            <?php
+                                            }
+                                            ?>
+                                            @if ($errors->has('get_cat_id'))
+                                                <span class="text-danger">{{ $errors->first('get_cat_id') }}</span>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="cateringCat" {{($item->item_type == 'product') ? 'style="display:none;"'  : ''}}>
+                                <div class="col-sm-3 col-md-12">
+                                    <div class="form-group">
+                                        <label for="catering_cat_id" class="col-form-label">Catering {{ trans('labels.category') }}</label>
+                                        <select name="catering_cat_id" class="form-control" id="catering_cat_id">
+                                            <option value="">{{ trans('messages.select_category') }}</option>
+                                            <?php
+                                            foreach ($getcateringcat as $category) {
+                                            ?>
+                                            <option value="{{$category->id}}" {{ $item->catering_cat_id == $category->id ? 'selected' : ''}}>{{$category->name}}</option>
+                                            <?php
+                                            }
+                                            ?>
+                                            @if ($errors->has('catering_cat_id'))
+                                                <span class="text-danger">{{ $errors->first('catering_cat_id') }}</span>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div id="ingredient_field">
                                 <h5>Edit Ingredients</h5>
                                 @if ($item->ingredients_id != null)
@@ -296,8 +341,8 @@
                             </div>
 
 
-                            <h3 class="mt-4">Add Combo</h3>
-                            <div id="comboOptions">
+                            <h3 class="mt-4"  {{($item->item_type == 'catering') ? 'style=display:none' : '' }}>Add Combo</h3>
+                            <div id="comboOptions"  {{($item->item_type == 'catering') ? 'style=display:none' : '' }}>
                                 <div class="row">
                                    <div class="col-sm-1">
                                         <div class="form-group">
@@ -310,7 +355,7 @@
                                     </div>
 
                                 <?php
-                                    $combo_groups = explode(',', $item->combo_group_id);
+                                    $combo_groups = ($item->combo_group_id != '') ? explode(',', $item->combo_group_id) : array();
                                 ?>
                                     <div class="col-sm-4 pt-3">
                                         <label for="make_combo">Make this product as combo product.</label><br>
@@ -445,6 +490,20 @@
 @section('script')
 <script type="text/javascript">
 
+    $('#p_type input[type="radio"]').change(function(){
+        if ($(this).val() == 'product') {
+            $('#comboOptions').show();            
+            $('#comboOptions').prev('h3').show();
+            $('#normalCat').show();
+            $('#cateringCat').hide();
+        }
+        else if($(this).val() == 'catering'){
+            $('#comboOptions').hide(); 
+            $('#comboOptions').prev('h3').hide();
+            $('#normalCat').hide();
+            $('#cateringCat').show();
+        }
+    })
     $(document).ready(function() {
     "use strict";
         $('#addproduct').on('submit', function(event){

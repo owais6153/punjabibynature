@@ -16,6 +16,7 @@ use App\ComboItem;
 use App\ComboGroup;
 use App\Cart;
 use Validator;
+use App\CateringCat;
 
 class ItemController extends Controller
 {
@@ -29,7 +30,7 @@ class ItemController extends Controller
         $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
         $getingredients = Ingredients::where('is_deleted','2')->get();
         $getaddons = Addons::where('is_deleted','2')->where('is_available','1')->get();
-        $getitem = Item::select('item.*')->with('category')->join('categories','item.cat_id','=','categories.id')->where('item.is_deleted','2')->where('categories.is_available','1')->get();
+        $getitem = Item::select('item.*')->where('item.is_deleted','2')->get();
      
 
         return view('item', compact('getcategory','getitem','getingredients','getaddons'));
@@ -54,7 +55,8 @@ class ItemController extends Controller
         foreach ($getComboGroup as $key => $value) {
            $value->countCombos = $value->ComboItem()->count();
         }        
-        return view('additem', compact('getcategory','getitem','getingredients','getaddons', 'getingredientTypes', 'addonGroups', 'getComboGroup'));
+        $getcateringcat = CateringCat::get();
+        return view('additem', compact('getcategory','getitem','getingredients','getaddons', 'getingredientTypes', 'addonGroups', 'getComboGroup', 'getcateringcat'));
     }
 
     public function edititem($id) {
@@ -79,13 +81,14 @@ class ItemController extends Controller
         $getComboGroup = ComboGroup::all();
         foreach ($getComboGroup as $key => $value) {
            $value->countCombos = $value->ComboItem()->count();
-        }        
-        return view('edititem', compact('item','getitem','getcategory','getingredients','getaddons','getvariation','getitemimages', 'getingredientTypes', 'addonGroups', 'getComboGroup'));
+        }       
+        $getcateringcat = CateringCat::get(); 
+        return view('edititem', compact('item','getitem','getcategory','getingredients','getaddons','getvariation','getitemimages', 'getingredientTypes', 'addonGroups', 'getComboGroup', 'getcateringcat'));
     }
 
     public function list()
     {
-        $getitem = Item::select('item.*')->with('category')->join('categories','item.cat_id','=','categories.id')->where('item.is_deleted','2')->where('categories.is_available','1')->get();
+        $getitem = Item::select('item.*')->where('item.is_deleted','2')->get();
         return view('theme.itemtable',compact('getitem'));
     }
 
@@ -108,7 +111,8 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'cat_id' => 'required',
+            // 'cat_id' => 'required',
+            'food_type' => 'required',            
             'item_name' => 'required',
             'item_type' => 'required',
             'file.*' => 'required|mimes:jpeg,png,jpg',
@@ -123,6 +127,8 @@ class ItemController extends Controller
         $item->ingredients_id =@implode(",",$request->ingredients_id);
         $item->item_type =$request->item_type;
         $item->item_name =$request->item_name;
+        $item->food_type =$request->food_type;
+        $item->catering_cat_id =$request->catering_cat_id;
         $item->item_description =$request->description;
         $item->delivery_time =$request->delivery_time;
         $item->available_ing_option = @implode(",", $request->available_ing_option);
@@ -256,7 +262,7 @@ class ItemController extends Controller
     {
 
         $this->validate($request,[
-            'getcat_id' => 'required',
+            'food_type' => 'required',  
             'item_name' => 'required',
             'item_type' => 'required',
             'product_price.*' => 'required|numeric',
@@ -278,6 +284,8 @@ class ItemController extends Controller
         $item->available_ing_option = @implode(",", $request->available_ing_option);
         $item->item_name =$request->item_name;
         $item->item_type =$request->item_type;
+        $item->food_type =$request->food_type;
+        $item->catering_cat_id =$request->catering_cat_id;
         $item->item_description =$request->getdescription;
         $item->delivery_time =$request->getdelivery_time;
         $item->addongroups_id = @implode(",", $request->addons_groups_id);

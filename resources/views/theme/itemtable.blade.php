@@ -2,7 +2,6 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>{{ trans('labels.category') }}</th>
             <th>{{ trans('labels.item_name') }}</th>
             <th>{{ trans('labels.tax') }}</th>
             <th>{{ trans('labels.delivery_time') }}</th>
@@ -16,7 +15,6 @@
         ?>
         <tr id="dataid{{$item->id}}">
             <td>{{$item->id}}</td>
-            <td>{{@$item['category']->category_name}}</td>
             <td>{{$item->item_name}}</td>
             <td>{{$item->tax, 2}}%</td>
             <td>{{$item->delivery_time}}</td>
