@@ -19,7 +19,7 @@
    
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                   <i class="fa fa-plus"></i><span class="nav-text">Add-ons</span>
+                   <i class="fa fa-puzzle-piece"></i><span class="nav-text">Add-ons</span>
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="{{URL::to('/admin/addons')}}">Items</a></li>
@@ -29,7 +29,7 @@
 
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="fa fa-plus"></i><span class="nav-text">Combo</span>
+                    <i class="fa fa-plus-square"></i><span class="nav-text">Combo</span>
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="{{URL::to('/admin/combo')}}">Items</a></li>
