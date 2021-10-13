@@ -16,11 +16,6 @@
             </li>
     
 
-            <li>
-                <a href="{{URL::to('/admin/catering/category')}}" aria-expanded="false">
-                    <i class="fa fa-plus"></i><span class="nav-text">Catering Category</span>
-                </a>
-            </li>
    
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
