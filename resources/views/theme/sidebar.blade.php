@@ -42,7 +42,7 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="{{URL::to('/admin/ingredients')}}">Items</a></li>
-                    <li><a href="{{URL::to('/admin/ingredients/types')}}">Typ</a></li>                    
+                    <li><a href="{{URL::to('/admin/ingredients/types')}}">Type</a></li>                    
                 </ul>
             </li>
             <li>

@@ -100,6 +100,7 @@ class UserController extends Controller
                                 $cart->combo = (isset($value->combo) && !empty($value->combo)) ? implode('|',$value->combo) : null;
                                 $cart->group_addons = (isset($value->group_addons) && !empty($value->group_addons)) ? implode('|',$value->group_addons) : null;
                                 $cart->totalAddonPrice =$value->totalAddonPrice;
+                                $cart->product_type =$value->product_type;
 
                                 $cart->save();
 

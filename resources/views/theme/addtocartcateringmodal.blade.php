@@ -1,6 +1,7 @@
                 
             <div class="cateringpopup">
                 <input type="hidden" name="item_id" id="item_id" value="{{$getitem->id}}">
+                <input type="hidden" name="product_type" id="product_type" value="catering">
 
                  @foreach ($getitem->variation as $key => $value)
                         <input type="hidden" name="price" id="price" value="{{($getitem->is_default_combo != 1) ? $value->product_price : ($value->product_price + $totalComboPrice)}}">
@@ -50,8 +51,12 @@
                 @endif
                     
                     <div class="col-md-6">
-                        <label>Select Quantity</label>
-                        <input type="number" name="quantity" id="quantity" value="1" min="1" max="1000" class="quantity form-control">
+                        <label>Select People</label>
+                        <select name="quantity" id="quantity" class="quantity form-control">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
                     </div>
                    </div>
                    <div class="alert alert-danger" style="display: none;" id="AddToCartError"></div>

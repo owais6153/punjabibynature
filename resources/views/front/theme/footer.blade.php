@@ -650,6 +650,7 @@ function validateIngredients(){
     var group_addons = [];
     var qty = $('#quantity').val();
     var totalAddonPrice = 0;
+    var product_type = $('#product_type').val();
 
 // Ingredients
     if ($('input.Checkbox.ingredients').length > 0 ){
@@ -734,7 +735,8 @@ function validateIngredients(){
             combo: combo,
             group_addons: group_addons,
             user_id: user_id,
-            totalAddonPrice: totalAddonPrice
+            totalAddonPrice: totalAddonPrice,
+            product_type: product_type
 
         },
         method: 'POST', //Post method,

@@ -9,6 +9,7 @@
             @else 
                 <div class="col-lg-8">
                     @foreach ($cartdata as $cartIndex => $cart)
+                    @if ($cart->product_type == 'product')
                     <?php
                         $data[] = array(
                             "total_price" => $cart->qty * $cart->price,
@@ -134,6 +135,7 @@
                             @endif
                         </div>
                     </div>
+                    @endif
                     @endforeach
                     @empty (!@$data)
                     @if (Session::has('offer_amount'))

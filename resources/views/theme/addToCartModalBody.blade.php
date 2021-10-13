@@ -1,6 +1,7 @@
 
               <img src='{{$getimages[0]->image }}' alt="">
                 <input type="hidden" name="item_id" id="item_id" value="{{$getitem->id}}">
+                <input type="hidden" name="product_type" id="product_type" value="product">
 
                  @foreach ($getitem->variation as $key => $value)
                         <input type="hidden" name="price" id="price" value="{{($getitem->is_default_combo != 1) ? $value->product_price : ($value->product_price + $totalComboPrice)}}">

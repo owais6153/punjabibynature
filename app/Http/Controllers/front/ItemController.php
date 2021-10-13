@@ -55,6 +55,7 @@ class ItemController extends Controller
               if (Session::get('id')) {
             $cartdata=Cart::with('itemimage')->select('id','qty','price','item_notes','cart.variation','item_name','tax',\DB::raw("CONCAT('".url('/storage/app/public/images/item/')."/', item_image) AS item_image"),'item_id','addons_id','addons_name','addons_price')
             ->where('user_id',$user_id)
+            ->where('product_type','product')
             ->where('is_available','=','1')->get();
         }
         else{
@@ -255,6 +256,9 @@ class ItemController extends Controller
         if($request->user_id == ""){
             return response()->json(["status"=>0,"message"=>"User ID is required"],400);
         }
+        if($request->product_type == ""){
+            return response()->json(["status"=>0,"message"=>"User ID is required"],400);
+        }
         $getitem=Item::with('itemimage')->select('item.id','item.item_name','item.tax')
                 ->where('item.id',$request->item_id)->first();
         
@@ -282,6 +286,7 @@ class ItemController extends Controller
                     'combo' => $request->combo,
                     'group_addons' => $request->group_addons,
                     'totalAddonPrice' => $request->totalAddonPrice,
+                    'product_type' => $request->product_type,
                 )                               
             );
             $guestCartData = array();
@@ -313,6 +318,7 @@ class ItemController extends Controller
                     'combo' => $request->combo,
                     'group_addons' => $request->group_addons,
                     'totalAddonPrice' => $request->totalAddonPrice,
+                    'product_type' => $request->product_type,
                  );
                 
 
@@ -351,6 +357,7 @@ class ItemController extends Controller
                 $cart->item_image =$getitem['itemimage']->image_name;
                 $cart->addons_name =$request->addons_name;
                 $cart->addons_price =$request->addons_price;
+                $cart->product_type = $request->product_type;
 
                 $cart->ingredients =  (isset($request->ingredients) && !empty($request->ingredients)) ? implode('|',$request->ingredients) : null;
                 $cart->combo = (isset($request->combo) && !empty($request->combo)) ? implode('|',$request->combo) : null;
