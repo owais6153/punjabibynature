@@ -14,61 +14,54 @@
                     <i class="fa fa-image"></i><span class="nav-text">{{ trans('labels.sliders') }} (Only for website)</span>
                 </a>
             </li>
-            <li>
-                <a href="{{URL::to('/admin/category')}}" aria-expanded="false">
-                    <i class="icon-menu menu-icon"></i><span class="nav-text">{{ trans('labels.categories') }}</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{URL::to('/admin/addons')}}" aria-expanded="false">
-                    <i class="fa fa-plus"></i><span class="nav-text">{{ trans('labels.addons') }}</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="{{URL::to('/admin/addons/groups')}}" aria-expanded="false">
-                    <i class="fa fa-plus"></i><span class="nav-text">Add-on Groups</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="{{URL::to('/admin/combo')}}" aria-expanded="false">
-                    <i class="fa fa-plus"></i><span class="nav-text">Combo Items</span>
-                </a>
-            </li>
-
-
-            <li>
-                <a href="{{URL::to('/admin/combo/groups')}}" aria-expanded="false">
-                    <i class="fa fa-plus"></i><span class="nav-text">Combo Groups</span>
-                </a>
-            </li>
-
     
-
-            <li>
-                <a href="{{URL::to('/admin/ingredients')}}" aria-expanded="false">
-                    <i class="fa fa-plus"></i><span class="nav-text">{{ trans('labels.ingredients') }}</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="{{URL::to('/admin/ingredients/types')}}" aria-expanded="false">
-                    <i class="fa fa-plus"></i><span class="nav-text">{{ trans('labels.ingredientsTypes') }}</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="{{URL::to('/admin/item')}}" aria-expanded="false">
-                    <i class="fa fa-plus"></i><span class="nav-text">{{ trans('labels.items') }}</span>
-                </a>
-            </li>
 
             <li>
                 <a href="{{URL::to('/admin/catering/category')}}" aria-expanded="false">
                     <i class="fa fa-plus"></i><span class="nav-text">Catering Category</span>
                 </a>
             </li>
+   
+            <li>
+                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                   <i class="fa fa-plus"></i><span class="nav-text">Add-ons</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{URL::to('/admin/addons')}}">Items</a></li>
+                    <li><a href="{{URL::to('/admin/addons/groups')}}">Groups</a></li>                    
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="fa fa-plus"></i><span class="nav-text">Combo</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{URL::to('/admin/combo')}}">Items</a></li>
+                    <li><a href="{{URL::to('/admin/combo/groups')}}">Groups</a></li>                    
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="fa fa-plus"></i><span class="nav-text">{{ trans('labels.ingredients') }}</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{URL::to('/admin/ingredients')}}">Items</a></li>
+                    <li><a href="{{URL::to('/admin/ingredients/types')}}">Typ</a></li>                    
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="fa fa-plus"></i><span class="nav-text">{{ trans('labels.items') }}</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{URL::to('/admin/item')}}">Items</a></li>
+                    <li><a href="{{URL::to('/admin/category')}}">{{ trans('labels.categories') }}</a></li>    
+                    <li><a href="{{URL::to('/admin/catering/category')}}">Catering Category</a></li>                    
+                </ul>
+            </li>
+
+
 
             <li>
                 <a href="{{URL::to('/admin/banner')}}" aria-expanded="false">
@@ -85,11 +78,11 @@
                     <i class="fa fa-tag"></i><span class="nav-text">{{ trans('labels.promocodes') }}</span>
                 </a>
             </li>
-            <li>
+<!--             <li>
                 <a href="{{URL::to('/admin/driver')}}" aria-expanded="false">
                     <i class="fa fa-car"></i><span class="nav-text">{{ trans('labels.drivers') }}</span>
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a href="{{URL::to('/admin/time')}}" aria-expanded="false">
                     <i class="fa fa-clock-o"></i><span class="nav-text">{{ trans('labels.working_hours') }}</span>
@@ -120,11 +113,11 @@
                     <i class="fa fa-bar-chart"></i><span class="nav-text">{{ trans('labels.report') }}</span>
                 </a>
             </li>
-            <li>
+     <!--        <li>
                 <a href="{{URL::to('/admin/notification')}}" aria-expanded="false">
                     <i class="fa fa-bell"></i><span class="nav-text">{{ trans('labels.notification') }} (Only for Mobile app)</span>
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a href="{{URL::to('/admin/contact')}}" aria-expanded="false">
                     <i class="fa fa-envelope"></i><span class="nav-text">{{ trans('labels.inquiries') }}</span>
@@ -151,7 +144,7 @@
             </li>
             <!-- OTP Addon-->
             
-            <li>
+       <!--      <li>
                 <a href="{{URL::to('/admin/systemaddons')}}" aria-expanded="false">
                     <i class="fa fa-puzzle-piece"></i><span class="nav-text">Addons Manager</span>
                 </a>
@@ -160,7 +153,7 @@
                 <a href="{{URL::to('/admin/clear-cache')}}" aria-expanded="false">
                     <i class="fa fa-refresh"></i><span class="nav-text">Clear cache</span>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>
