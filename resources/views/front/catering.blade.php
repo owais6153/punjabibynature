@@ -92,28 +92,58 @@
                  <h3>Cart </h3>
                  <div class="cart-catering-body">
                     <div class="cart-total-catering cart-items-catering">
-                        <div class="total-values">
-                            <div>6</div>
-                            <div>Traditional BreakFast<br/>serves 6</div>
-                            <div>$43.53</div>
-                            <div><a href="#"><i class="fas fa-times"></i></a></div>
-                        </div>
-                      
-                        
-                    </div>
+                        @empty (!$cateringcartdata)
+                            @foreach ($cateringcartdata as $cartIndex => $cart)
+                                @if($cart->product_type == 'catering')
+                                    @php
+                                        $data[] = array(
+                                            "total_price" => $cart->qty * $cart->price,
+                                            "tax" => ($cart->qty*$cart->price)*$cart->tax/100,
+                                            "qty" => $cart->qty
+                                        );
 
+                                        if (isset($cart->id)) {
+                                            $id = $cart->id;
+                                        }
+                                        else{
+                                            $id = $cartIndex;
+                                        }
+                                    @endphp
+                                    <div class="total-values">
+                                        <div>6</div>
+                                        <div>{{$cart->item_name}}<br/>serves {{$cart->qty}}</div>
+                                        <div>{{$taxval->currency}}{{number_format($cart->qty * $cart->price,2)}}</div>
+                                        <div><a href="javascript:void(0)" onclick="RemoveCart({{$id}})"><i class="fas fa-times"></i></a></div>
+                                    </div>                      
+                                @endif  
+                            @endforeach
+                        @endif
+                    </div>
+                    @empty (!@$data)
+                        @php 
+                            $order_total = array_sum(array_column(@$data, 'total_price'));
+                            $tax = array_sum(array_column(@$data, 'tax'));
+                            $total = array_sum(array_column(@$data, 'total_price'))+$tax;
+                        @endphp
+                    @else    
+                        @php 
+                            $order_total = 0;
+                            $tax = 0;
+                            $total = 0;
+                        @endphp
+                    @endif
                     <div class="cart-total-catering">
                        <div class="total-values">
-                            <div>Food & Beverage</div>
-                            <div>$43.53</div>
+                            <div>Subtotal</div>
+                            <div>{{$taxval->currency}}{{$order_total}}</div>
                         </div>
                         <div class="total-values">
-                            <div>Restaurant Delivery Fee</div>
-                            <div>$43.53</div>
+                            <div>Tax</div>
+                            <div>{{$taxval->currency}}{{$tax}}</div>
                         </div>
                         <div class="total-values">
-                            <div>8.875% Sales Tax</div>
-                            <div>$43.53</div>
+                            <div>Delivery charge</div>
+                            <div>$0</div>
                         </div>
 
                     </div>
@@ -121,16 +151,12 @@
                     <div class="cart-total-catering">
                         <div class="total-values">
                             <div><b>Total</b></div>
-                            <div><b>$43.53</b></div>
-                        </div>
-                        <div class="total-description">
-                            <div>Price Per Head</div>
-                            <a href="#">$7.26/person</a>
+                            <div><b>{{$taxval->currency}}{{$order_total}}</b></div>
                         </div>
                     </div>
 
            
-                        <label>Date & Time</label>
+                        <p class="text-left mb-0"><label>Date & Time</label></p>
                         <input type="datetime-local" name="calendar" id="calendar" class="quantity form-control">
                     
 

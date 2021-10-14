@@ -162,9 +162,9 @@ class HomeController extends Controller
             $cateringcartdata = json_decode(json_encode($cartdata_temp));
         }
 
+        $taxval=User::select('currency','map')->where('type','1')->first();
 
-
-        return view('front.catering',compact('getabout','getdata','getcategory','cartdata', 'catering_category', 'cateringcartdata'));
+        return view('front.catering',compact('getabout','getdata','getcategory','cartdata', 'catering_category', 'cateringcartdata', 'taxval'));
     }
 
     public function contact(Request $request)
