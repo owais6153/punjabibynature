@@ -12,6 +12,7 @@
     </div>
 </section>
 
+
 <input type="hidden" id="type_catering" value="true" name="">
 
      <section class="sec2-catering">
@@ -32,7 +33,11 @@
      	         
 
                     
-                  <h3 id="category{{$category->id}}">{{$category->name}}</h3>
+                  <h3 id="category{{$category->id}}">{{$category->name}} 
+                    @if($category->option_allowed != '')
+                        <small>{{$category->option_allowed}} option{{($category->option_allowed > 1) ? 's' : ''}} allowed</small>
+                    @endif
+                  </h3>
 <div class="row">
                         @foreach ($category->items as $item)
 
@@ -67,9 +72,10 @@
                                     <p>{{ Str::limit($item->item_description, 255) }}</p>
                                 </div>
                             </div>
-                             @if (Session::get('id'))
+                        @if (Session::get('id'))
+
                             @if ($item->item_status == '1')
-                                <button class="btn"  onclick="openCartModal('{{$item->id}}')" >{{ trans('labels.add_to_cart') }}</button>
+                                <button class="btn" {{($item->option_allowed)}}  onclick="openCartModal('{{$item->id}}')" >{{ trans('labels.add_to_cart') }}</button>
 
                             @else 
                                 <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>

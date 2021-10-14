@@ -15,6 +15,9 @@ class EditCarttable extends Migration
     {
         Schema::table('cart', function (Blueprint $table) {
            $table->string('product_type', 50);
+           $table->string('food_type', 50)->nullable();
+           $table->string('catering_cat', 255)->nullable();
+
         });
     }
 
@@ -26,7 +29,9 @@ class EditCarttable extends Migration
     public function down()
     {
         Schema::table('cart', function (Blueprint $table) {
-             $table->dropColumn('product_type');
+            $table->dropColumn('product_type');
+            $table->dropColumn('food_type');
+            $table->dropColumn('catering_cat');
         });
     }
 }

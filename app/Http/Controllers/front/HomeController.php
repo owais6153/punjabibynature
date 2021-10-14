@@ -125,7 +125,7 @@ class HomeController extends Controller
         $getabout = About::where('id','=','1')->first();
         $user_id  = Session::get('id');
         $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
-        $catering_category = CateringCat::select('catering_category.name', 'catering_category.id')
+        $catering_category = CateringCat::select('catering_category.*')
         ->join("item","item.catering_cat_id","=","catering_category.id")
         ->groupBy('name')
         ->where('item.item_status', '1')

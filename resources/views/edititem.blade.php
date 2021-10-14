@@ -72,7 +72,7 @@
                                         Veg
                                     </label>
                                     <label>
-                                        <input type="radio" name="food_type" value="Non Veg" {{($item->food_type == 'Veg') ? 'checked' : '' }}>
+                                        <input type="radio" name="food_type" value="Non Veg" {{($item->food_type == 'Non Veg') ? 'checked' : '' }}>
                                         Non Veg
                                     </label>
                                 </div>
@@ -89,7 +89,7 @@
                                 </div>
                             </div>
 
-                          <div class="row" id="normalCat" {{($item->item_type == 'catering') ? 'style=display:none;'  : ''}}>
+                          <div class="row" id="normalCat" style="{{($item->item_type == 'catering') ? 'display:none;'  : ''}}">
                                 <div class="col-sm-3 col-md-12">
                                     <div class="form-group">
                                         <label for="getcat_id" class="col-form-label">{{ trans('labels.category') }}</label>
@@ -109,7 +109,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" id="cateringCat" {{($item->item_type == 'product') ? 'style="display:none;"'  : ''}}>
+                            <div class="row" id="cateringCat" style="{{($item->item_type == 'product') ? 'display:none;'  : ''}}">
                                 <div class="col-sm-3 col-md-12">
                                     <div class="form-group">
                                         <label for="catering_cat_id" class="col-form-label">Catering {{ trans('labels.category') }}</label>

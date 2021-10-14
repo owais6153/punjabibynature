@@ -940,6 +940,17 @@ section.sec2-catering .sec-head {
 section.sec2-catering .cat-new-product {
     padding-left: 0px;
 }
+section.sec2-catering .cat-new-product h3 small {
+    font-size: 12px;
+    margin-left: 6px;
+    background: #fba40e;
+    color: #fff;
+    display: inline-block;
+    padding: 3px 7px;
+    line-height: 13px;
+    border-radius: 4px;
+    transform: translateY(-4px);
+}
 .sec2-catering .cat-aside-wrap {
     display: flex;
 }
