@@ -257,7 +257,13 @@ class ItemController extends Controller
             return response()->json(["status"=>0,"message"=>"User ID is required"],400);
         }
         if($request->product_type == ""){
-            return response()->json(["status"=>0,"message"=>"User ID is required"],400);
+            return response()->json(["status"=>0,"message"=>"Product type is required"],400);
+        }
+        if($request->food_type == ""){
+            return response()->json(["status"=>0,"message"=>"Food type is required"],400);
+        }
+        if($request->product_type == "catering" && ($request->catering_cat == 0 || $request->catering_cat == '')){
+            return response()->json(["status"=>0,"message"=>"Catering Category is required"],400);
         }
         $getitem=Item::with('itemimage')->select('item.id','item.item_name','item.tax')
                 ->where('item.id',$request->item_id)->first();
@@ -287,6 +293,8 @@ class ItemController extends Controller
                     'group_addons' => $request->group_addons,
                     'totalAddonPrice' => $request->totalAddonPrice,
                     'product_type' => $request->product_type,
+                    'food_type' => $request->food_type,
+                    'catering_cat' => $request->catering_cat,
                 )                               
             );
             $guestCartData = array();
@@ -319,6 +327,8 @@ class ItemController extends Controller
                     'group_addons' => $request->group_addons,
                     'totalAddonPrice' => $request->totalAddonPrice,
                     'product_type' => $request->product_type,
+                    'food_type' => $request->food_type,
+                    'catering_cat' => $request->catering_cat,
                  );
                 
 
@@ -358,6 +368,8 @@ class ItemController extends Controller
                 $cart->addons_name =$request->addons_name;
                 $cart->addons_price =$request->addons_price;
                 $cart->product_type = $request->product_type;
+                $cart->food_type = $request->food_type;
+                $cart->catering_cat = $request->catering_cat;
 
                 $cart->ingredients =  (isset($request->ingredients) && !empty($request->ingredients)) ? implode('|',$request->ingredients) : null;
                 $cart->combo = (isset($request->combo) && !empty($request->combo)) ? implode('|',$request->combo) : null;

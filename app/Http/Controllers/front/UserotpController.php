@@ -87,6 +87,8 @@ class UserotpController extends Controller
                         $cart->addons_name =$value->addons_name;
                         $cart->addons_price =$value->addons_price;
                         $cart->product_type =$value->product_type;
+                        $cart->food_type = $request->food_type;
+                        $cart->catering_cat = $request->catering_cat;
 
                         $cart->ingredients =  (isset($value->ingredients) && !empty($value->ingredients)) ? implode('|',$value->ingredients) : null;
                         $cart->combo = (isset($value->combo) && !empty($value->combo)) ? implode('|',$value->combo) : null;
@@ -596,6 +598,8 @@ class UserotpController extends Controller
                                 $cart->addons_name =$value->addons_name;
                                 $cart->addons_price =$value->addons_price;
                                 $cart->product_type =$value->product_type;
+                                $cart->food_type = $request->food_type;
+                                $cart->catering_cat = $request->catering_cat;
 
                                 $cart->ingredients =  (isset($value->ingredients) && !empty($value->ingredients)) ? implode('|',$value->ingredients) : null;
                                 $cart->combo = (isset($value->combo) && !empty($value->combo)) ? implode('|',$value->combo) : null;
@@ -725,6 +729,8 @@ class UserotpController extends Controller
                                 $cart->addons_name =$value->addons_name;
                                 $cart->addons_price =$value->addons_price;
                                 $cart->product_type =$value->product_type;
+                                $cart->food_type = $request->food_type;
+                                $cart->catering_cat = $request->catering_cat;
 
                                 $cart->ingredients =  (isset($value->ingredients) && !empty($value->ingredients)) ? implode('|',$value->ingredients) : null;
                                 $cart->combo = (isset($value->combo) && !empty($value->combo)) ? implode('|',$value->combo) : null;

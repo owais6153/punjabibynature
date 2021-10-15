@@ -12,6 +12,37 @@
     </div>
 </section>
 
+@php
+    $validation = array();
+@endphp
+@empty (!$cateringcartdata)
+    @foreach ($cateringcartdata as $cartIndex => $cart)
+        @if($cart->product_type == 'catering')
+            @php
+                if(isset($validation[$cart->catering_cat])){
+                    $validation[$cart->catering_cat]['total'] += 1;                     
+                    if ($cart->food_type == 'Veg'){
+                        $validation[$cart->catering_cat]['veg'] += 1;
+                    }
+                    else if ($cart->food_type == 'Non Veg'){
+                        $validation[$cart->catering_cat]['nonveg'] +=  1;
+                    }
+                }
+                else{
+                    $validation[$cart->catering_cat]['total'] = 1;                     
+                    if ($cart->food_type == 'Veg'){
+                        $validation[$cart->catering_cat]['veg'] = 1;
+                    }
+                    else if ($cart->food_type == 'Non Veg'){
+                        $validation[$cart->catering_cat]['nonveg'] =  1;
+                    }
+                }
+            @endphp
+        @endif
+    @endforeach
+@endif
+
+
 
 <input type="hidden" id="type_catering" value="true" name="">
 
@@ -30,8 +61,40 @@
                 <div class="row catering">
                      <div class="cat-new-product col-md-8">
                     @foreach ($catering_category as $category)
-     	         
+     	          
 
+           
+                        @php
+                            if (isset($validation[$category->id]) && $category->option_allowed != '' && $category->option_allowed > $validation[$category->id]['total']):
+                                $validation[$category->id]['allow_add_to_cart'] = true;
+                            else:
+                                if (isset($validation[$category->id]) && $category->option_allowed != '') {
+                                    $validation[$category->id]['allow_add_to_cart'] = false;
+                                }
+                                else{
+                                    $validation[$category->id]['allow_add_to_cart'] = true;
+                                }
+                            endif;
+
+                           /* if($validation[$category->id]['allow_add_to_cart'] != false && (!empty($category->allowed_veg) || !empty($category->allowed_nonveg) )) {
+                                if(!empty($category->allowed_veg) && $category->allowed_veg  > $validation[$category->id]['veg']){
+                                    $validation[$category->id]['allow_add_to_cart'] = true;
+                                }
+                                else{
+                                    $validation[$category->id]['allow_add_to_cart'] = false;
+                                }
+
+
+                                if($validation[$category->id]['allow_add_to_cart'] != false && !empty($category->allowed_nonveg) && $category->allowed_nonveg  > $validation[$category->id]['nonveg']){
+                                    $validation[$category->id]['allow_add_to_cart'] = true;
+                                }
+                                else{
+                                    $validation[$category->id]['allow_add_to_cart'] = false;
+                                }
+                            }*/
+
+                        @endphp
+            
                     
                   <h3 id="category{{$category->id}}">{{$category->name}} 
                     @if($category->option_allowed != '')
@@ -75,14 +138,14 @@
                         @if (Session::get('id'))
 
                             @if ($item->item_status == '1')
-                                <button class="btn" {{($item->option_allowed)}}  onclick="openCartModal('{{$item->id}}')" >{{ trans('labels.add_to_cart') }}</button>
+                                <button class="btn" {{($validation[$category->id]['allow_add_to_cart']) ? '' : 'disabled'}} onclick="openCartModal('{{$item->id}}')" >{{ trans('labels.add_to_cart') }}</button>
 
                             @else 
                                 <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>
                             @endif
                         @else
                             @if ($item->item_status == '1')
-                                <button class="btn" onclick="openCartModal('{{$item->id}}')">{{ trans('labels.add_to_cart') }}</button>
+                                <button class="btn" {{($validation[$category->id]['allow_add_to_cart']) ? '' : 'disabled'}} onclick="openCartModal('{{$item->id}}')">{{ trans('labels.add_to_cart') }}</button>
                             @else 
                                 <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>
                             @endif
@@ -119,6 +182,8 @@
                                         <div>6</div>
                                         <div>{{$cart->item_name}}<br/>serves {{$cart->qty}}</div>
                                         <div>{{$taxval->currency}}{{number_format($cart->qty * $cart->price,2)}}</div>
+
+
                                         <div><a href="javascript:void(0)" onclick="RemoveCart({{$id}})"><i class="fas fa-times"></i></a></div>
                                     </div>                      
                                 @endif  

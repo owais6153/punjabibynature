@@ -101,6 +101,8 @@ class UserController extends Controller
                                 $cart->group_addons = (isset($value->group_addons) && !empty($value->group_addons)) ? implode('|',$value->group_addons) : null;
                                 $cart->totalAddonPrice =$value->totalAddonPrice;
                                 $cart->product_type =$value->product_type;
+                                $cart->food_type = $request->food_type;
+                                $cart->catering_cat = $request->catering_cat;
 
                                 $cart->save();
 

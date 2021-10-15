@@ -651,6 +651,8 @@ function validateIngredients(){
     var qty = $('#quantity').val();
     var totalAddonPrice = 0;
     var product_type = $('#product_type').val();
+    var food_type = $('#food_type').val();
+    var catering_cat = ($('#catering_cat').length > 0) ? $('#catering_cat').val() : '';
 
 // Ingredients
     if ($('input.Checkbox.ingredients').length > 0 ){
@@ -736,7 +738,9 @@ function validateIngredients(){
             group_addons: group_addons,
             user_id: user_id,
             totalAddonPrice: totalAddonPrice,
-            product_type: product_type
+            product_type: product_type,            
+            food_type: food_type,
+            catering_cat: catering_cat
 
         },
         method: 'POST', //Post method,
