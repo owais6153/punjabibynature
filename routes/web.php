@@ -59,6 +59,7 @@ Route::group(['namespace' => 'front'], function () {
 	Route::get('/product/{id}', 'ItemController@show');
 	Route::post('/product/favorite', 'ItemController@favorite');
 	Route::post('/product/unfavorite', 'ItemController@unfavorite');
+	Route::post('/home/checkbookings', 'ItemController@checkbookings');
 	Route::post('/product/addtocart', 'ItemController@addtocart');
 	Route::get("/search","ItemController@search");
 	Route::post('product/searchitem', 'ItemController@searchitem');
@@ -92,6 +93,7 @@ Route::group(['namespace' => 'front'], function () {
 		Route::get('/resend-otp', 'UserotpController@resend_otp');
 		Route::post('/otp-verification', 'UserotpController@otp_verification');
 		Route::post('/resendcode_checkout', 'UserotpController@resendcode_checkout');
+
 
 		Route::get('/orders', 'OrderotpController@index');
 		Route::post('/orders/cashondelivery', 'OrderotpController@cashondelivery');

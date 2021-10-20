@@ -32,9 +32,11 @@
                     $validation[$cart->catering_cat]['total'] = 1;                     
                     if ($cart->food_type == 'Veg'){
                         $validation[$cart->catering_cat]['veg'] = 1;
+                        $validation[$cart->catering_cat]['nonveg'] = 0;
                     }
                     else if ($cart->food_type == 'Non Veg'){
                         $validation[$cart->catering_cat]['nonveg'] =  1;
+                        $validation[$cart->catering_cat]['veg'] = 0;
                     }
                 }
             @endphp
@@ -231,7 +233,7 @@
                         <input type="datetime-local" name="calendar" id="calendar" class="quantity form-control">
                     
 
-                 	<button disabled="" class="checkout-btn">Checkout <i class="fas fa-arrow-right"></i></button>
+                 	<button disabled="" class="checkout-btn btn">Checkout <i class="fas fa-arrow-right"></i></button>
                  	<p>$100.00 minimum for delivery</p>
                  </div> 
             </div>
@@ -246,6 +248,44 @@ $('html,body').animate({
             scrollTop: $($(this).attr('href')).offset().top -100},
         'slow');
 });
+
+$('.calendar').change( function(){
+    if( $(this).val() != ''){
+        var CSRF_TOKEN = $('input[name="_token"]').val();
+
+        $.ajax({
+          headers: {
+              'X-CSRF-Token': CSRF_TOKEN 
+          },
+          url:"{{ url('/home/checkbookings') }}",
+          method:'POST',
+          data: {booking_date: $(this).val()},
+          dataType: 'json',
+          success:function(data){
+          $("#preloader").hide();
+            if(data.error.length > 0)
+            {
+                var error_html = '';
+                for(var count = 0; count < data.error.length; count++)
+                {
+                    error_html += '<div class="alert alert-danger mt-1">'+data.error[count]+'</div>';
+                }
+                $('#errorr').html(error_html);
+                setTimeout(function(){
+                    $('#errorr').html('');
+                }, 10000);
+            }
+            else
+            {
+                location.reload();
+            }
+          },error:function(data){
+             
+          }
+        });
+    }
+});
+
 
 </script>
 @endsection
