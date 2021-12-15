@@ -206,6 +206,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 		Route::post('ingredients/status', 'IngredientsController@status');
 		Route::post('ingredients/delete', 'IngredientsController@delete');
 
+		Route::get('club', 'FanClubController@index');
+		Route::post('club/store', 'fanClubController@store');
+		Route::get('club/fanclub', 'fanClubController@fanlist');
+
 		Route::get('combo', 'ComboItemController@index');
 		Route::post('combo/store', 'ComboItemController@store');
 		Route::post('combo/show', 'ComboItemController@show');
@@ -226,6 +230,22 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 		Route::post('ingredients/types/update', 'IngredientTypeController@update');
 		Route::get('ingredients/types/list', 'IngredientTypeController@list');
 		Route::post('ingredients/types/delete', 'IngredientTypeController@delete');
+
+		Route::get('cateringproducts', 'CateringController@index');
+		Route::get('addcatering', 'CateringController@addcatering');
+		Route::post('catering/store', 'CateringController@store');
+		// Route::get('edititem/{id}', 'ItemController@edititem');
+		// Route::post('item/store', 'ItemController@store');
+		// Route::get('item/list', 'ItemController@list');
+		// Route::post('item/update', 'ItemController@update');
+		// Route::post('item/showimage', 'ItemController@showimage');
+		// Route::post('item/updateimage', 'ItemController@updateimage');
+		// Route::post('item/storeimages', 'ItemController@storeimages');
+		// Route::post('item/destroyimage', 'ItemController@destroyimage');
+		// Route::post('item/status', 'ItemController@status');
+		// Route::post('item/delete', 'ItemController@delete');
+		// Route::post('item/deletevariation', 'ItemController@deletevariation');
+
 
 		Route::get('item', 'ItemController@index');
 		Route::get('additem', 'ItemController@additem');
@@ -262,6 +282,20 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 		Route::post('addons/groups/update', 'AddonGroupsController@update');
 		Route::post('addons/groups/delete', 'AddonGroupsController@delete');
 
+		Route::get('cateringaddon/groups', 'CateringgroupController@index');
+		Route::post('cateringaddon/groups/store', 'CateringgroupController@store');
+		Route::get('cateringaddon/groups/list', 'CateringgroupController@list');
+		Route::post('cateringaddon/groups/show', 'CateringgroupController@show');
+		Route::post('cateringaddon/groups/update', 'CateringgroupController@update');
+		Route::post('cateringaddon/groups/delete', 'CateringgroupController@delete');
+		
+		Route::get('cateringaddon', 'CateringaddonController@index');
+		Route::post('cateringaddon/store', 'CateringaddonController@store');
+		Route::post('cateringaddon/update', 'CateringaddonController@update');
+		Route::post('cateringaddon/show', 'CateringaddonController@show');
+		Route::get('cateringaddon/list', 'CateringaddonController@list');
+		Route::post('cateringaddon/status', 'CateringaddonController@status');
+		Route::post('cateringaddon/delete', 'CateringaddonController@delete');
 
 		Route::get('catering/category', 'CateringCategory@index');
 		Route::post('catering/category/store', 'CateringCategory@store');

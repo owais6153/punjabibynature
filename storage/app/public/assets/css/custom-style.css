@@ -1500,3 +1500,22 @@ section.sec2-catering .cat-new-product {
     font-size: 30px !important;
 }
 }
+#pricelist .quaty {
+    border: solid 1px #f88f12;
+    opacity: 1 !important;
+    width: 7%;
+    position: relative !important;
+    margin-left: 7px;
+    height: 30px;
+    margin-top: -1px;
+    padding: 8px;
+}
+#pricelist li {
+    display: flex;
+}
+#pricelist .label-quan {
+    margin-left: 18px;
+}
+#pricelist p {
+    margin-bottom: 0px;
+}

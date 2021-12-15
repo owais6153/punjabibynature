@@ -9,7 +9,7 @@
             @else 
                 <div class="col-lg-8">
                     @foreach ($cartdata as $cartIndex => $cart)
-                    @if ($cart->product_type == 'product')
+                    @if ($cart->product_type == 'product' || $cart->product_type == 'catering')
                     <?php
                         $data[] = array(
                             "total_price" => $cart->qty * $cart->price,
@@ -75,7 +75,7 @@
                                     @endif    
 
                                     @if ($cart->addons_id != "" || $cart->group_addons != '')
-                                        <h5 class="cart-addon-h"><span>Add-ons: </span><span>{{$taxval->currency}}{{$cart->totalAddonPrice * $cart->qty}}</span></h5>
+                                        <h5 class="cart-addon-h"><span>Sides: </span><span>{{$taxval->currency}}{{$cart->qty}}</span></h5>
                                         @if ($cart->addons_id != "")
                                             <?php 
                                             $addons_id = explode(",",$cart->addons_id);
@@ -84,7 +84,7 @@
                                             ?>                                            
                                             @foreach ($addons_id as $key =>  $addons)                                
                                                 <div class="cart-addons">
-                                                    <b>{{$addons_name[$key]}}</b>
+                                                    <b>{{$addons_name[$key]}}</b><br />
                                                 </div>
                                             @endforeach
                                         @endif

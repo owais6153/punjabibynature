@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
@@ -10,15 +10,17 @@ use App\ItemImages;
 use App\Variation;
 use App\Ingredients;
 use App\IngredientTypes;
-use App\Addons;
-use App\AddonGroups;
+// use App\Addons;
+// use App\AddonGroups;
 use App\ComboItem;
 use App\ComboGroup;
+use App\Cateringtypes;
+use App\Cateringaddon;
 use App\Cart;
 use Validator;
 use App\CateringCat;
 
-class ItemController extends Controller
+class CateringController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,17 +31,17 @@ class ItemController extends Controller
     public function index() {
         $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
         $getingredients = Ingredients::where('is_deleted','2')->get();
-        $getaddons = Addons::where('is_deleted','2')->where('is_available','1')->get();
-        $getitem = Item::where('item_type','product')->where('item.is_deleted','2')->get();
+        $getaddons = Cateringaddon::where('is_deleted','2')->where('is_available','1')->get();
+        $getitem = Item::where('item_type','catering')->where('item.is_deleted','2')->get();
      
 
-        return view('item', compact('getcategory','getitem','getingredients','getaddons'));
+        return view('catering', compact('getcategory','getitem','getingredients','getaddons'));
     }
 
-    public function additem() {
+    public function addcatering() {
         $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
         $getingredients = Ingredients::where('is_deleted','2')->get();
-        $getaddons = Addons::where('is_deleted','2')->where('is_available','1')->get();        
+        $getaddons = Cateringaddon::where('is_deleted','2')->where('is_available','1')->get();        
         $getitem = Item::select('item.*')->with('category')->join('categories','item.cat_id','=','categories.id')->where('item.is_deleted','2')->where('categories.is_available','1')->get();
         $getingredientTypes = IngredientTypes::all();
 
@@ -47,22 +49,25 @@ class ItemController extends Controller
            $value->countIngredients = $value->ingredients()->count();
         }
 
-        $addonGroups = AddonGroups::all();
+        $addonGroups = Cateringtypes::all();
+
+        // dd($addonGroups);
+
         foreach ($addonGroups as $key => $value) {
-           $value->countAddons = $value->addons()->count();
+           $value->countAddons = $value->cateringaddon()->count();
         }
         $getComboGroup = ComboGroup::all();
         foreach ($getComboGroup as $key => $value) {
            $value->countCombos = $value->ComboItem()->count();
         }        
         $getcateringcat = CateringCat::get();
-        return view('additem', compact('getcategory','getitem','getingredients','getaddons', 'getingredientTypes', 'addonGroups', 'getComboGroup', 'getcateringcat'));
+        return view('addcatering', compact('getcategory','getitem','getingredients','getaddons', 'getingredientTypes', 'addonGroups', 'getComboGroup', 'getcateringcat'));
     }
 
     public function edititem($id) {
         $getcategory = Category::where('is_available','1')->where('is_deleted','2')->get();
         $getingredients = Ingredients::where('is_deleted','2')->get();
-        $getaddons = Addons::where('is_deleted','2')->where('is_available','1')->get();
+        $getaddons = Cateringaddon::where('is_deleted','2')->where('is_available','1')->get();
         $item = Item::findorFail($id);
         $getvariation = Variation::where('item_id', $id)->get();
         $getitem = Item::where('id',$id)->first();
@@ -73,9 +78,9 @@ class ItemController extends Controller
         foreach ($getingredientTypes as $key => $value) {
            $value->countIngredients = $value->ingredients()->count();
         }
-        $addonGroups = AddonGroups::all();
+        $addonGroups = Cateringtypes::all();
         foreach ($addonGroups as $key => $value) {
-           $value->countAddons = $value->addons()->count();
+           $value->countAddons = $value->cateringaddon()->count();
         }
 
         $getComboGroup = ComboGroup::all();
@@ -121,48 +126,50 @@ class ItemController extends Controller
         ]);
 
         $item = new Item;
+        
         $item->cat_id =$request->cat_id;
-        // $item->addons_id =@implode(",",$request->addons_id);
-        // $item->ingredients_id =@implode(",",$request->ingredients_id);
+        $item->addons_id = (isset($request->addons_id)) ? @implode(",",$request->addons_id) : null;
+        $item->ingredients_id = (isset($request->ingredients_id)) ? @implode(",",$request->ingredients_id) : null;
         $item->item_type =$request->item_type;
-        // $item->preparing_time =$request->preparation_time;
-        // $item->minimum_peeps =$request->minimum_people;
         $item->item_name =$request->item_name;
         $item->food_type =$request->food_type;
+        $item->preparing_time =$request->preparation_time;
+        $item->minimum_peeps =$request->minimum_people;
         $item->catering_cat_id =$request->catering_cat_id;
         $item->item_description =$request->description;
         $item->delivery_time =$request->delivery_time;
-        $item->available_ing_option = (isset( $request->available_ing_option) ) ? @implode(",", $request->available_ing_option) : null;
-        $item->addongroups_id = (isset( $request->addons_groups_id) ) ? @implode(",", $request->addons_groups_id): null;
-        $item->available_addons_option = @implode(",", $request->available_addons_option);
+        $item->available_ing_option = (isset($request->available_ing_option)) ? @implode(",", $request->available_ing_option) : null;
+        $item->addongroups_id = (isset($request->addons_groups_id)) ? @implode(",", $request->addons_groups_id) : null;
+        $item->available_addons_option = (isset($request->available_addons_option)) ? @implode(",", $request->available_addons_option) : null;
         $item->tax =$request->tax;
         if (intval($request->make_combo) == '') {
             $request->make_combo = 0;
         }
-        if ($request->combogroup == "") {
-            $item->combo_group_id = NULL;
-            $request->make_combo = NULL;
-            $item->addons_id =NULL;    
-        }else{
-            $item->combo_group_id = @implode(",",$request->combo_group);
-            $item->is_default_combo =$request->make_combo;
-            $item->addons_id =@implode(",",$request->addons_id);
-        }
+        $item->is_default_combo = (isset($request->make_combo)) ? $request->make_combo : 0;
+        $item->combo_group_id = (isset($request->combo_group)) ? @implode(",",$request->combo_group) : null;
         $item->save();
 
         $product_price = $request->product_price;
         $sale_price = $request->sale_price;
         $variation = $request->variation;
 
-        foreach($product_price as $key => $no)
-        {
-            $input['item_id'] =$item->id;
-            $input['product_price'] = $no;
-            $input['sale_price'] = $sale_price[$key];
-            $input['variation'] = $variation[$key];
+        $input['item_id'] =$item->id;
+        $input['product_price'] = $product_price;
+        $input['sale_price'] = '0';
+        $input['variation'] = '0';
 
-            Variation::create($input);
-        }
+        Variation::create($input);
+
+
+        // foreach($product_price as $key => $no)
+        // {
+        //     $input['item_id'] =$item->id;
+        //     $input['product_price'] = $no;
+        //     $input['sale_price'] = $sale_price[$key];
+        //     $input['variation'] = $variation[$key];
+
+        //     Variation::create($input);
+        // }
 
         if ($request->hasFile('file')) {
             $files = $request->file('file');
@@ -182,7 +189,7 @@ class ItemController extends Controller
         }
 
         if ($item) {
-             return redirect('admin/item')->with('success', trans('messages.success'));
+            return redirect('admin/cateringproducts')->with('success', trans('messages.success'));
         } else {
             return redirect()->back()->with('danger', trans('messages.fail'));
         }
@@ -302,16 +309,8 @@ class ItemController extends Controller
         if (intval($request->make_combo) == '') {
             $request->make_combo = 0;
         }
-        if ($request->combogroup == "") {
-            $item->combo_group_id = NULL;
-            $request->make_combo = NULL;
-            $item->addons_id =NULL;    
-        }else{
-            $item->combo_group_id = @implode(",",$request->combo_group);
-            $item->is_default_combo =$request->make_combo;
-            $item->addons_id =@implode(",",$request->addons_id);
-        }
-
+        $item->is_default_combo =intval($request->make_combo);
+        $item->combo_group_id = @implode(",",$request->combo_group);
         $item->save();   
 
         $product_price = $request->product_price;
@@ -319,6 +318,7 @@ class ItemController extends Controller
         $variation = $request->variation;
         $variation_id = $request->variation_id;
 
+                Variation::create($input);
         foreach($product_price as $key => $no)
         {
             if ($variation_id[$key] == "") {
@@ -328,7 +328,6 @@ class ItemController extends Controller
                 $input['sale_price'] = $sale_price[$key];
                 $input['variation'] = $variation[$key];
 
-                Variation::create($input);
             } 
 
             if ($variation_id[$key] != "") {

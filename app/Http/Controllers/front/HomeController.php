@@ -18,6 +18,7 @@ use App\Pincode;
 use Session;
 use Validator;
 use App\CateringCat;
+use App\FanClub;
 
 class HomeController extends Controller
 {
@@ -117,7 +118,8 @@ class HomeController extends Controller
        
         //     // exit();
         }
-        return view('front.fanclub',compact('getabout','getdata','getcategory','cartdata'));
+        $getfans = fanclub::all();
+        return view('front.fanclub',compact('getabout','getdata','getcategory','cartdata','getfans'));
     }
      public function catering()
     {

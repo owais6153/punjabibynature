@@ -12,6 +12,6 @@ class AddonGroups extends Model
 
     public function addons()
     {
-    	return $this->hasMany(Addons::class,'group_id');
+        return $this->hasMany(Addons::class,'group_id');
     }
 }

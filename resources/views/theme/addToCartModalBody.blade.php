@@ -54,35 +54,25 @@
                         <label>Select Quantity</label>
                         <input type="number" name="quantity" id="quantity" value="1" min="1" class="quantity form-control">
                     </div>
-                   </div>
-                    
-                
+                   </div>          
 
+        <div class="alert alert-danger" style="display: none;" id="AddToCartError"></div>
+          <div class="extra-food-wrap addons-box"> 
+                <ul class="col-md-12 nav nav-tabs">
+                      @if (isset($getingredientsByTypes[0]->name))
+                          <li><a class="active" data-toggle="tab" href="#ingredients">Ingredients</a></li>
+                      @endif
+                      @if (isset($getAddonsByGroups[0]->name))
+                          <li><a class="{{(isset($getingredientsByTypes[0]->name)) ? '' : 'active'}}" data-toggle="tab" href="#free">Free Add-on</a></li>
+                      @endif
 
-                        
-                        
-                        
-
-<div class="alert alert-danger" style="display: none;" id="AddToCartError"></div>
-          <div class="extra-food-wrap addons-box">
-
-                        
-
-    <ul class="col-md-12 nav nav-tabs">
-      @if (isset($getingredientsByTypes[0]->name))
-          <li><a class="active" data-toggle="tab" href="#ingredients">Ingredients</a></li>
-      @endif
-      @if (isset($getAddonsByGroups[0]->name))
-          <li><a class="{{(isset($getingredientsByTypes[0]->name)) ? '' : 'active'}}" data-toggle="tab" href="#free">Free Add-on</a></li>
-      @endif
-
-      @if (isset($getAddonsByGroups[0]->name))
-      <li><a data-toggle="tab" href="#paid">Paid Add-on</a></li>
-      @endif
-      @if (isset($ComboGroups[0]->name)) 
-      <li class="combotab" style="{{($getitem->is_default_combo != 1) ? 'display: none;' : '' }}"><a data-toggle="tab" href="#combocontent" >Combo</a></li>
-      @endif
-    </ul>
+                      @if (isset($getAddonsByGroups[0]->name))
+                      <li><a data-toggle="tab" href="#paid">Paid Add-on</a></li>
+                      @endif
+                      @if (isset($ComboGroups[0]->name)) 
+                      <!-- <li class="combotab" style="{{($getitem->is_default_combo != 1) ? 'display: none;' : '' }}"><a data-toggle="tab" href="#combocontent" >Combo</a></li> -->
+                      @endif
+                </ul>
 
     <div class="col-md-12 tab-content main-tab-content">
                         
@@ -170,6 +160,7 @@
                                 <li>
                                     <input type="checkbox" name="addons[]" class="Checkbox single_addon" value="{{$addons->id}}" price="{{$addons->price}}" addons_name="{{$addons->name}}">
                                     <p>{{$addons->name}}</p>
+
                                 </li>
                                 @endforeach
                             @else
@@ -229,6 +220,8 @@
                             <li>
                                 <input type="checkbox" name="addons[]" class="Checkbox single_addon" value="{{$addons->id}}" price="{{$addons->price}}" addons_name="{{$addons->name}}">
                                 <p>{{$addons->name}} : {{$getdata->currency}}{{number_format($addons->price, 2)}}</p>
+                                <span class="label-quan">Qty:</span>
+                                <input type="number" id="qty" name="quantity-paid-addon" value="0" class="quaty">
                             </li>
                             @endforeach
                             </div>
@@ -250,7 +243,7 @@
                                 @endif
                                 {{($getitem->is_default_combo == 0) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : 'Combo Option' }}         
                             </p> -->
-                            <div id="combocontent" class="comboWrapp tab-pane fade ">
+                            <!-- <div id="combocontent" class="comboWrapp tab-pane fade ">
                                 <div class="col-md-12 w3-bar w3-black tab">
                                 @if ($getitem->is_default_combo == 1)
                                     @foreach ($ComboGroups as $ComboGroup)
@@ -269,7 +262,7 @@
                                         </div>
                                         @endforeach
                                 @endif
-                            </div>
+                            </div> -->
                         </div>
                             </div>
                         
@@ -287,6 +280,34 @@
                                 {{($getitem->is_default_combo == 0 && isset($ComboGroups[0]->name)) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : '' }}         
                         </p>
                 </div>
+
+
+                <div class="extra-food-wrap addons-box combotab" style="display: none;">  
+                    <div class="col-md-12 tab-content main-tab-content">                        
+                            <div id="combocontent" class="comboWrapp tab-pane fade active show">
+                                <div class="col-md-12 w3-bar w3-black tab"><div class="comboWrapper"><div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('Cold Drinks7combo')">
+                                        <h3>Cold Drinks</h3>
+                                        <p>You can select 1 option.</p>
+                                        <span class="required_label">Required</span>
+                                    </div>
+                                    <div id="Cold Drinks7combo" class="addon tabcontent" style="display:none">
+                                    <ul class="list-unstyled extra-food single-addon ComboGroups">
+                                     <div id="pricelist">
+                                    <li><input type="radio" name="ComboItem['Cold Drinks']" class="Radio comboItem" value="Pepsi"><p>Pepsi</p></li><li><input type="radio" name="ComboItem['Cold Drinks']" class="Radio comboItem" value="7up"><p>7up</p></li><li><input type="radio" name="ComboItem['Cold Drinks']" class="Radio comboItem" value="Juice"><p>Juice</p></li></div></ul></div></div><div class="comboWrapper"><div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('Paratha8combo')">
+                                        <h3>Paratha</h3>
+                                        <p>You can select 1 option.</p>
+                                        <span class="required_label">Required</span>
+                                    </div>
+                                    <div id="Paratha8combo" class="addon tabcontent" style="display:none">
+                                    <ul class="list-unstyled extra-food single-addon ComboGroups">
+                                     <div id="pricelist">
+                                    <li><input type="radio" name="ComboItem['Paratha']" class="Radio comboItem" value="Puri Paratha"><p>Puri Paratha</p></li><li><input type="radio" name="ComboItem['Paratha']" class="Radio comboItem" value="Simple Paratha"><p>Simple Paratha</p></li></div></ul></div></div></div>
+                              </div>
+                        </div>       
+                  </div>
+
+
+
                 <textarea id="item_notes" name="item_notes" placeholder="Write Notes..."></textarea>
 
                 <script type="text/javascript">
@@ -338,28 +359,51 @@ $('input[type="checkbox"]').change(function() {
 });
 
 
-$('.single-addon input[type="checkbox"]').change(function() {
-    "use strict";    
+    
+        var total = parseFloat($("#price").val());
+    $('#pricelist .quaty').on('keyup', function(){
     $('.temp-pricing').hide();
-    var total = parseFloat($("#price").val()); 
+    $('.qty').hide();
+        basic_price = total; 
+        let addon_price = $(this).parent('li').find('input[type="checkbox"]').attr('price');
+        let qty = $(this).val();
+        var value = addon_price*qty;
+        var final_price = value+basic_price;
+        
+        $('p.pricing').text('{{$getdata->currency}}'+final_price.toFixed(2));
 
-    if($(this).is(':checked')){
+        $('#price').val(final_price.toFixed(2));
 
-        total += parseFloat($(this).attr('price')) || 0;
 
-    }
+    })
+    
 
-    else{
+// $('.single-addon input[type="checkbox"]').change(function() {
+//     "use strict";    
+//     $('.temp-pricing').hide();
+//     var total = parseFloat($("#price").val()); 
+//     var qty= '';
+//     qty = $(this).parent('li').find('.quaty').val();
+//     if (qty == '') {
+//         qty = 1;
+//     }
+//     if($(this).is(':checked')){
 
-        total -= parseFloat($(this).attr('price')) || 0;
+//         total += parseFloat(($(this).attr('price') * qty)) || 0;
 
-    }
+//     }
 
-    $('p.pricing').text('{{$getdata->currency}}'+total.toFixed(2));
+//     else{
 
-    $('#price').val(total.toFixed(2));
+//         total -= parseFloat(($(this).attr('price') * qty)) || 0;
 
-})
+//     }
+
+//     $('p.pricing').text('{{$getdata->currency}}'+total.toFixed(2));
+
+//     $('#price').val(total.toFixed(2));
+
+// })
 
 
 $('.addon_group.paid input').change(function() {

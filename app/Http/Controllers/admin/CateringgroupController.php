@@ -1,20 +1,20 @@
 <?php
- 
+
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\AddonGroups;
+use App\Cateringtypes;
 use Validator;
 
-class AddonGroupsController extends Controller
+class CateringgroupController extends Controller
 {
     public function index()
     {
         
-        $addonGroups = AddonGroups::all();
+        $addonGroups = Cateringtypes::all();
         
-        return view('addonGroups',compact('addonGroups'));
+        return view('cateringGroup',compact('addonGroups'));
     }
     public function store(Request $request){
 
@@ -32,7 +32,7 @@ class AddonGroupsController extends Controller
         }
         else
         {
-            $addonGroups = new AddonGroups;            
+            $addonGroups = new Cateringtypes;            
             $addonGroups->name =$request->group_name;
             if ($request->group_price=='') {
                 $addonGroups->price = 0;
@@ -52,12 +52,12 @@ class AddonGroupsController extends Controller
     }
     public function list()
     {
-        $addonGroups = AddonGroups::all();
+        $addonGroups = Cateringtypes::all();
         return view('theme.addonGroupsTable',compact('addonGroups'));
     }
     public function show(Request $request)
     {
-        $addonGroups = AddonGroups::where('id',$request->id)->first();
+        $addonGroups = Cateringtypes::where('id',$request->id)->first();
 
         return response()->json(['ResponseCode' => 1, 'ResponseText' => 'Addon group fetch successfully', 'ResponseData' => $addonGroups], 200);
     }
@@ -79,7 +79,7 @@ class AddonGroupsController extends Controller
         }
         else
         {
-            $addonGroups = new AddonGroups;
+            $addonGroups = new Cateringtypes;
             $addonGroups->exists = true;
             $addonGroups->id = $request->id;
             $addonGroups->name =$request->group_name;  
@@ -102,7 +102,7 @@ class AddonGroupsController extends Controller
     }
     public function delete(Request $request)
     {
-        $addonGroups = AddonGroups::where('id', $request->id)->delete();
+        $addonGroups = Cateringtypes::where('id', $request->id)->delete();
         if ($addonGroups) {
             return 1;
         } else {

@@ -11,6 +11,6 @@ class ComboItem extends Model
 
    public function ComboGroup()
    {
-   		return $this->belongsTo(ComboGroup::class, 'group_id');
+        return $this->belongsTo(ComboGroup::class, 'group_id');
    }
 }

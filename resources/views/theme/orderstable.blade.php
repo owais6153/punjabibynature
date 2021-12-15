@@ -21,7 +21,7 @@
         ?>
         <tr id="dataid{{$orders->id}}">
             <td>{{$i}}</td>
-            <td>{{$orders['users']->name}}</td>
+            <td>{{$orders->uname}}</td>
             <td>{{$orders->order_number}}</td>
             <td>
                 @if($orders->payment_type == 1)

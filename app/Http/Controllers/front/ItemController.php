@@ -18,6 +18,8 @@ use App\Addons;
 use App\AddonGroups;
 use App\ComboItem;
 use App\ComboGroup;
+use App\Cateringaddon;
+use App\Cateringtypes;
 use App\Address;
 use App\Payment;
 use Session;
@@ -251,7 +253,7 @@ class ItemController extends Controller
             return response()->json(["status"=>0,"message"=>"Price is required"],400);
         }
         if($request->variation_id == ""){
-            return response()->json(["status"=>0,"message"=>"Variation is required"],400);
+//            return response()->json(["status"=>0,"message"=>"Variation is required"],400);
         }
         if($request->user_id == ""){
             return response()->json(["status"=>0,"message"=>"User ID is required"],400);
@@ -442,7 +444,7 @@ class ItemController extends Controller
         
     }
     public function getOptions(Request $request){
-                $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
+        $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
         $user_id  = Session::get('id');
         $getabout = About::where('id','=','1')->first();
 
@@ -458,14 +460,14 @@ class ItemController extends Controller
 
             $arr = explode(',', $getitem->addons_id);
             foreach ($arr as $value) {
-                $freeaddons['value'] = Addons::whereIn('id',$arr)
+                $freeaddons['value'] = Cateringaddon::whereIn('id',$arr)
                 ->where('is_available','=','1')
                 ->where('is_deleted','=','2')
                 ->where('price','=','0')
                 ->get();
             };
             foreach ($arr as $value) {
-                $paidaddons['value'] = Addons::whereIn('id',$arr)
+                $paidaddons['value'] = Cateringaddon::whereIn('id',$arr)
                 ->where('is_available','=','1')
                 ->where('is_deleted','=','2')
                 ->where('price','!=',"0")
@@ -501,7 +503,7 @@ class ItemController extends Controller
             $available_addons_option = explode(',', $getitem->available_addons_option);
             foreach ($addon_groups_id as $key => $value) {
                 $available_add = ($available_addons_option[$key] == 'allow_all') ? "'all'" : intval($available_addons_option[$key]);
-                $getAddonsByGroups[] =  AddonGroups::with(['addons'])->select('addon_groups.*', \DB::raw($available_add . ' AS available_add_option'))->where('addon_groups.id', $value)->first();
+                $getAddonsByGroups[] =  Cateringtypes::with(['cateringaddon'])->select('catering_group.*', \DB::raw($available_add . ' AS available_add_option'))->where('catering_group.id', $value)->first();
                
                 // print_r($getingredientsByTypes[0]->ingredients[1]->ingredients);
 

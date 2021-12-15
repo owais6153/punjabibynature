@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Addons extends Model
+class Cateringaddon extends Model
 {
-    protected $table='addons';
+  protected $table='catering_items';
     protected $fillable=['cat_id','item_id','name','price'];
 
     public function category(){
@@ -19,6 +19,6 @@ class Addons extends Model
 
     public function addonsGroups()
     {
-        return $this->hasOne(AddonGroups::class,'group_id');
+      return $this->hasOne(AddonGroups::class,'group_id');
     }
 }

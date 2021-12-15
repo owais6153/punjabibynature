@@ -25,31 +25,38 @@
          	<div class="container">
   				<h2 class="sec-head">{{ trans('labels.our_review') }}</h2> 
 	  			<div class="row review-row">
+		            
+	  				 <?php
+        				foreach ($getfans as $fans) {
+        			?>
 		            <div class="col-md-4 item-review">
 		            	<div class="review-box">
 			                <div class="review-img">
 			                    <img src='{!! asset("storage/app/public/assets/images/boss.png") !!}' alt="">
 			                    <div class="head-star">
-			                    <h3>Harry Jackson</h3>
+			                    <h3>{{$fans->reviewer_name}}</h3>
 			                    <p class="stars-review">
-			                    <i class="fas fa-star"></i>
-			                    <i class="fas fa-star"></i>
-			                    <i class="fas fa-star"></i>
-			                    <i class="fas fa-star"></i>
-			                    <i class="fas fa-star"></i>
+			                    	<?php for ($i=0; $i < $fans->reviewer_rating; $i++) {?> 
+			                    			<i class="fas fa-star"></i>		
+			                    	<?php 
+			                    	}?>
 			                	</p>
 			                	</div>
 			                </div>
-			                <p class="des-review">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+			                <p class="des-review">{{$fans->reviewer_review}}</p>
 			                <p class="ndrsl-testimonial-source" style="pointer-events:all; ">
 					            <a href="https://search.google.com/local/reviews?placeid=ChIJyw63k688K4gRjXAtI4RJERk" target="_blank" style="">
 					            <img width="20px" aria-hidden="true" focusable="false" class="ndrsl-source-icon ndrsl-facebook-icon svg-inline--fa fa-google fa-w-16-" role="img" height="20" src="https://d2umh4u76e9b4y.cloudfront.net/fit-in/40x40/integrations/google.com.png">
-					            Google review
+					            {{$fans->reviewer_link}}
 					            </a>
 		          			</p>
 		                </div>
 		            </div>
-		            <div class="col-md-4 item-review">
+
+		            <?php
+        				}
+        			?>
+		            <!-- <div class="col-md-4 item-review">
 		            	<div class="review-box">
 			                <div class="review-img">
 			                    <img src='{!! asset("storage/app/public/assets/images/boss.png") !!}' alt="">
@@ -171,7 +178,7 @@
           					</p>
 		                </div>
 	            
-	        		</div>
+	        		</div> -->
 	         	</div>
          </section>
          </div>

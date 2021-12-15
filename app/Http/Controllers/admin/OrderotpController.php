@@ -26,7 +26,7 @@ class OrderotpController extends Controller
      */
     public function index()
     {
-        $getorders = Order::with('users')->select('order.*','users.name')->leftJoin('users', 'order.driver_id', '=', 'users.id')->get();
+        $getorders = Order::with('users')->select('order.*','users.name as uname')->leftJoin('users', 'order.user_id', '=', 'users.id')->get();
         $getdriver = User::where('type','3')->get();
         
         return view('orders',compact('getorders','getdriver'));

@@ -11,7 +11,17 @@
         </div>
     </div>
 </section>
+<?php
+date_default_timezone_set("Asia/Karachi"); 
+$date = date('H:i:s a', time());
+$time = explode(':', $date);
 
+if ($time[0] > 06) {
+    echo $timee = 1;
+}else{
+    echo $timee = 0;
+}
+?>
 @php
     $validation = array();
 @endphp
@@ -78,22 +88,22 @@
                                 }
                             endif;
 
-                           /* if($validation[$category->id]['allow_add_to_cart'] != false && (!empty($category->allowed_veg) || !empty($category->allowed_nonveg) )) {
-                                if(!empty($category->allowed_veg) && $category->allowed_veg  > $validation[$category->id]['veg']){
-                                    $validation[$category->id]['allow_add_to_cart'] = true;
+                           if($validation[$category->id]['allow_add_to_cart'] != false && (!empty($category->allowed_veg) || !empty($category->allowed_nonveg) )) {
+                                if(!empty($category->allowed_veg) && isset($validation[$category->id]['Veg']) && $category->allowed_veg  > $validation[$category->id]['Veg']){
+                                    $validation[$category->id]['Veg'] = true;
                                 }
                                 else{
-                                    $validation[$category->id]['allow_add_to_cart'] = false;
+                                    $validation[$category->id]['Veg'] = false;
                                 }
 
 
-                                if($validation[$category->id]['allow_add_to_cart'] != false && !empty($category->allowed_nonveg) && $category->allowed_nonveg  > $validation[$category->id]['nonveg']){
-                                    $validation[$category->id]['allow_add_to_cart'] = true;
+                                if($validation[$category->id]['allow_add_to_cart'] != false &&  isset($validation[$category->id]['Non Veg']) && !empty($category->allowed_nonveg) && $category->allowed_nonveg  > $validation[$category->id]['Non Veg']){
+                                    $validation[$category->id]['Non Veg'] = true;
                                 }
                                 else{
-                                    $validation[$category->id]['allow_add_to_cart'] = false;
+                                    $validation[$category->id]['Non Veg'] = false;
                                 }
-                            }*/
+                            }
 
                         @endphp
             
@@ -101,6 +111,8 @@
                   <h3 id="category{{$category->id}}">{{$category->name}} 
                     @if($category->option_allowed != '')
                         <small>{{$category->option_allowed}} option{{($category->option_allowed > 1) ? 's' : ''}} allowed</small>
+                        <small>{{$category->allowed_veg}} Veg allowed</small>
+                        <small>{{$category->allowed_nonveg}} Nonveg allowed</small>
                     @endif
                   </h3>
 <div class="row">
@@ -138,20 +150,28 @@
                                 </div>
                             </div>
                         @if (Session::get('id'))
+                            @if($validation[$category->id]['allow_add_to_cart'])
 
-                            @if ($item->item_status == '1')
-                                <button class="btn" {{($validation[$category->id]['allow_add_to_cart']) ? '' : 'disabled'}} onclick="openCartModal('{{$item->id}}')" >{{ trans('labels.add_to_cart') }}</button>
+                            @if ($item->item_status == '1' && $timee = 1)
+                                <button class="btn" {{( (!$validation[$category->id][$item->food_type]) ) ? '' : 'disabled'}} onclick="openCartModal('{{$item->id}}')" >{{ trans('labels.add_to_cart') }}</button>
 
                             @else 
                                 <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>
+                            @endif
                             @endif
                         @else
-                            @if ($item->item_status == '1')
-                                <button class="btn" {{($validation[$category->id]['allow_add_to_cart']) ? '' : 'disabled'}} onclick="openCartModal('{{$item->id}}')">{{ trans('labels.add_to_cart') }}</button>
-                            @else 
-                                <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>
+                            @if($validation[$category->id]['allow_add_to_cart'])
+                                @if ($item->item_status == '1')
+                                    <button class="btn" {{( (!$validation[$category->id][$item->food_type])) ? '' : 'disabled'}} onclick="openCartModal('{{$item->id}}')">{{ trans('labels.add_to_cart') }}</button>
+                                @else 
+                                    <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>
+                                @endif
                             @endif
-                        @endif                        
+                        @endif 
+
+                     
+                     
+<!--                         <p>{{ (isset($validation[$category->id][$item->food_type])) ? 'asd' : 'def' }}</p -->
                         </div>
                     </div>
                         @endforeach
@@ -186,7 +206,9 @@
                                         <div>{{$taxval->currency}}{{number_format($cart->qty * $cart->price,2)}}</div>
 
 
-                                        <div><a href="javascript:void(0)" onclick="RemoveCart({{$id}})"><i class="fas fa-times"></i></a></div>
+                                        <div>
+                                            <!-- <a href="javascript:void(0)" onclick="RemoveCart({{$id}})"><i class="fas fa-times"></i></a> -->
+                                        </div>
                                     </div>                      
                                 @endif  
                             @endforeach
@@ -233,7 +255,7 @@
                         <input type="datetime-local" name="calendar" id="calendar" class="quantity form-control">
                     
 
-                 	<button disabled="" class="checkout-btn btn">Checkout <i class="fas fa-arrow-right"></i></button>
+                 	<a href="{{URL::to('/cart')}}" class="checkout-btn btn">Checkout <i class="fas fa-arrow-right"></i></a>
                  	<p>$100.00 minimum for delivery</p>
                  </div> 
             </div>

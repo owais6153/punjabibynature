@@ -15,7 +15,7 @@ use App\Ratting;
 use App\Banner;
 use App\Order;
 use App\Promocode;
-
+use Session;
 class HomeController extends Controller
 {
     /**
@@ -52,7 +52,7 @@ class HomeController extends Controller
         }
         else{
             $cartdata_temp = Session::get('guest_cart');
-            $cartdata = json_decode(json_encode($cartdata_temp));
+            $cartdata = json_decode(json_encode($cartdata_temp), true);
                     }
         $getpincode = Pincode::all();
         $addons = Addons::where('is_available','1')->where('is_deleted','2')->get();

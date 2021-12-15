@@ -36,6 +36,28 @@
                     <li><a href="{{URL::to('/admin/combo/groups')}}">Groups</a></li>                    
                 </ul>
             </li>
+
+            <li>
+                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="fa fa-plus-square"></i><span class="nav-text">Sides Add-ons</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{URL::to('/admin/cateringaddon')}}">Add-ons</a></li>
+                    <li><a href="{{URL::to('/admin/cateringaddon/groups')}}">Types</a></li>                    
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="fa fa-child"></i><span class="nav-text">Fanclub</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{URL::to('/admin/club')}}">Fans</a></li>
+                    <!-- <li><a href="{{URL::to('/admin/combo/groups')}}">Groups</a></li> -->                    
+                </ul>
+            </li>
+
+
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="fa fa-plus"></i><span class="nav-text">{{ trans('labels.ingredients') }}</span>
@@ -51,6 +73,7 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="{{URL::to('/admin/item')}}">Items</a></li>
+                    <li><a href="{{URL::to('/admin/cateringproducts')}}">Catering</a></li>
                     <li><a href="{{URL::to('/admin/category')}}">{{ trans('labels.categories') }}</a></li>    
                     <li><a href="{{URL::to('/admin/catering/category')}}">Catering Category</a></li>                    
                 </ul>

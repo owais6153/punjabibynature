@@ -129,7 +129,7 @@
 						@endforeach
 							<div class="cart-btn-header">
 							  								<!-- View order btn -->
-@if ( isset($cartdata[0]))
+@if ( isset($cartdata))
   <a href="{{URL::to('/cart')}}" class="head-cart">{{ trans('labels.view_my_order') }}</a>
 @endif
 <!-- View order btn -->
@@ -140,7 +140,7 @@
 						</li>
 						@endif
 						@if (Session::get('id'))
-							<li class="nav-item dropdown  {{(!isset($cartdata[0])) ? 'ml-2' : ''}}">
+							<li class="nav-item dropdown  {{(!isset($cartdata)) ? 'ml-2' : ''}}">
 								<a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:void(0)">
 									<img src='{!! asset("storage/app/public/images/profile/".Session::get("profile_image")) !!}' alt="">
 								</a>

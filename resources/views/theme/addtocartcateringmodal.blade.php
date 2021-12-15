@@ -10,7 +10,7 @@
                     @endforeach
                     <div class="row title-price">
                     <div class="col-md-9">
-                        <h3>{{$getitem->item_name}}</h3> 
+                        <h3>{{$getitem->item_name}}<span style="font-size: 13px;"> - (Will Take {{$getitem->preparing_time}} Mins to Prepare this.)</span></h3> 
                        <p>{{ Str::limit($getitem->item_description, 200) }}</p>
                        </div>
                     <div class="col-md-3">
@@ -32,31 +32,18 @@
                         </p> 
                     </div>
                     
-                        @if (count($getitem['variation']) > 1)
-                        <div class="col-md-6">
-                    <label>{{ trans('messages.select_variation') }}</label>
-                    <select class="form-control readers" name="variation" id="variation">
-                        @foreach($getitem['variation'] as $key => $variation)
-                            <option value="{{$variation->id}}" data-price="{{$variation->product_price}}" data-saleprice="{{$variation->sale_price}}" data-variation="{{$variation->variation}}">{{$variation->variation}}</option>
-                        @endforeach
-                    </select>
-                    </div>
-                @else
-
-                    <select class="form-control readers" name="variation" id="variation" style="display: none;">
-                        @foreach($getitem['variation'] as $key => $variation)
-                            <option value="{{$variation->id}}" data-price="{{$variation->product_price}}" data-saleprice="{{$variation->sale_price}}" data-variation="{{$variation->variation}}">{{$variation->variation}}</option>
-                        @endforeach
-                    </select>
-
-                @endif
-                    
+                  
                     <div class="col-md-6">
                         <label>Select People</label>
                         <select name="quantity" id="quantity" class="quantity form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                            <?php 
+                                $number = $getitem->minimum_peeps;
+                                $max = 100;
+                                for ($i=$number; $i <= $max; $i++) {?> 
+                                    <option value="<?= $i; ?>"><?= $i; ?></option>
+                                    
+                            <?php    }
+                            ?>
                         </select>
                     </div>
                    </div>
@@ -67,14 +54,14 @@
 
     <ul class="col-md-12 nav nav-tabs">
       @if (isset($getingredientsByTypes[0]->name))
-          <li><a class="active" data-toggle="tab" href="#ingredients">Ingredients</a></li>
+          <li><a class="active" data-toggle="tab" href="#ingredients">Add On</a></li>
       @endif
       @if (isset($getAddonsByGroups[0]->name))
           <li><a class="{{(isset($getingredientsByTypes[0]->name)) ? '' : 'active'}}" data-toggle="tab" href="#free">Free Add-on</a></li>
       @endif
 
       @if (isset($getAddonsByGroups[0]->name))
-      <li><a data-toggle="tab" href="#paid">Paid Add-on</a></li>
+      <!-- <li><a data-toggle="tab" href="#paid">Paid Add-on</a></li> -->
       @endif
       @if (isset($ComboGroups[0]->name)) 
       <li class="combotab" style="{{($getitem->is_default_combo != 1) ? 'display: none;' : '' }}"><a data-toggle="tab" href="#combocontent" >Combo</a></li>
@@ -84,7 +71,7 @@
     <div class="col-md-12 tab-content main-tab-content">
                         
             <!-- Ingredients start -->
-            <div id="ingredients" class="tab-pane in active">
+            <div id="ingredients" class="tab-pane in <?= (isset($getingredientsByTypes[0]->name)) ? 'active' : ''; ?>">
                 <div class="col-md-12 w3-bar w3-black tab">
             @if (isset($getingredientsByTypes[0]->name))
                     <!-- <div id="ingredientsOptions" class="ingredientsOptions">  -->
@@ -119,7 +106,7 @@
             <!-- End Ingredients -->    
             <!-- ------Paid group addon start----- -->  
                 <!-- Paid Group Addon -->
-                <div id="free" class="tab-pane fade">
+                <div id="free" class="tab-pane paid-addon <?= (!isset($getingredientsByTypes[0]->name)) ? 'active' : ''; ?> ">
                     <div class="col-md-12 w3-bar w3-black tab">
                
             <!-- ------free group start---- -->
@@ -136,10 +123,10 @@
                             <div id="{{$getAddonsByGroup->name}}{{$getAddonsByGroup->id}}free" class="addon tabcontent" style="display:none">
                             <ul class="list-unstyled extra-food addon_group" group_name="{{$getAddonsByGroup->name}}"  data-currency="{{$getdata->currency}}" data-price="{{$getAddonsByGroup->price}}">
                                  
-                                @foreach($getAddonsByGroup->addons as $addon)
+                                @foreach($getAddonsByGroup->cateringaddon as $addon)
                                     <li class="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? '' : 'Radio'}}">
-                                        <input type="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? 'checkbox' : 'radio'}}" name="addons['{{$getAddonsByGroup->name}}'][]" class="Checkbox group_addon" value="{{$addon->name}}" data-option-allowed="{{$getAddonsByGroup->available_add_option}}"  addon_name="{{$addon->name}}">
-                                        <p>{{$addon->name}}</p>
+                                        <input type="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? 'checkbox' : 'radio'}}" name="addons['{{$getAddonsByGroup->name}}'][]" class="Checkbox group_addon" value="{{$addon->name}}" data-option-allowed="{{$getAddonsByGroup->available_add_option}}"  addon_name="{{$addon->name}}" price="{{number_format($addon->price,2)}}">
+                                        <p>{{$addon->name}} (+ {{$getdata->currency}}{{number_format($addon->price,2)}}) </p>
                                     </li>
                                 @endforeach
                                 </ul>
@@ -180,7 +167,7 @@
                     <!-- End Free Single Addon -->
             <!-- ---------free group addon end---- -->
             <!-- -----free single addon start---- -->
-            <div id="paid" class="tab-pane fade">
+            <div id="paid" class="tab-pane  fade">
                 <div class="col-md-12 w3-bar w3-black tab">
                      @if (isset($getAddonsByGroups[0]->name))
                     @foreach ($getAddonsByGroups as $getAddonsByGroup)
@@ -258,7 +245,7 @@ $('input[type="checkbox"]').change(function() {
 });
 
 
-$('.single-addon input[type="checkbox"]').change(function() {
+$('.paid-addon input[type="checkbox"]').change(function() {
     "use strict";    
     $('.temp-pricing').hide();
     var total = parseFloat($("#price").val()); 
