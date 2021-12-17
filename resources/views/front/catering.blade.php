@@ -71,7 +71,7 @@ if ($time[0] > 06) {
 
 @csrf
                 <div class="row catering">
-                     <div class="cat-new-product col-md-8">
+                     <div class="cat-new-product col-md-12">
                     @foreach ($catering_category as $category)
      	          
 
@@ -118,7 +118,7 @@ if ($time[0] > 06) {
 <div class="row">
                         @foreach ($category->items as $item)
 
- <div class="col-xl-6 col-md-6">
+<div class="col-xl-4 col-md-6" onclick="openCartModal('{{$item->id}}')">
 
                         <div class="pro-box">
                             <div class="pro-img">
@@ -153,18 +153,18 @@ if ($time[0] > 06) {
                             @if($validation[$category->id]['allow_add_to_cart'])
 
                             @if ($item->item_status == '1' && $timee = 1)
-                                <button class="btn" {{( (!$validation[$category->id][$item->food_type]) ) ? '' : 'disabled'}} onclick="openCartModal('{{$item->id}}')" >{{ trans('labels.add_to_cart') }}</button>
+                                <!-- <button class="btn" {{( (!$validation[$category->id][$item->food_type]) ) ? '' : 'disabled'}} onclick="openCartModal('{{$item->id}}')" >{{ trans('labels.add_to_cart') }}</button> -->
 
                             @else 
-                                <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>
+                                <!-- <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button> -->
                             @endif
                             @endif
                         @else
                             @if($validation[$category->id]['allow_add_to_cart'])
                                 @if ($item->item_status == '1')
-                                    <button class="btn" {{( (!$validation[$category->id][$item->food_type])) ? '' : 'disabled'}} onclick="openCartModal('{{$item->id}}')">{{ trans('labels.add_to_cart') }}</button>
+                                    <!-- <button class="btn" {{( (!$validation[$category->id][$item->food_type])) ? '' : 'disabled'}} onclick="openCartModal('{{$item->id}}')">{{ trans('labels.add_to_cart') }}</button> -->
                                 @else 
-                                    <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button>
+                                    <!-- <button class="btn" disabled="">{{ trans('labels.unavailable') }}</button> -->
                                 @endif
                             @endif
                         @endif 
@@ -179,86 +179,7 @@ if ($time[0] > 06) {
 @endforeach
                   
 </div>
-            <div class="cart-box-catering col-md-4">
-                 <h3>Cart </h3>
-                 <div class="cart-catering-body">
-                    <div class="cart-total-catering cart-items-catering">
-                        @empty (!$cateringcartdata)
-                            @foreach ($cateringcartdata as $cartIndex => $cart)
-                                @if($cart->product_type == 'catering')
-                                    @php
-                                        $data[] = array(
-                                            "total_price" => $cart->qty * $cart->price,
-                                            "tax" => ($cart->qty*$cart->price)*$cart->tax/100,
-                                            "qty" => $cart->qty
-                                        );
-
-                                        if (isset($cart->id)) {
-                                            $id = $cart->id;
-                                        }
-                                        else{
-                                            $id = $cartIndex;
-                                        }
-                                    @endphp
-                                    <div class="total-values">
-                                        <div>6</div>
-                                        <div>{{$cart->item_name}}<br/>serves {{$cart->qty}}</div>
-                                        <div>{{$taxval->currency}}{{number_format($cart->qty * $cart->price,2)}}</div>
-
-
-                                        <div>
-                                            <!-- <a href="javascript:void(0)" onclick="RemoveCart({{$id}})"><i class="fas fa-times"></i></a> -->
-                                        </div>
-                                    </div>                      
-                                @endif  
-                            @endforeach
-                        @endif
-                    </div>
-                    @empty (!@$data)
-                        @php 
-                            $order_total = array_sum(array_column(@$data, 'total_price'));
-                            $tax = array_sum(array_column(@$data, 'tax'));
-                            $total = array_sum(array_column(@$data, 'total_price'))+$tax;
-                        @endphp
-                    @else    
-                        @php 
-                            $order_total = 0;
-                            $tax = 0;
-                            $total = 0;
-                        @endphp
-                    @endif
-                    <div class="cart-total-catering">
-                       <div class="total-values">
-                            <div>Subtotal</div>
-                            <div>{{$taxval->currency}}{{$order_total}}</div>
-                        </div>
-                        <div class="total-values">
-                            <div>Tax</div>
-                            <div>{{$taxval->currency}}{{$tax}}</div>
-                        </div>
-                        <div class="total-values">
-                            <div>Delivery charge</div>
-                            <div>$0</div>
-                        </div>
-
-                    </div>
-
-                    <div class="cart-total-catering">
-                        <div class="total-values">
-                            <div><b>Total</b></div>
-                            <div><b>{{$taxval->currency}}{{$order_total}}</b></div>
-                        </div>
-                    </div>
-
-           
-                        <p class="text-left mb-0"><label>Date & Time</label></p>
-                        <input type="datetime-local" name="calendar" id="calendar" class="quantity form-control">
-                    
-
-                 	<a href="{{URL::to('/cart')}}" class="checkout-btn btn">Checkout <i class="fas fa-arrow-right"></i></a>
-                 	<p>$100.00 minimum for delivery</p>
-                 </div> 
-            </div>
+            
          </div>
     </div>
      </section>

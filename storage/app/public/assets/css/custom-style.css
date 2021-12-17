@@ -988,9 +988,12 @@ section.sec2-catering .cat-new-product h3 small {
 section.sec2-catering .cat-new-product .col-xl-4.col-md-6 {
     padding-left: 10px;
     padding-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
+/*#fba40e*/
 .cart-catering-body{
-    background-color: #fba40e !important;
+    background-color: #fff !important;
     border-radius: 8px;
     box-shadow: 0 0 22px rgb(0 0 0 / 10%);
     padding-left: 10px;
@@ -998,7 +1001,9 @@ section.sec2-catering .cat-new-product .col-xl-4.col-md-6 {
     padding-bottom: 30px;
     padding-right: 10px;
     text-align: center;
-    color: #fff;
+    color: #000;
+    font-weight: 400;
+    /*border:2px solid #fba40e;*/
 }
 .cart-catering-body .checkout-btn {
     padding-top: 10px;
@@ -1042,7 +1047,7 @@ section.sec2-catering .cat-new-product .col-xl-6.col-md-6 .product-details:nth-c
     justify-content: space-between;
 }
 .cart-total-catering {
-    border-top: 2px dashed #000;
+    border-top: 2px dashed #fba40e;
     padding-bottom: 10px;
     padding-top: 10px;
 }

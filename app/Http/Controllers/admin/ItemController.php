@@ -122,11 +122,10 @@ class ItemController extends Controller
 
         $item = new Item;
         $item->cat_id =$request->cat_id;
-        // $item->addons_id =@implode(",",$request->addons_id);
-        // $item->ingredients_id =@implode(",",$request->ingredients_id);
+        $item->addons_id =@implode(",",$request->addons_id);
+        $item->ingredients_id =@implode(",",$request->ingredients_id);
         $item->item_type =$request->item_type;
-        // $item->preparing_time =$request->preparation_time;
-        // $item->minimum_peeps =$request->minimum_people;
+
         $item->item_name =$request->item_name;
         $item->food_type =$request->food_type;
         $item->catering_cat_id =$request->catering_cat_id;
@@ -134,20 +133,20 @@ class ItemController extends Controller
         $item->delivery_time =$request->delivery_time;
         $item->available_ing_option = (isset( $request->available_ing_option) ) ? @implode(",", $request->available_ing_option) : null;
         $item->addongroups_id = (isset( $request->addons_groups_id) ) ? @implode(",", $request->addons_groups_id): null;
-        $item->available_addons_option = @implode(",", $request->available_addons_option);
+        $item->available_addons_option = (isset($request->available_addons_option))?@implode(",", $request->available_addons_option):null;
         $item->tax =$request->tax;
         if (intval($request->make_combo) == '') {
             $request->make_combo = 0;
         }
-        if ($request->combogroup == "") {
-            $item->combo_group_id = NULL;
-            $request->make_combo = NULL;
-            $item->addons_id =NULL;    
-        }else{
-            $item->combo_group_id = @implode(",",$request->combo_group);
-            $item->is_default_combo =$request->make_combo;
-            $item->addons_id =@implode(",",$request->addons_id);
-        }
+        // if ($request->combogroup == "") {
+        //     $item->combo_group_id = NULL;
+        //     $request->make_combo = NULL;
+        //     $item->addons_id =NULL;    
+        // }else{
+        //     $item->combo_group_id = @implode(",",$request->combo_group);
+        //     $item->is_default_combo =$request->make_combo;
+        //     $item->addons_id =@implode(",",$request->addons_id);
+        // }
         $item->save();
 
         $product_price = $request->product_price;
@@ -269,6 +268,9 @@ class ItemController extends Controller
     public function update(Request $request)
     {
 
+        // dd($request);
+        // print_r($request->addons_id);
+        // die();
         $this->validate($request,[
             'food_type' => 'required',  
             'item_name' => 'required',
@@ -285,18 +287,18 @@ class ItemController extends Controller
         $item = new Item;
         $item->exists = true;
         $item->id = $request->id;
-
         $item->cat_id =$request->getcat_id;
-        $item->addons_id =@implode(",",$request->addons_id);
-        $item->ingredients_id =@implode(",",$request->ingredients_id);
-        $item->available_ing_option = @implode(",", $request->available_ing_option);
+        $item->addons_id = (isset($request->addons_id))?@implode(",",$request->addons_id):Null;
+
+        $item->ingredients_id = (isset($request->ingredients_id))?@implode(",",$request->ingredients_id): Null;
+        $item->available_ing_option = (isset($request->available_ing_option))?@implode(",", $request->available_ing_option): Null;
         $item->item_name =$request->item_name;
         $item->item_type =$request->item_type;
         $item->food_type =$request->food_type;
-        $item->catering_cat_id =$request->catering_cat_id;
+        // $item->catering_cat_id =$request->catering_cat_id;
         $item->item_description =$request->getdescription;
         $item->delivery_time =$request->getdelivery_time;
-        $item->addongroups_id = @implode(",", $request->addons_groups_id);
+        $item->addongroups_id = (isset($request->addons_groups_id))?@implode(",", $request->addons_groups_id): Null;
         $item->available_addons_option = @implode(",", $request->available_addons_option);
         $item->tax =$request->tax;
         if (intval($request->make_combo) == '') {
@@ -305,14 +307,14 @@ class ItemController extends Controller
         if ($request->combogroup == "") {
             $item->combo_group_id = NULL;
             $request->make_combo = NULL;
-            $item->addons_id =NULL;    
+            // $item->addons_id =NULL;    
         }else{
             $item->combo_group_id = @implode(",",$request->combo_group);
             $item->is_default_combo =$request->make_combo;
-            $item->addons_id =@implode(",",$request->addons_id);
+            //$item->addons_id =@implode(",",$request->addons_id);
         }
 
-        $item->save();   
+       $item->save();   
 
         $product_price = $request->product_price;
         $sale_price = $request->sale_price;

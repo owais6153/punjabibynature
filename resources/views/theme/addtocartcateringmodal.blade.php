@@ -52,26 +52,11 @@
 
                         
 
-    <ul class="col-md-12 nav nav-tabs">
-      @if (isset($getingredientsByTypes[0]->name))
-          <li><a class="active" data-toggle="tab" href="#ingredients">Add On</a></li>
-      @endif
-      @if (isset($getAddonsByGroups[0]->name))
-          <li><a class="{{(isset($getingredientsByTypes[0]->name)) ? '' : 'active'}}" data-toggle="tab" href="#free">Free Add-on</a></li>
-      @endif
-
-      @if (isset($getAddonsByGroups[0]->name))
-      <!-- <li><a data-toggle="tab" href="#paid">Paid Add-on</a></li> -->
-      @endif
-      @if (isset($ComboGroups[0]->name)) 
-      <li class="combotab" style="{{($getitem->is_default_combo != 1) ? 'display: none;' : '' }}"><a data-toggle="tab" href="#combocontent" >Combo</a></li>
-      @endif
-    </ul>
-
     <div class="col-md-12 tab-content main-tab-content">
                         
-            <!-- Ingredients start -->
-            <div id="ingredients" class="tab-pane in <?= (isset($getingredientsByTypes[0]->name)) ? 'active' : ''; ?>">
+            <!-- addons start -->
+
+                <div id="ingredients" class="tab-pane in active">
                 <div class="col-md-12 w3-bar w3-black tab">
             @if (isset($getingredientsByTypes[0]->name))
                     <!-- <div id="ingredientsOptions" class="ingredientsOptions">  -->
@@ -103,70 +88,10 @@
             @endif
             </div>
             </div>
-            <!-- End Ingredients -->    
-            <!-- ------Paid group addon start----- -->  
+
                 <!-- Paid Group Addon -->
-                <div id="free" class="tab-pane paid-addon <?= (!isset($getingredientsByTypes[0]->name)) ? 'active' : ''; ?> ">
-                    <div class="col-md-12 w3-bar w3-black tab">
-               
-            <!-- ------free group start---- -->
-            <!--  Free Group Addon -->
-                    @if (isset($getAddonsByGroups[0]->name)) 
-                   
-                        @foreach ($getAddonsByGroups as $getAddonsByGroup)
-                         @if ($getAddonsByGroup->price == 0)
-                         <div class="group_addon_wrapper">
-                         <div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{$getAddonsByGroup->name}}{{$getAddonsByGroup->id}}free')">
-                       <h3>{{$getAddonsByGroup->name}}</h3> 
-                       <p>You can select {{$getAddonsByGroup->available_add_option}} option<?php echo ($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? 's' : '' ; ?>.</p>
-                        </div>
-                            <div id="{{$getAddonsByGroup->name}}{{$getAddonsByGroup->id}}free" class="addon tabcontent" style="display:none">
-                            <ul class="list-unstyled extra-food addon_group" group_name="{{$getAddonsByGroup->name}}"  data-currency="{{$getdata->currency}}" data-price="{{$getAddonsByGroup->price}}">
-                                 
-                                @foreach($getAddonsByGroup->cateringaddon as $addon)
-                                    <li class="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? '' : 'Radio'}}">
-                                        <input type="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? 'checkbox' : 'radio'}}" name="addons['{{$getAddonsByGroup->name}}'][]" class="Checkbox group_addon" value="{{$addon->name}}" data-option-allowed="{{$getAddonsByGroup->available_add_option}}"  addon_name="{{$addon->name}}" price="{{number_format($addon->price,2)}}">
-                                        <p>{{$addon->name}} (+ {{$getdata->currency}}{{number_format($addon->price,2)}}) </p>
-                                    </li>
-                                @endforeach
-                                </ul>
-                                </div>
-                            </div>
-                            @endif
-                        @endforeach
-                    @endif
+                
 
-            <!-- ------free group end---- -->
-            <!-- ---------free group addon start---- -->   
-                    <!-- Free Single Addon -->
-                    @if (count($freeaddons['value']) != 0)
-                     <!-- <button >{{ trans('labels.free_addons') }}</button> -->
-
-                     <div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{ trans('labels.free_addons') }}')">
-                       <h3>{{ trans('labels.free_addons') }}</h3> 
-                        <p>Select Additional Add-ons</p>
-                        </div>
-
-                     <div id="{{ trans('labels.free_addons') }}" class="addon tabcontent" style="display:none"> 
-                        <ul class="list-unstyled extra-food single-addon">
-                            @if ($freeaddons['value'] != "")
-                                @foreach ($freeaddons['value'] as $addons)
-                                <li>
-                                    <input type="checkbox" name="addons[]" class="Checkbox single_addon" value="{{$addons->id}}" price="{{$addons->price}}" addons_name="{{$addons->name}}">
-                                    <p>{{$addons->name}}</p>
-                                </li>
-                                @endforeach
-                            @else
-
-                            @endif
-                        </ul>
-                        </div>
-                    @endif
-                    </div>
-                    </div>
-                    <!-- End Free Single Addon -->
-            <!-- ---------free group addon end---- -->
-            <!-- -----free single addon start---- -->
             <div id="paid" class="tab-pane  fade">
                 <div class="col-md-12 w3-bar w3-black tab">
                      @if (isset($getAddonsByGroups[0]->name))
@@ -332,4 +257,4 @@ function openCity(cityName) {
   }
   document.getElementById(cityName).style.display = "block";
 }
-                </script>
+</script>
