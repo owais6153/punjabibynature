@@ -1,7 +1,7 @@
 
 @include('front.theme.header')
 
-	<section class="fifth-sec-home sec-catering" style="background: url('storage/app/public/assets/images/live-catring-video-img.jpg');">
+    <section class="fifth-sec-home sec-catering" style="background: url('storage/app/public/assets/images/live-catring-video-img.jpg');">
     <div class="container">
         <div class="about-box fifth-section-home">
             <div class="sectionhome-contant">
@@ -59,9 +59,9 @@ if ($time[0] > 06) {
 <input type="hidden" id="type_catering" value="true" name="">
 
      <section class="sec2-catering">
-     	<div class="container">
-     	<h2 class="sec-head">Catering Menu</h2>
-     	<div class="cat-aside-wrap">
+        <div class="container">
+        <h2 class="sec-head">Catering Menu</h2>
+        <div class="cat-aside-wrap">
             @foreach ($catering_category as $category)
             <a href="#category{{$category->id}}" class="cat-check border-top-no @if (request()->id == $category->id) active @endif">
                 <p>{{$category->name}}</p>
@@ -73,7 +73,7 @@ if ($time[0] > 06) {
                 <div class="row catering">
                      <div class="cat-new-product col-md-12">
                     @foreach ($catering_category as $category)
-     	          
+                  
 
            
                         @php
@@ -118,7 +118,7 @@ if ($time[0] > 06) {
 <div class="row">
                         @foreach ($category->items as $item)
 
-<div class="col-xl-4 col-md-6" onclick="openCartModal('{{$item->id}}')">
+<div class="col-xl-4 col-md-4" onclick="openCartModal('{{$item->id}}')">
 
                         <div class="pro-box">
                             <div class="pro-img">
@@ -130,7 +130,9 @@ if ($time[0] > 06) {
                                     @endif
                                     @break
                                 @endforeach
-                                
+                                <!-- <a href="{{URL::to('product-details/'.$item->id)}}"> -->
+                                    <img src='{{$item["itemimage"]->image }}' alt="">
+                                <!-- </a> -->
                             
                             </div>
                             <div class="product-details-wrap">

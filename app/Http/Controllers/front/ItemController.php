@@ -108,7 +108,7 @@ class ItemController extends Controller
             $getingredientsByTypes = array();
             foreach ($irr as $key => $value) {
                 $available_ing_option = ($irrAvailable[$key] == 'allow_all') ? "'all'" : intval($irrAvailable[$key]);
-                $getingredientsByTypes[] =  IngredientTypes::with(['ingredients'])->select('ingredient_types.*', \DB::raw($available_ing_option . ' AS available_ing_option'))->where('ingredient_types.id', $value)->first();
+                // $getingredientsByTypes[] =  IngredientTypes::with(['ingredients'])->select('ingredient_types.*', \DB::raw($available_ing_option . ' AS available_ing_option'))->where('ingredient_types.id', $value)->first();
                
                 // print_r($getingredientsByTypes[0]->ingredients[1]->ingredients);
 
@@ -165,6 +165,7 @@ class ItemController extends Controller
 
         return view('front.product-details', compact('getitem','getabout','getimages','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory', 'ComboGroups', 'totalComboPrice', 'cartdata'));
     }
+
 
     public function show(Request $request)
     {
@@ -444,6 +445,7 @@ class ItemController extends Controller
         
     }
     public function getOptions(Request $request){
+        $source = $request->source;
         $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
         $user_id  = Session::get('id');
         $getabout = About::where('id','=','1')->first();
@@ -501,12 +503,25 @@ class ItemController extends Controller
 
             $addon_groups_id = explode(',', $getitem->addongroups_id);
             $available_addons_option = explode(',', $getitem->available_addons_option);
+
+
+            // dd($available_addons_option);
+            if($source != 'product'){
             foreach ($addon_groups_id as $key => $value) {
                 $available_add = ($available_addons_option[$key] == 'allow_all') ? "'all'" : intval($available_addons_option[$key]);
                 $getAddonsByGroups[] =  Cateringtypes::with(['cateringaddon'])->select('catering_group.*', \DB::raw($available_add . ' AS available_add_option'))->where('catering_group.id', $value)->first();
                
                 // print_r($getingredientsByTypes[0]->ingredients[1]->ingredients);
+                }
+            }
+            else{
+                foreach ($addon_groups_id as $key => $value) {
+                $available_add = ($available_addons_option[$key] == 'allow_all') ? "'all'" : intval($available_addons_option[$key]);
+                $getAddonsByGroups[] =  AddonGroups::with(['addons'])->select('addon_groups.*', \DB::raw($available_add . ' AS available_add_option'))->where('addon_groups.id', $value)->first();
+               
+                // print_r($getingredientsByTypes[0]->ingredients[1]->ingredients);
 
+            }
             }
         }
         $totalComboPrice = 0;
@@ -521,15 +536,14 @@ class ItemController extends Controller
         $getdata=User::select('currency')->where('type','1')->first();
         $getcategory = Category::where('is_available','=','1')->where('is_deleted','2')->get();
 
-        $source = $request->source;
+       
         if($source == 'product'){
 
         $output = view('theme.addToCartModalBody', compact('getitem','getabout','getimages','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory', 'ComboGroups', 'totalComboPrice', 'source'))->render();
 
         }
         else{
-            $output = view('theme.addtocartcateringmodal', compact('getitem','getabout','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory', 'source'))->render();
-
+            $output = view('theme.addtocartcateringmodal', compact('getitem','getabout','getimages','freeaddons','paidaddons','relatedproduct','getdata', 'getingredientsByTypes', 'getAddonsByGroups', 'getcategory', 'ComboGroups', 'totalComboPrice', 'source'))->render();
         }
         return response()->json(['status'=>1,'html'=> $output, 'title' => $getitem->item_name],200);
     }

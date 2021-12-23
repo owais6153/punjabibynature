@@ -424,6 +424,8 @@ img {
   border-radius: 10px;
   background-color: #fff;
   box-shadow: 0 0 22px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .favourite [class*="col-"],
@@ -1183,11 +1185,12 @@ footer {
   display: flex;
   margin-top: 20px;
   align-items: flex-start;
+  display: block;
 }
 
 .extra-food li {
   position: relative;
-  margin-bottom: 16px;
+  /*margin-bottom: 16px;*/
 }
 
 .extra-food li input {
@@ -1215,7 +1218,7 @@ footer {
   height: 20px;
   position: absolute;
   border-radius: 5px;
-  border: 1px solid var(--primary-color-hover);
+  border: 1px solid #afa5a5;
 }
 
 .extra-food {
@@ -1232,7 +1235,7 @@ footer {
   opacity: 0;
   border-radius: 3px;
   transition: all 0.5s;
-  background-color: var(--primary-color-hover);
+  background-color: #000;
 }
 
 .extra-food li input:checked+p::after {

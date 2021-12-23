@@ -1,5 +1,3 @@
-
-
 @include('front.theme.header')
 
 <section class="product-details-sec">

@@ -1,4 +1,8 @@
-
+<?php 
+    // print_r($getingredientsByTypes[0]->ingredients[0]->ingredients);
+    print_r($getAddonsByGroups[0]->addons[0]->price);
+    
+?>
               <img src='{{$getimages[0]->image }}' alt="">
                 <input type="hidden" name="item_id" id="item_id" value="{{$getitem->id}}">
                 <input type="hidden" name="product_type" id="product_type" value="product">
@@ -8,11 +12,11 @@
                         @break
                     @endforeach
                     <div class="row title-price">
-                    <div class="col-md-9">
+                    <div class="col-md-9" style="padding-left: 10px;">
                         <h3>{{$getitem->item_name}}</h3> 
                        <p>{{ Str::limit($getitem->item_description, 200) }}</p>
                        </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" style="padding-left: 10px;">
                        <p class="pricing">
                             @foreach ($getitem->variation as $key => $value)
 
@@ -24,15 +28,15 @@
                             @endforeach
                             <p class="card2-oldprice-show"></p>
                             @if($getitem->tax > 0)
-                                <p style="color: #ff0000;" class="mt-3">+ {{$getitem->tax}}% Additional Tax</p>
+                                <!-- <p style="color: #ff0000;" class="mt-3">+ {{$getitem->tax}}% Additional Tax</p> -->
                             @else
-                                <p style="color: #03a103;" class="mt-3">Inclusive of all taxes</p>
+                                <!-- <p style="color: #03a103;" class="mt-3">Inclusive of all taxes</p> -->
                             @endif
                         </p> 
                     </div>
                     
                         @if (count($getitem['variation']) > 1)
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="padding-left: 10px;">
                     <label>{{ trans('messages.select_variation') }}</label>
                     <select class="form-control readers" name="variation" id="variation">
                         @foreach($getitem['variation'] as $key => $variation)
@@ -50,7 +54,7 @@
 
                 @endif
                     
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="padding-left: 10px;">
                         <label>Select Quantity</label>
                         <input type="number" name="quantity" id="quantity" value="1" min="1" class="quantity form-control">
                     </div>
@@ -62,250 +66,92 @@
                       @if (isset($getingredientsByTypes[0]->name))
                           <li><a class="active" data-toggle="tab" href="#ingredients">Ingredients</a></li>
                       @endif
-                      @if (isset($getAddonsByGroups[0]->name))
-                          <li><a class="{{(isset($getingredientsByTypes[0]->name)) ? '' : 'active'}}" data-toggle="tab" href="#free">Free Add-on</a></li>
-                      @endif
-
-                      @if (isset($getAddonsByGroups[0]->name))
-                      <li><a data-toggle="tab" href="#paid">Paid Add-on</a></li>
-                      @endif
-                      @if (isset($ComboGroups[0]->name)) 
-                      <!-- <li class="combotab" style="{{($getitem->is_default_combo != 1) ? 'display: none;' : '' }}"><a data-toggle="tab" href="#combocontent" >Combo</a></li> -->
-                      @endif
                 </ul>
-
-    <div class="col-md-12 tab-content main-tab-content">
-                        
-            <!-- Ingredients start -->
-            <div id="ingredients" class="tab-pane in active">
-                <div class="col-md-12 w3-bar w3-black tab">
-            @if (isset($getingredientsByTypes[0]->name))
-                    <!-- <div id="ingredientsOptions" class="ingredientsOptions">  -->
+                @if (isset($getingredientsByTypes[0]->name))    
                     @foreach($getingredientsByTypes as $ingredientsByType)
-                    <!-- <button class="w3-bar-item w3-button" onclick="openCity('{{$ingredientsByType->name}}')">{{$ingredientsByType->name}}</button> -->
                     <div class="ingredientsWrapper" option-allowed="{{$ingredientsByType->available_ing_option}}">
-                    <div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{$ingredientsByType->name}}')">
-                       <h3>{{$ingredientsByType->name}}</h3> 
-                       <p>You can select {{$ingredientsByType->available_ing_option}} option<?php echo ($ingredientsByType->available_ing_option > 1 || $ingredientsByType->available_ing_option == 'all')? 's' : '' ; ?>.</p>
-                       <span class="required_label">Required</span>
-
-                    </div>
-                    <div id="{{$ingredientsByType->name}}" class="addon tabcontent"  >
-                        <div class="selectIngredients" >                                        
+                        <h5>{{$ingredientsByType->name}} <span style="color:#000;font-size: 13px;">(You can select {{$ingredientsByType->available_ing_option}} option<?php echo ($ingredientsByType->available_ing_option > 1 || $ingredientsByType->available_ing_option == 'all')? 's' : '' ; ?>)</span>.</h5>
+                        <!-- <div id="{{$ingredientsByType->name}}" class="addon tabcontent"  >
+                            <div class="selectIngredients" >        -->                                 
                             
-                             <ul class="list-unstyled extra-food" ingredient_type="{{$ingredientsByType->name}}">
-                             @foreach($ingredientsByType->ingredients as $ingredientsItems)
+                            <ul class="list-unstyled extra-food" ingredient_type="{{$ingredientsByType->name}}">
+                            @foreach($ingredientsByType->ingredients as $ingredientsItems)
                             <li class="{{($ingredientsByType->available_ing_option > 1 || $ingredientsByType->available_ing_option == 'all')? '' : 'Radio'}}">
                                 <input  class="Checkbox ingredients" type="{{($ingredientsByType->available_ing_option > 1 || $ingredientsByType->available_ing_option == 'all')? 'checkbox' : 'radio'}}" name="ingredients['{{$ingredientsByType->name}}']" value="{{$ingredientsItems->ingredients}}" data-option-allowed="{{$ingredientsByType->available_ing_option}}" ingredient_name="{{$ingredientsItems->ingredients}}" >
                                 <p>{{$ingredientsItems->ingredients}}</p>
                             </li>
-                             @endforeach
-                             </ul>
-                         </div>
-                    </div>
-                    </div>
+                            @endforeach
+                            </ul><br />
+                            <!-- </div>
+                        </div> --> 
+                </div>
                     @endforeach
-                    <!-- </div> -->
-            @endif
-            </div>
-            </div>
-            <!-- End Ingredients -->    
-            <!-- ------Paid group addon start----- -->  
-                <!-- Paid Group Addon -->
-                <div id="free" class="tab-pane fade">
-                    <div class="col-md-12 w3-bar w3-black tab">
-               
-            <!-- ------free group start---- -->
-            <!--  Free Group Addon -->
-                    @if (isset($getAddonsByGroups[0]->name)) 
-                   
-                        @foreach ($getAddonsByGroups as $getAddonsByGroup)
-                         @if ($getAddonsByGroup->price == 0)
-                         <div class="group_addon_wrapper">
-                         <div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{$getAddonsByGroup->name}}{{$getAddonsByGroup->id}}free')">
-                       <h3>{{$getAddonsByGroup->name}}</h3> 
-                       <p>You can select {{$getAddonsByGroup->available_add_option}} option<?php echo ($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? 's' : '' ; ?>.</p>
-                        </div>
-                            <div id="{{$getAddonsByGroup->name}}{{$getAddonsByGroup->id}}free" class="addon tabcontent" style="display:none">
-                            <ul class="list-unstyled extra-food addon_group" group_name="{{$getAddonsByGroup->name}}"  data-currency="{{$getdata->currency}}" data-price="{{$getAddonsByGroup->price}}">
-                                 
-                                @foreach($getAddonsByGroup->addons as $addon)
+                @endif
+            
+            </div></div>
+        <div class="alert alert-danger" style="display: none;" id="AddToCartError"></div>
+          <div class="extra-food-wrap addons-box"> 
+                <ul class="col-md-12 nav nav-tabs">
+                      @if (isset($getAddonsByGroups[0]->name) && $getAddonsByGroups[0]->addons[0]->price != NULL)
+                          <li><a class="active" data-toggle="tab" href="#ingredients">Free Add-on</a></li>
+                      @endif
+                </ul>
+                 @if (isset($getAddonsByGroups[0]->name)) 
+                    @foreach ($getAddonsByGroups as $getAddonsByGroup)
+                        @if ($getAddonsByGroup->price == 0)
+                        <h5>{{$getAddonsByGroup->name}}</h5>
+                        <!-- <div id="{{$ingredientsByType->name}}" class="addon tabcontent"  >
+                            <div class="selectIngredients" >        -->                                 
+                            
+                            <ul class="list-unstyled extra-food" ingredient_type="{{$ingredientsByType->name}}">
+                            @foreach($getAddonsByGroup->addons as $addon)
                                     <li class="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? '' : 'Radio'}}">
                                         <input type="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? 'checkbox' : 'radio'}}" name="addons['{{$getAddonsByGroup->name}}'][]" class="Checkbox group_addon" value="{{$addon->name}}" data-option-allowed="{{$getAddonsByGroup->available_add_option}}"  addon_name="{{$addon->name}}">
                                         <p>{{$addon->name}}</p>
                                     </li>
-                                @endforeach
-                                </ul>
-                                </div>
-                            </div>
-                            @endif
-                        @endforeach
-                    @endif
-
-            <!-- ------free group end---- -->
-            <!-- ---------free group addon start---- -->   
-                    <!-- Free Single Addon -->
-                    @if (count($freeaddons['value']) != 0)
-                     <!-- <button >{{ trans('labels.free_addons') }}</button> -->
-
-                     <div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{ trans('labels.free_addons') }}')">
-                       <h3>{{ trans('labels.free_addons') }}</h3> 
-                        <p>Select Additional Add-ons</p>
-                        </div>
-
-                     <div id="{{ trans('labels.free_addons') }}" class="addon tabcontent" style="display:none"> 
-                        <ul class="list-unstyled extra-food single-addon">
-                            @if ($freeaddons['value'] != "")
-                                @foreach ($freeaddons['value'] as $addons)
-                                <li>
-                                    <input type="checkbox" name="addons[]" class="Checkbox single_addon" value="{{$addons->id}}" price="{{$addons->price}}" addons_name="{{$addons->name}}">
-                                    <p>{{$addons->name}}</p>
-
-                                </li>
-                                @endforeach
-                            @else
-
-                            @endif
-                        </ul>
-                        </div>
-                    @endif
-                    </div>
-                    </div>
-                    <!-- End Free Single Addon -->
-            <!-- ---------free group addon end---- -->
-            <!-- -----free single addon start---- -->
-            <div id="paid" class="tab-pane fade">
-                <div class="col-md-12 w3-bar w3-black tab">
-                     @if (isset($getAddonsByGroups[0]->name))
+                            @endforeach
+                            </ul><br />
+                            <!-- </div>
+                        </div> --> 
+                        @endif
+                    @endforeach
+                @endif
+            </div>
+        </div>
+         
+         <div class="alert alert-danger" style="display: none;" id="AddToCartError"></div>
+          <div class="extra-food-wrap addons-box"> 
+                <ul class="col-md-12 nav nav-tabs">
+                      @if (isset($getAddonsByGroups[0]->name))
+                      <li><a data-toggle="tab" href="#paid">Paid Add-on</a></li>
+                      @endif
+                </ul>
+                @if (isset($getAddonsByGroups[0]->name))
                     @foreach ($getAddonsByGroups as $getAddonsByGroup)
                         @if ($getAddonsByGroup->price != 0)
-
-                   <!--  <button class="w3-bar-item w3-button" onclick="openCity('{{$getAddonsByGroup->name}}{{$getAddonsByGroup->id}}paid')">{{$getAddonsByGroup->name}} : {{$getdata->currency}}{{number_format($getAddonsByGroup->price, 2)}}</button> -->
-
-                   <div class="group_addon_wrapper">
-                    <div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{$getAddonsByGroup->name}}{{$getAddonsByGroup->id}}paid')">
-                        <h3>{{$getAddonsByGroup->name}} : {{$getdata->currency}}{{number_format($getAddonsByGroup->price, 2)}}</h3>
-                        <p>You can select {{$getAddonsByGroup->available_add_option}} option<?php echo ($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? 's' : '' ; ?>.</p>
-                    </div>
-                    <div id="{{$getAddonsByGroup->name}}{{$getAddonsByGroup->id}}paid" class="addon tabcontent" style="display:none">
-                        <ul class="list-unstyled extra-food addon_group paid" data-currency="{{$getdata->currency}}" data-price="{{$getAddonsByGroup->price}}" group_name="{{$getAddonsByGroup->name}}">
+                        <h5>{{$getAddonsByGroup->name}} : {{$getdata->currency}}{{number_format($getAddonsByGroup->price, 2)}}</h5>
+                        <!-- <div id="{{$ingredientsByType->name}}" class="addon tabcontent"  >
+                            <div class="selectIngredients" >        -->                                 
                             
-                            @foreach($getAddonsByGroup->addons as $addon)
+                            <ul class="list-unstyled extra-food" ingredient_type="{{$ingredientsByType->name}}">
+                             @foreach($getAddonsByGroup->addons as $addon)
                                 <li class="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? '' : 'Radio'}}">
                                     <input type="{{($getAddonsByGroup->available_add_option > 1 || $getAddonsByGroup->available_add_option == 'all')? 'checkbox' : 'radio'}}" name="addons['{{$getAddonsByGroup->name}}'][]" class="Checkbox group_addon" value="{{$addon->name}}" data-option-allowed="{{$getAddonsByGroup->available_add_option}}" addon_name="{{$addon->name}}">
                                     <p>{{$addon->name}}</p>
                                </li>
                             @endforeach
-                        </ul>
-                    </div>   
-                    </div> 
+                            </ul><br />
+                            <!-- </div>
+                        </div> --> 
                         @endif
                     @endforeach
-                @endif 
-                
-            <!-- End Paid Group Addon -->
-                        <!-- Paid Single Addon --> 
-                    @if (count($paidaddons['value']) != 0)
-                    <!-- <button class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{ trans('labels.paid_addons') }}')"></button> -->
-
-                    <div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{ trans('labels.paid_addons') }}')">
-                        <h3>{{ trans('labels.paid_addons') }}</h3>
-                        <p>Select Additional Add-ons</p>
-                    </div>
-
-                    <div id="{{ trans('labels.paid_addons') }}" class="addon tabcontent" style="display:none">
-                        <ul class="list-unstyled extra-food single-addon">
-                            <div id="pricelist">
-                            @foreach ($paidaddons['value'] as $addons)
-                            <li>
-                                <input type="checkbox" name="addons[]" class="Checkbox single_addon" value="{{$addons->id}}" price="{{$addons->price}}" addons_name="{{$addons->name}}">
-                                <p>{{$addons->name}} : {{$getdata->currency}}{{number_format($addons->price, 2)}}</p>
-                                <span class="label-quan">Qty:</span>
-                                <input type="number" id="qty" name="quantity-paid-addon" value="0" class="quaty">
-                            </li>
-                            @endforeach
-                            </div>
-                        </ul>
-                        </div>
-                    @endif
-            </div>   
-            </div>
-                    <!-- End Paid Single Addon -->
-        <!-- -----free single addon end---- -->
-         <!-- -----combos tab start---- --> 
-            @if (isset($ComboGroups[0]->name)) 
-
-               
-                            <!-- <div id="comboGroup" class="combo-div" style="flex: 0 0 100%; max-width: 100%;">
-                            <p class="{{($getitem->is_default_combo == 0) ? 'not_required' : 'required_combo' }}">
-                                @if ($getitem->is_default_combo == 0)
-                                    <input type="checkbox" id="makeItCombo" class="Checkbox checkbox-detail" data-price="{{$totalComboPrice}}">
-                                @endif
-                                {{($getitem->is_default_combo == 0) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : 'Combo Option' }}         
-                            </p> -->
-                            <!-- <div id="combocontent" class="comboWrapp tab-pane fade ">
-                                <div class="col-md-12 w3-bar w3-black tab">
-                                @if ($getitem->is_default_combo == 1)
-                                    @foreach ($ComboGroups as $ComboGroup)
-                                    <div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('{{$ComboGroup->name}}{{$ComboGroup->id}}combo')">
-                                        <h3>{{$ComboGroup->name}}</h3>
-                                        <p>You can select 1 option.</p>
-                                        <span class="required_label">Required</span>
-                                    </div>
-
-                                    <div id="{{$ComboGroup->name}}{{$ComboGroup->id}}combo" class="addon tabcontent" style="display:none">
-                                        <ul class="list-unstyled extra-food single-addon ComboGroups">
-                                            <div id="pricelist">
-                                            @foreach ($ComboGroup->ComboItem as $ComboItem)<li><input type="radio" name="ComboItem['{{$ComboGroup->name}}']" class="Radio comboItem" value="{{$ComboItem->name}}"><p>{{$ComboItem->name}}</p></li>@endforeach
-                                            </div>
-                                        </ul>
-                                        </div>
-                                        @endforeach
-                                @endif
-                            </div> -->
-                        </div>
-                            </div>
-                        
-                        @endif
-                    <!-- -----combos tab end---- -->
-       
-    </div>
-                    
-                </div>
-                 <div id="comboGroup" class="w3-bar-item w3-button addons-tabs-cart combo-div" style="flex: 0 0 100%; max-width: 100%;">
-                        <p class="{{($getitem->is_default_combo == 0) ? 'not_required' : 'required_combo' }}">
-                                @if ($getitem->is_default_combo == 0 && isset($ComboGroups[0]->name))
-                                    <input type="checkbox" id="makeItCombo" class="Checkbox checkbox-detail" data-price="{{$totalComboPrice}}">
-                                @endif
-                                {{($getitem->is_default_combo == 0 && isset($ComboGroups[0]->name)) ? 'Make it Combo : ' . $getdata->currency . $totalComboPrice : '' }}         
-                        </p>
-                </div>
+                @endif
+            
+            
+            </div></div>
 
 
-                <div class="extra-food-wrap addons-box combotab" style="display: none;">  
-                    <div class="col-md-12 tab-content main-tab-content">                        
-                            <div id="combocontent" class="comboWrapp tab-pane fade active show">
-                                <div class="col-md-12 w3-bar w3-black tab"><div class="comboWrapper"><div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('Cold Drinks7combo')">
-                                        <h3>Cold Drinks</h3>
-                                        <p>You can select 1 option.</p>
-                                        <span class="required_label">Required</span>
-                                    </div>
-                                    <div id="Cold Drinks7combo" class="addon tabcontent" style="display:none">
-                                    <ul class="list-unstyled extra-food single-addon ComboGroups">
-                                     <div id="pricelist">
-                                    <li><input type="radio" name="ComboItem['Cold Drinks']" class="Radio comboItem" value="Pepsi"><p>Pepsi</p></li><li><input type="radio" name="ComboItem['Cold Drinks']" class="Radio comboItem" value="7up"><p>7up</p></li><li><input type="radio" name="ComboItem['Cold Drinks']" class="Radio comboItem" value="Juice"><p>Juice</p></li></div></ul></div></div><div class="comboWrapper"><div class="w3-bar-item w3-button addons-tabs-cart" onclick="openCity('Paratha8combo')">
-                                        <h3>Paratha</h3>
-                                        <p>You can select 1 option.</p>
-                                        <span class="required_label">Required</span>
-                                    </div>
-                                    <div id="Paratha8combo" class="addon tabcontent" style="display:none">
-                                    <ul class="list-unstyled extra-food single-addon ComboGroups">
-                                     <div id="pricelist">
-                                    <li><input type="radio" name="ComboItem['Paratha']" class="Radio comboItem" value="Puri Paratha"><p>Puri Paratha</p></li><li><input type="radio" name="ComboItem['Paratha']" class="Radio comboItem" value="Simple Paratha"><p>Simple Paratha</p></li></div></ul></div></div></div>
-                              </div>
-                        </div>       
-                  </div>
-
+      
 
 
                 <textarea id="item_notes" name="item_notes" placeholder="Write Notes..."></textarea>
@@ -462,12 +308,12 @@ $(document).ready(function(){
     $('.readers').prop('selectedIndex',0);
 });
 
-function openCity(cityName) {
-  var i;
-  var x = document.getElementsByClassName("addon");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  document.getElementById(cityName).style.display = "block";
-}
+// function openCity(cityName) {
+//   var i;
+//   var x = document.getElementsByClassName("addon");
+//   for (i = 0; i < x.length; i++) {
+//     x[i].style.display = "block";
+//   }
+//   document.getElementById(cityName).style.display = "block";
+// }
                 </script>

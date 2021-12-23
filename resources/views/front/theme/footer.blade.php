@@ -577,7 +577,9 @@ function validateIngredients(){
             }
             else{
               ingFlag = false;
+              console.log('inside option_allowed');
               return false;
+
             }
           // console.log(attr_name);
           }
@@ -587,7 +589,9 @@ function validateIngredients(){
             }
             else{
               ingFlag = false;
+              console.log('inssside option_allowed');
               return false;
+
             }
           // console.log(attr_name);
           }
